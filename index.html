@@ -221,6 +221,21 @@ main{ position:relative; z-index:2; }
 .np-btn.playing{ animation:spin 6s linear infinite; }
 @keyframes spin{ to{ transform:rotate(360deg); } }
 
+/* ---------- Lock screen (countdown) ---------- */
+.lock{ position:fixed; inset:0; z-index:6000; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:2rem;
+  background:radial-gradient(circle at 50% 38%, #2a0a12 0%, var(--bg) 72%); }
+.lock.unlocked{ opacity:0; transform:scale(1.08); pointer-events:none; transition:opacity 1s ease, transform 1s ease; }
+.lock__icon{ font-size:2.6rem; margin-bottom:1.1rem; animation:float 3.4s ease-in-out infinite; }
+.lock .eyebrow{ display:block; margin-bottom:1rem; }
+.lock h2{ font-size:clamp(2rem,7vw,3.6rem); margin-bottom:.3rem; }
+.lock h2 em{ font-style:italic; color:var(--gold); }
+.lock__cd{ display:flex; gap:clamp(.5rem,3vw,1.8rem); justify-content:center; margin:2.2rem 0 1.5rem; }
+.lock__u{ min-width:66px; }
+.lock__u b{ font-family:'Fraunces',serif; font-weight:600; font-size:clamp(2.2rem,8vw,4rem); color:var(--paper); display:block; line-height:1; font-variant-numeric:tabular-nums; }
+.lock__u small{ font-size:.58rem; letter-spacing:.26em; text-transform:uppercase; color:var(--gold); }
+.lock__sep{ font-family:'Fraunces',serif; font-size:clamp(1.6rem,6vw,3rem); color:rgba(231,195,107,.4); align-self:flex-start; line-height:1.1; }
+.lock__note{ color:var(--muted); font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(1.1rem,3.4vw,1.4rem); max-width:360px; }
+
 footer{ text-align:center; padding:3rem 1.5rem 4rem; font-size:.72rem; letter-spacing:.15em; color:var(--muted); }
 
 @media (prefers-reduced-motion:reduce){ *,*::before,*::after{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; } }
@@ -231,6 +246,26 @@ footer{ text-align:center; padding:3rem 1.5rem 4rem; font-size:.72rem; letter-sp
 <div class="cursor" id="cur"></div><div class="cursor-dot" id="curDot"></div>
 <div class="grain"></div>
 <div class="ambient" id="ambient"></div>
+
+<!-- Lock screen: unlocks automatically on July 21 at 00:00 -->
+<div class="lock" id="lock">
+  <div>
+    <div class="lock__icon">🔒</div>
+    <span class="eyebrow">A surprise is waiting</span>
+    <h2>Unlocks on <em>July 21</em></h2>
+    <div class="lock__cd">
+      <div class="lock__u"><b id="lkD">00</b><small>Days</small></div>
+      <span class="lock__sep">:</span>
+      <div class="lock__u"><b id="lkH">00</b><small>Hours</small></div>
+      <span class="lock__sep">:</span>
+      <div class="lock__u"><b id="lkM">00</b><small>Min</small></div>
+      <span class="lock__sep">:</span>
+      <div class="lock__u"><b id="lkS">00</b><small>Sec</small></div>
+    </div>
+    <p class="lock__note">Come back at midnight, my love — it'll open on its own. 💛</p>
+  </div>
+</div>
+<script>if(Date.now()>=new Date("2026-07-21T00:00:00").getTime()){var _lk=document.getElementById('lock');if(_lk)_lk.style.display='none';}</script>
 
 <!-- Preloader -->
 <div class="pre" id="pre">
@@ -392,6 +427,7 @@ footer{ text-align:center; padding:3rem 1.5rem 4rem; font-size:.72rem; letter-sp
    ========================================================= */
 const CONFIG = {
   startDate: "2026-06-21T00:00:00",   // the day you became a couple (YYYY-MM-DD)
+  unlockDate: "2026-07-21T00:00:00",  // the page stays locked until this moment (first-month day)
   totalPhotos: 56,                     // media/f01.jpg ... f56.jpg
   totalVideos: 5,                      // media/v1.mp4 ... v5.mp4
   reasons: [
@@ -420,6 +456,26 @@ const media = [];
 for(let i=1;i<=CONFIG.totalPhotos;i++){ media.push({ type:'img', src:'media/f'+String(i).padStart(2,'0')+'.jpg' }); }
 for(let i=1;i<=CONFIG.totalVideos;i++){ media.push({ type:'video', src:'media/v'+i+'.mp4' }); }
 const photos = media.filter(m=>m.type==='img');
+
+/* ---------- Lock screen countdown (unlocks on CONFIG.unlockDate) ---------- */
+(function(){
+  const lock=document.getElementById('lock');
+  if(!lock) return;
+  const UNLOCK=new Date(CONFIG.unlockDate).getTime();
+  const p2=n=>String(n).padStart(2,'0');
+  let done=false, iv=null;
+  function unlock(){ if(done)return; done=true; if(iv)clearInterval(iv); lock.classList.add('unlocked'); setTimeout(()=>{ lock.style.display='none'; },1100); }
+  function step(){
+    const diff=UNLOCK-Date.now();
+    if(diff<=0){ unlock(); return; }
+    lkD.textContent=p2(Math.floor(diff/864e5));
+    lkH.textContent=p2(Math.floor(diff/36e5)%24);
+    lkM.textContent=p2(Math.floor(diff/6e4)%60);
+    lkS.textContent=p2(Math.floor(diff/1e3)%60);
+  }
+  if(Date.now()>=UNLOCK){ lock.style.display='none'; }
+  else { lock.style.display='flex'; step(); iv=setInterval(step,1000); }
+})();
 
 /* ---------- Reel frames (a cinematic spread across the set) ---------- */
 const reelCount = Math.min(14, photos.length);
