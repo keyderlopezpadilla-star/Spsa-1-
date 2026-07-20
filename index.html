@@ -327,6 +327,36 @@ main{ position:relative; z-index:2; }
 .ll-close{ position:absolute; top:clamp(1rem,4vw,2.4rem); right:clamp(1rem,4vw,2.4rem); z-index:6; width:46px; height:46px; border-radius:50%;
   border:1px solid rgba(231,195,107,.5); background:rgba(20,7,10,.55); backdrop-filter:blur(6px); color:var(--gold); cursor:pointer; font-size:1.1rem; }
 
+/* ---------- Background videos (muted, play in view) ---------- */
+.has-bgv{ position:relative; overflow:hidden; }
+.bg-video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:0; transition:opacity 1.4s ease; }
+.bg-video.playing{ opacity:.42; }
+.bg-veil{ position:absolute; inset:0; z-index:1; background:radial-gradient(circle at 50% 45%, rgba(14,4,6,.5), rgba(14,4,6,.9)); }
+.has-bgv > .wrap{ position:relative; z-index:2; }
+
+/* ---------- Spiral flower intro ---------- */
+.spiral{ position:fixed; inset:0; z-index:2800; display:none; align-items:center; justify-content:center; overflow:hidden;
+  background:radial-gradient(circle at 50% 45%, #2a0a12 0%, var(--bg) 75%); }
+.spiral.run{ display:flex; }
+.spiral.out{ opacity:0; transition:opacity .9s ease; pointer-events:none; }
+.spiral__stage{ position:relative; width:1px; height:1px; }
+.spiral .bloom-flower{ position:absolute; transform:translate(-50%,-50%); filter:drop-shadow(0 6px 16px rgba(201,24,74,.35)); }
+
+/* ---------- To be continued / save ---------- */
+.tobe{ text-align:center; padding:clamp(5rem,12vh,9rem) 0 0; }
+.tobe__line{ font-family:'Fraunces',serif; font-style:italic; font-size:clamp(1.6rem,6vw,3.2rem); color:var(--gold); }
+.tobe__dots span{ animation:dots 1.6s infinite; }
+.tobe__dots span:nth-child(2){ animation-delay:.25s; } .tobe__dots span:nth-child(3){ animation-delay:.5s; }
+@keyframes dots{ 0%,100%{opacity:.2;} 50%{opacity:1;} }
+.tobe__sub{ color:var(--muted); max-width:440px; margin:1.4rem auto 2rem; font-weight:300; line-height:1.7; }
+.tobe__save{ background:transparent; color:var(--gold); border:1px solid rgba(231,195,107,.5); padding:.9rem 2rem; border-radius:100px;
+  font-family:'Jost',sans-serif; cursor:pointer; font-size:.9rem; letter-spacing:.04em; transition:all .3s ease; }
+.tobe__save:hover{ background:var(--gold); color:#2a0a12; }
+.tobe__hint{ margin:1.2rem auto 0; max-width:380px; font-size:.72rem; letter-spacing:.06em; color:var(--muted); line-height:1.6; display:none; }
+.tobe__hint.show{ display:block; }
+.tobe__saved{ margin-top:1rem; color:var(--gold); font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.2rem; display:none; }
+.tobe__saved.show{ display:block; }
+
 /* ---------- Lock screen (countdown) ---------- */
 .lock{ position:fixed; inset:0; z-index:6000; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:2rem;
   background:radial-gradient(circle at 50% 38%, #2a0a12 0%, var(--bg) 72%); }
@@ -395,6 +425,9 @@ footer{ text-align:center; padding:3rem 1.5rem 4rem; font-size:.72rem; letter-sp
   </div>
 </div>
 
+<!-- Spiral flower intro transition -->
+<div class="spiral" id="spiral"><div class="spiral__stage" id="spiralStage"></div></div>
+
 <main id="main">
   <!-- Hero -->
   <section class="hero">
@@ -412,12 +445,16 @@ footer{ text-align:center; padding:3rem 1.5rem 4rem; font-size:.72rem; letter-sp
   </section>
 
   <!-- Manifesto -->
-  <section class="manifesto">
+  <section class="manifesto has-bgv">
+    <video class="bg-video" data-bgv muted loop playsinline preload="none" src="media/v1.mp4"></video>
+    <div class="bg-veil"></div>
     <div class="wrap"><p id="manifesto">Some people you meet and simply know your days will never look the same.</p></div>
   </section>
 
   <!-- Counter -->
-  <section class="section counter">
+  <section class="section counter has-bgv">
+    <video class="bg-video" data-bgv muted loop playsinline preload="none" src="media/v2.mp4"></video>
+    <div class="bg-veil"></div>
     <div class="wrap">
       <span class="eyebrow" data-anim="fade">Measured in us</span>
       <div class="ledger">
@@ -488,7 +525,9 @@ footer{ text-align:center; padding:3rem 1.5rem 4rem; font-size:.72rem; letter-sp
   </section>
 
   <!-- Letter -->
-  <section class="section letter">
+  <section class="section letter has-bgv">
+    <video class="bg-video" data-bgv muted loop playsinline preload="none" src="media/v3.mp4"></video>
+    <div class="bg-veil"></div>
     <div class="wrap">
       <span class="eyebrow" data-anim="fade">In my words</span>
       <h2 data-anim="up">Hold to open my letter</h2>
@@ -502,7 +541,9 @@ footer{ text-align:center; padding:3rem 1.5rem 4rem; font-size:.72rem; letter-sp
   </section>
 
   <!-- Proposal -->
-  <section class="section proposal">
+  <section class="section proposal has-bgv">
+    <video class="bg-video" data-bgv muted loop playsinline preload="none" src="media/v4.mp4"></video>
+    <div class="bg-veil"></div>
     <div class="wrap">
       <h2 data-anim="up">One more month?</h2>
       <div class="proposal__btns" id="propBtns">
@@ -514,11 +555,21 @@ footer{ text-align:center; padding:3rem 1.5rem 4rem; font-size:.72rem; letter-sp
   </section>
 
   <!-- Finale -->
-  <section class="finale">
+  <section class="finale has-bgv">
+    <video class="bg-video" data-bgv muted loop playsinline preload="none" src="media/v5.mp4"></video>
+    <div class="bg-veil"></div>
     <div class="wrap">
       <div class="bouquet" id="bouquet" aria-hidden="true"><svg class="bq-stems" id="bqStems" viewBox="0 0 100 100" preserveAspectRatio="none"></svg><span class="bq-knot"></span></div>
       <h2 data-anim="up">To many<br>more, <em>my love</em></h2>
       <p data-anim="fade">This was only the first month. I can't wait for every one that follows — all of them with you.</p>
+
+      <div class="tobe">
+        <p class="tobe__line" data-anim="up">To be continued<span class="tobe__dots"><span>.</span><span>.</span><span>.</span></span></p>
+        <p class="tobe__sub" data-anim="fade">Keep this page close, my love. This was only chapter one — more surprises are already on their way. 💛</p>
+        <button class="tobe__save" id="saveBtn" data-cursor>💾 Save this page</button>
+        <p class="tobe__hint" id="saveHint">On iPhone: tap Share → “Add to Home Screen”. On Android: menu (⋮) → “Add to Home screen”. Or simply bookmark it. 💛</p>
+        <p class="tobe__saved" id="savedMsg">Saved. I'll see you here again soon. 💛</p>
+      </div>
     </div>
   </section>
 </main>
@@ -673,7 +724,7 @@ const hcards=[...track.children];
 const vidsGrid=document.getElementById('vidsGrid');
 media.filter(m=>m.type==='video').forEach(m=>{
   const c=document.createElement('div'); c.className='vcard';
-  c.innerHTML='<video src="'+m.src+'" controls playsinline preload="metadata"></video>';
+  c.innerHTML='<video src="'+m.src+'" controls muted playsinline preload="metadata"></video>';
   vidsGrid.appendChild(c);
 });
 
@@ -689,7 +740,7 @@ CONFIG.reasons.forEach((r,i)=>{
 const lb=document.getElementById('lb'),lbMedia=document.getElementById('lbMedia'),lbCap=document.getElementById('lbCap');
 let cur=0;
 function renderLB(){ const m=media[cur];
-  lbMedia.innerHTML=m.type==='img'?'<img src="'+m.src+'" alt="">':'<video src="'+m.src+'" controls autoplay playsinline></video>';
+  lbMedia.innerHTML=m.type==='img'?'<img src="'+m.src+'" alt="">':'<video src="'+m.src+'" controls autoplay muted playsinline></video>';
   lbCap.textContent=(cur+1)+' / '+media.length;
 }
 function openLB(i){ cur=i; renderLB(); lb.classList.add('open'); if(window.lenis) lenis.stop(); }
@@ -868,6 +919,45 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches && !RM){
       el.style.transform='translate('+((e.clientX-r.left-r.width/2)*.3)+'px,'+((e.clientY-r.top-r.height/2)*.4)+'px)'; });
     el.addEventListener('mouseleave',()=>{ el.style.transform=''; });
   });
+}
+
+/* ---------- Background videos: play only when in view (muted) ---------- */
+if(!RM){
+  const bio=new IntersectionObserver(es=>es.forEach(e=>{ const v=e.target;
+    if(e.isIntersecting){ v.muted=true; const pr=v.play(); if(pr&&pr.catch) pr.catch(()=>{}); v.classList.add('playing'); }
+    else { v.pause(); v.classList.remove('playing'); } }),{threshold:0.15});
+  document.querySelectorAll('[data-bgv]').forEach(v=>{ v.muted=true; bio.observe(v); });
+} else {
+  document.querySelectorAll('[data-bgv]').forEach(v=>v.remove());
+}
+
+/* ---------- Spiral flower intro ---------- */
+function playSpiral(cb){
+  const spiral=document.getElementById('spiral'), stage=document.getElementById('spiralStage');
+  if(RM || !spiral || !stage){ if(cb) cb(); return; }
+  stage.innerHTML='';
+  const N=26, maxR=Math.min(innerWidth,innerHeight)*0.42, flowers=[];
+  for(let i=0;i<N;i++){ const ang=i*2.39996323, r=maxR*Math.sqrt(i/(N-1));
+    const fl=makeFlower(FLOWERS[i%FLOWERS.length]); const sz=24+(i/N)*48;
+    fl.style.width=sz+'px'; fl.style.height=sz+'px';
+    fl.style.left=(Math.cos(ang)*r)+'px'; fl.style.top=(Math.sin(ang)*r)+'px';
+    stage.appendChild(fl); flowers.push(fl);
+  }
+  spiral.classList.add('run');
+  flowers.forEach((fl,i)=>setTimeout(()=>fl.classList.add('bloomed'), i*45));
+  const total=N*45+950;
+  setTimeout(()=>spiral.classList.add('out'), total);
+  setTimeout(()=>{ spiral.classList.remove('run','out'); stage.innerHTML=''; }, total+1000);
+}
+
+/* ---------- Save this page ---------- */
+const saveBtn=document.getElementById('saveBtn');
+if(saveBtn){
+  const saveHint=document.getElementById('saveHint'), savedMsg=document.getElementById('savedMsg');
+  try{ if(localStorage.getItem('ks_saved')) savedMsg.classList.add('show'); }catch(_){}
+  saveBtn.addEventListener('click',e=>{ saveHint.classList.add('show'); savedMsg.classList.add('show');
+    try{ localStorage.setItem('ks_saved','1'); }catch(_){}
+    burst(e.clientX,e.clientY,22); confetti(70); });
 }
 
 /* ---------- burst + confetti ---------- */
@@ -1088,6 +1178,7 @@ const gate=document.getElementById('gate'),gateBtn=document.getElementById('gate
 gateBtn.addEventListener('click',()=>{
   const r=gateBtn.getBoundingClientRect(); burst(r.left+r.width/2,r.top+r.height/2,26);
   gate.classList.add('hide'); gateOpen=true; npBtn.classList.add('show'); playMusic();
+  playSpiral();
   if(window.lenis) lenis.start();
   setTimeout(()=>{ gate.style.display='none'; if(window.ScrollTrigger) ScrollTrigger.refresh(); },1000);
 });
