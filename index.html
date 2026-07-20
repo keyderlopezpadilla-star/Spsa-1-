@@ -8,7 +8,7 @@
 <title>K &amp; S — Our First Month</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Dancing+Script:wght@500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{ margin:0; padding:0; box-sizing:border-box; }
 :root{
@@ -55,8 +55,18 @@ a{ color:var(--gold); text-decoration:none; }
   animation:grain 6s steps(6) infinite; }
 @keyframes grain{ 0%{transform:translate(0,0);} 100%{transform:translate(-8%,6%);} }
 .ambient{ position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
-.petal{ position:absolute; top:-8%; will-change:transform; animation:fall linear forwards; opacity:0; }
-@keyframes fall{ 0%{transform:translateY(-10vh) rotate(0);opacity:0;} 10%{opacity:.4;} 90%{opacity:.25;} 100%{transform:translateY(112vh) translateX(var(--drift)) rotate(540deg);opacity:0;} }
+.petal{ position:absolute; top:-8%; width:15px; height:15px; border-radius:0 100% 0 100%; will-change:transform,opacity;
+  background:radial-gradient(circle at 30% 25%, rgba(255,255,255,.9), var(--pc,#ff8fa3) 62%, var(--pc2,#ff5c7c));
+  box-shadow:0 1px 3px rgba(120,20,45,.22); animation:flutter linear forwards; opacity:0; }
+@keyframes flutter{
+  0%{ transform:translateY(-12vh) translateX(0) rotateZ(0deg) rotateX(0deg); opacity:0; }
+  8%{ opacity:.9; }
+  100%{ transform:translateY(114vh) translateX(var(--drift)) rotateZ(var(--rz,540deg)) rotateX(1080deg); opacity:.12; } }
+/* Interactive petal trail (desktop) */
+.trail{ position:fixed; z-index:3900; width:12px; height:12px; border-radius:0 100% 0 100%; pointer-events:none;
+  background:radial-gradient(circle at 30% 25%, rgba(255,255,255,.9), var(--pc,#ffb3c6) 70%); animation:trail 1.1s ease-out forwards; }
+@keyframes trail{ 0%{opacity:.9; transform:translate(-50%,-50%) scale(1) rotate(0);} 100%{opacity:0; transform:translate(-50%,26px) scale(.35) rotate(140deg);} }
+@media (hover:none),(pointer:coarse){ .trail{ display:none; } }
 
 /* ---------- Gate ---------- */
 .gate{ position:fixed; inset:0; z-index:3000; display:flex; align-items:center; justify-content:center; text-align:center; padding:2rem;
@@ -220,6 +230,44 @@ main{ position:relative; z-index:2; }
 .np-btn.show{ display:flex; transform:scale(1); }
 .np-btn.playing{ animation:spin 6s linear infinite; }
 @keyframes spin{ to{ transform:rotate(360deg); } }
+
+/* ---------- Hidden love letter (antique burnt parchment) ---------- */
+.svgdefs{ position:absolute; width:0; height:0; overflow:hidden; }
+.loveletter{ position:fixed; inset:0; z-index:4500; display:none; align-items:center; justify-content:center; padding:clamp(1rem,4vw,3rem);
+  background:radial-gradient(circle at 50% 34%, rgba(52,20,10,.94), rgba(6,2,3,.985)); }
+.loveletter.open{ display:flex; }
+.ll__petals{ position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+.scroll{ position:relative; width:min(720px,94vw); max-height:88vh; opacity:0; transform:scale(.82) rotate(-3deg); }
+.scroll.in{ opacity:1; transform:scale(1) rotate(0deg); transition:opacity 1.1s ease, transform 1.2s cubic-bezier(.2,.9,.2,1); }
+.scroll__char,.scroll__bg{ position:absolute; inset:0; border-radius:10px; filter:url(#burntedge); }
+.scroll__char{ inset:-16px; background:#22110a; filter:url(#burntedge) blur(4px); opacity:.92; }
+.scroll__bg{ background:
+    radial-gradient(ellipse at 14% 8%, rgba(120,72,30,.20), transparent 55%),
+    radial-gradient(ellipse at 86% 92%, rgba(120,72,30,.22), transparent 50%),
+    radial-gradient(ellipse at 72% 18%, rgba(150,100,40,.12), transparent 45%),
+    linear-gradient(175deg, #f6e8ca, #eeddb4 55%, #e4cd9c);
+  box-shadow: inset 0 0 50px rgba(90,45,12,.42), inset 0 0 140px rgba(120,66,22,.3); }
+.scroll__glow{ position:absolute; inset:-16px; border-radius:16px; pointer-events:none; animation:ember 3.6s ease-in-out infinite; }
+@keyframes ember{ 0%,100%{ box-shadow:0 0 34px rgba(214,120,40,.28), 0 0 80px rgba(180,60,20,.16); } 50%{ box-shadow:0 0 54px rgba(232,142,52,.5), 0 0 120px rgba(200,70,25,.28); } }
+.scroll__flower{ position:absolute; z-index:3; font-size:2.1rem; filter:drop-shadow(0 4px 8px rgba(0,0,0,.35)); animation:sway 5s ease-in-out infinite; }
+.scroll__flower.tl{ top:-16px; left:-8px; transform:rotate(-22deg); }
+.scroll__flower.tr{ top:-14px; right:-6px; transform:rotate(28deg); }
+.scroll__flower.bl{ bottom:-16px; left:-6px; transform:rotate(-150deg); }
+.scroll__flower.br{ bottom:-16px; right:-8px; transform:rotate(150deg); }
+@keyframes sway{ 0%,100%{ transform:translateY(0) rotate(var(--r,0deg)); } 50%{ transform:translateY(-6px) rotate(calc(var(--r,0deg) + 6deg)); } }
+.scroll__content{ position:relative; z-index:2; overflow-y:auto; max-height:88vh; padding:clamp(1.9rem,5vw,3.6rem) clamp(1.6rem,5vw,3.4rem); }
+.scroll__content::-webkit-scrollbar{ width:7px; }
+.scroll__content::-webkit-scrollbar-thumb{ background:rgba(120,66,22,.45); border-radius:8px; }
+.ll-lang{ display:flex; justify-content:center; gap:.4rem; margin-bottom:1.4rem; }
+.ll-lang button{ background:transparent; border:1px solid rgba(122,46,30,.4); color:#7a2e1e; padding:.32rem .95rem; border-radius:100px;
+  font-family:'Jost',sans-serif; font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; cursor:pointer; transition:all .25s ease; }
+.ll-lang button.on{ background:#7a2e1e; color:#f6e8ca; }
+.scroll__name{ font-family:'Dancing Script',cursive; font-weight:700; font-size:clamp(2.8rem,10vw,4.6rem); color:#7a2e1e; text-align:center; line-height:1; }
+.scroll__deco{ text-align:center; color:#a5643a; letter-spacing:.5em; font-size:.7rem; margin:.3rem 0 1.7rem; }
+.scroll__text{ font-family:'Cormorant Garamond',serif; font-size:clamp(1.06rem,2.9vw,1.28rem); line-height:1.92; color:#42291a; white-space:pre-line; }
+.scroll__sign{ font-family:'Dancing Script',cursive; font-weight:600; font-size:clamp(1.6rem,5vw,2.2rem); color:#7a2e1e; text-align:right; margin-top:1.5rem; }
+.ll-close{ position:absolute; top:clamp(1rem,4vw,2.4rem); right:clamp(1rem,4vw,2.4rem); z-index:6; width:46px; height:46px; border-radius:50%;
+  border:1px solid rgba(231,195,107,.5); background:rgba(20,7,10,.55); backdrop-filter:blur(6px); color:var(--gold); cursor:pointer; font-size:1.1rem; }
 
 /* ---------- Lock screen (countdown) ---------- */
 .lock{ position:fixed; inset:0; z-index:6000; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:2rem;
@@ -391,7 +439,7 @@ footer{ text-align:center; padding:3rem 1.5rem 4rem; font-size:.72rem; letter-sp
         <button class="btn-yes" id="btnYes" data-cursor>Yes — always</button>
         <button class="btn-no" id="btnNo">Not yet</button>
       </div>
-      <p class="proposal__yes" id="yesMsg">I already knew. I'm all yours. 💛</p>
+      <p class="proposal__yes" id="yesMsg">I already knew. I'm all yours. 💛 &nbsp;·&nbsp; <span style="font-size:.7em;letter-spacing:.2em;text-transform:uppercase;">tap to read my letter</span></p>
     </div>
   </section>
 
@@ -405,6 +453,39 @@ footer{ text-align:center; padding:3rem 1.5rem 4rem; font-size:.72rem; letter-sp
 </main>
 
 <footer>K &amp; S · Made with love · Music: <a href="https://www.youtube.com/watch?v=GxldQ9eX2wo" target="_blank" rel="noopener">Until I Found You — Stephen Sanchez</a></footer>
+
+<!-- SVG filter for burnt paper edges -->
+<svg class="svgdefs" aria-hidden="true"><defs>
+  <filter id="burntedge">
+    <feTurbulence type="fractalNoise" baseFrequency="0.012 0.016" numOctaves="3" seed="8" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="17" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</defs></svg>
+
+<!-- Hidden love letter (revealed on "Yes") -->
+<div class="loveletter" id="loveletter">
+  <div class="ll__petals" id="llPetals"></div>
+  <button class="ll-close" id="llClose" aria-label="Close">✕</button>
+  <div class="scroll" id="llScroll">
+    <div class="scroll__char"></div>
+    <div class="scroll__bg"></div>
+    <div class="scroll__glow"></div>
+    <span class="scroll__flower tl" style="--r:-22deg">🌹</span>
+    <span class="scroll__flower tr" style="--r:28deg">🌸</span>
+    <span class="scroll__flower bl" style="--r:-150deg">🌸</span>
+    <span class="scroll__flower br" style="--r:150deg">🌹</span>
+    <div class="scroll__content">
+      <div class="ll-lang">
+        <button id="llEn" class="on">English</button>
+        <button id="llEs">Español</button>
+      </div>
+      <div class="scroll__name">Samanta</div>
+      <div class="scroll__deco">✦ &nbsp; ❦ &nbsp; ✦</div>
+      <p class="scroll__text" id="llText"></p>
+      <div class="scroll__sign" id="llSign"></div>
+    </div>
+  </div>
+</div>
 
 <!-- Lightbox -->
 <div class="lb" id="lb">
@@ -552,14 +633,23 @@ function tick(){ let d=Date.now()-start; if(d<0)d=0;
 }
 tick(); setInterval(tick,1000);
 
-/* ---------- Petals ---------- */
+/* ---------- Rose petals ---------- */
 const ambient=document.getElementById('ambient');
-const petals=['🌸','🤍','✨','❦'];
-function petal(){ const p=document.createElement('span'); p.className='petal'; p.textContent=petals[Math.random()*petals.length|0];
-  p.style.left=Math.random()*100+'%'; p.style.fontSize=(.7+Math.random()*1.2)+'rem'; p.style.color=Math.random()>.5?'#E7C36B':'#FF8FA3';
-  p.style.setProperty('--drift',(Math.random()*120-60)+'px'); p.style.animationDuration=(9+Math.random()*8)+'s';
-  ambient.appendChild(p); setTimeout(()=>p.remove(),18000); }
-setInterval(petal,1400);
+const PC=[['#ffd0da','#ff8fa3'],['#ffb3c6','#ff5c7c'],['#f7d9a0','#e7c36b'],['#ff9db0','#c9184a'],['#ffffff','#ffc2cf']];
+function makePetal(container,dur){
+  const p=document.createElement('span'); p.className='petal';
+  const c=PC[Math.random()*PC.length|0];
+  p.style.setProperty('--pc',c[0]); p.style.setProperty('--pc2',c[1]);
+  const s=10+Math.random()*12; p.style.width=s+'px'; p.style.height=s+'px';
+  p.style.left=Math.random()*100+'%';
+  p.style.setProperty('--drift',(Math.random()*180-90)+'px');
+  p.style.setProperty('--rz',(360+Math.random()*540)+'deg');
+  const d=dur||(8+Math.random()*7); p.style.animationDuration=d+'s';
+  container.appendChild(p); setTimeout(()=>p.remove(),d*1000+400);
+}
+function petal(){ makePetal(ambient); }
+for(let i=0;i<8;i++) setTimeout(()=>makePetal(ambient),i*260);
+setInterval(petal,850);
 
 /* ---------- burst + confetti ---------- */
 function burst(x,y,n){ const e=['💛','❤️','💕','✨','💗']; for(let i=0;i<n;i++){ const h=document.createElement('span'); h.className='burst';
@@ -590,7 +680,73 @@ let noI=0;
 function dodge(){ noI++; btnNo.textContent=noTxt[Math.min(noI,noTxt.length-1)]; btnNo.style.transform='translate('+(Math.random()*260-130)+'px,'+(Math.random()*120-60)+'px)';
   const s=parseFloat(getComputedStyle(btnYes).fontSize); btnYes.style.fontSize=Math.min(s*1.06,34)+'px'; }
 btnNo.addEventListener('mouseenter',dodge); btnNo.addEventListener('click',e=>{e.preventDefault();dodge();});
-btnYes.addEventListener('click',e=>{ burst(e.clientX,e.clientY,30); confetti(90); btnNo.style.display='none'; yesMsg.style.display='block'; });
+btnYes.addEventListener('click',e=>{
+  burst(e.clientX,e.clientY,34); confetti(110);
+  btnNo.style.display='none'; yesMsg.style.display='block';
+  setTimeout(openLoveLetter, 900);
+});
+
+/* ---------- Hidden love letter (antique parchment) ---------- */
+const LETTER = {
+  en:{
+    body:
+`Honestly, I'm not usually the best at expressing my feelings. I'm not perfect and I'm full of flaws, but I try to get better every single day. I don't want you to think I'm a loser, and of course I want you to know just how much I love you.
+
+And here's something I'm a little obsessed about: you are the most beautiful girl I've ever seen. I know I've told you this many times, but when I say it I'm not just saying it — I say it because I truly feel it.
+
+These last months getting to know you, and this incredible month with you as my girlfriend, have without a doubt been the best month of my life. I hadn't been this happy with someone for so long. Since I've been with you I get the most beautiful sunrises (well... we always wake up at 12:00 pm or later, but they're sunrises, you know...). The best part of waking up is seeing you here, asleep in my arms; I just watch you and wonder what great joke I told to end up with such a gorgeous girl.
+
+I feel so lucky to have met you, and lucky for the way our chance came to be. I still remember your first smile and what caused it — even what I said after the first "hello, how are you": it was a "my english is so bad" hahaha. That's where I always get lost thinking about how we made it this far: the odds were almost 0%. First, countries very, very far apart (this feels like a fairy tale hahaha); second, totally different languages, customs, almost everything so different. I'll stop wondering whether it was a coincidence — if it was, it's the best thing that's ever happened to me. I've realized love follows no rules: no borders, no distance, no language. It's just a beautiful, powerful feeling that built what we have — and with its help, I made you my girlfriend.
+
+The first day we met was literally my first day meeting a girl in Spain, something totally new for me. I was very, very nervous ._. I thought: "she's so pretty, maybe this is a trap to kidnap me," I don't know — but within 40 minutes I started feeling comfortable next to you, and I began to notice everything. I fell completely in love with your eyes from day one; your straight hair, your expressions, your smile, your scent — whatever perfume you wore that day drove me crazy for almost two months.
+
+Then there's the night on the swing. That was the most beautiful night in the world, I'll never forget it. You and me there, in a comfortable silence, barely talking... I can't find words for what I felt that night; the feeling is too strong. We stayed there for hours. I just wanted to be the first to wish you a happy birthday, and I did — that makes me so happy :). Maybe for you it's normal, but for me it meant everything. Since that night I was sure of what I wanted.
+
+If you've read this far, you must be bored, I know, because I'm boring... but it's okay, you know.`,
+    sign:"Yours, with all my heart. 💛"
+  },
+  es:{
+    body:
+`La verdad, no suelo ser el mejor expresando mis sentimientos. No soy perfecto y estoy lleno de errores, pero intento mejorar cada día más y más. No quiero que pienses que soy un perdedor, y obviamente quiero que sepas cuánto te amo.
+
+Y algo obsesionado de ti: eres la chica más guapa que he visto. Sé que te lo he dicho muchas veces, pero cuando lo digo no lo hago por hacerlo, lo hago porque de verdad lo siento.
+
+Estos últimos meses conociéndote, y este increíble mes que te tengo como mi novia, han sido sin duda el mejor mes que he vivido. No había estado feliz tanto tiempo con alguien. Desde que estoy contigo tengo los amaneceres más lindos (bueno... siempre nos despertamos a las 12:00 pm o más tarde, pero son amaneceres, tú sabes...). Lo mejor de despertar es ver que estás aquí, dormida en mis brazos; yo solo te observo y pienso qué chiste tan bueno conté para tener a una chica tan preciosa.
+
+Me siento tan afortunado de haberte conocido y de cómo se nos dio la oportunidad. Aún recuerdo tu primera sonrisa y lo que la causó — incluso lo que dije después del primer "hello, how are you": fue un "my english is so bad" hahaha. Ahí es donde casi siempre me quedo pensando en cómo llegamos tan lejos: las probabilidades eran casi 0%. Primero, países muy pero muy lejanos (esto parece un cuento de hadas hahaha); segundo, idiomas totalmente diferentes, costumbres y casi todo muy distinto. Ya dejaré de pensar si fue casualidad o no; si así fue, fue lo mejor que me ha pasado. Me he dado cuenta de que el amor no sigue reglas: no tiene fronteras, ni distancia, ni idioma. Es solo un sentimiento muy lindo y muy fuerte que ha formado nuestra relación, y con su ayuda te hice mi novia.
+
+El primer día que nos conocimos fue exactamente mi primer día conociendo a la primera chica en España, algo totalmente nuevo para mí. Estaba muy, muy nervioso ._. Pensé: "ella es muy guapa, quizá esto es una trampa para secuestrarme", no lo sé, pero a los 40 minutos máximo empecé a sentirme cómodo a tu lado y empecé a observar más. Quedé totalmente enamorado de tus ojos desde el primer día; tu cabello liso, tus expresiones, tu sonrisa, tu olor — no sé qué perfume usaste ese día que me dejó loco por casi dos meses.
+
+Luego está la noche en el columpio. Esa fue la noche más linda del mundo, jamás la olvidaré. Tú y yo allí, en un silencio cómodo, sin hablar mucho... No encuentro las palabras para describir lo que sentí esa noche; el sentimiento es demasiado fuerte. Estuvimos allí por horas. Yo solo quería ser el primero en desearte un feliz cumpleaños, y lo hice — eso me hace tan feliz :). Quizá para ti sea normal, pero para mí fue muy importante. Desde esa noche estaba seguro de lo que quería.
+
+Si has leído hasta este punto, debes estar aburrida, lo sé, porque soy aburrido... pero it's okay, you know.`,
+    sign:"Tuyo, con todo mi corazón. 💛"
+  }
+};
+const loveletter=document.getElementById('loveletter'),llScroll=document.getElementById('llScroll'),
+      llText=document.getElementById('llText'),llSign=document.getElementById('llSign'),
+      llEn=document.getElementById('llEn'),llEs=document.getElementById('llEs'),
+      llClose=document.getElementById('llClose'),llPetals=document.getElementById('llPetals');
+let llLangSet=false;
+function setLang(l){ llText.textContent=LETTER[l].body; llSign.textContent=LETTER[l].sign;
+  llEn.classList.toggle('on',l==='en'); llEs.classList.toggle('on',l==='es'); }
+llEn.addEventListener('click',()=>setLang('en'));
+llEs.addEventListener('click',()=>setLang('es'));
+let llPetalTimer=null;
+function openLoveLetter(){
+  if(!llLangSet){ setLang('en'); llLangSet=true; }
+  loveletter.classList.add('open');
+  if(window.lenis) lenis.stop();
+  setTimeout(()=>llScroll.classList.add('in'),60);
+  if(!llPetalTimer) llPetalTimer=setInterval(()=>makePetal(llPetals,7+Math.random()*5),420);
+}
+function closeLoveLetter(){ loveletter.classList.remove('open'); llScroll.classList.remove('in');
+  if(llPetalTimer){ clearInterval(llPetalTimer); llPetalTimer=null; }
+  if(window.lenis && gateOpen) lenis.start(); }
+llClose.addEventListener('click',closeLoveLetter);
+loveletter.addEventListener('click',e=>{ if(e.target===loveletter) closeLoveLetter(); });
+yesMsg.style.cursor='pointer'; yesMsg.title='Open the letter again';
+yesMsg.addEventListener('click',openLoveLetter);
 
 /* ---------- Music (official YouTube audio, tiny button) ---------- */
 let yt=null,ytReady=false,wantPlay=false; const npBtn=document.getElementById('npBtn');
@@ -604,7 +760,11 @@ npBtn.addEventListener('click',()=>{ if(!ytReady)return; yt.getPlayerState()===Y
 /* ---------- Custom cursor ---------- */
 const cur1=document.getElementById('cur'),curDot=document.getElementById('curDot');
 let mx=innerWidth/2,my=innerHeight/2,cx=mx,cy=my;
-addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; curDot.style.transform='translate('+mx+'px,'+my+'px) translate(-50%,-50%)'; });
+let lastTrail=0;
+addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; curDot.style.transform='translate('+mx+'px,'+my+'px) translate(-50%,-50%)';
+  const now=Date.now(); if(now-lastTrail>55){ lastTrail=now; const t=document.createElement('span'); t.className='trail';
+    const c=PC[Math.random()*PC.length|0]; t.style.setProperty('--pc',c[0]); t.style.left=mx+'px'; t.style.top=my+'px';
+    document.body.appendChild(t); setTimeout(()=>t.remove(),1100); } });
 (function curLoop(){ cx+=(mx-cx)*.18; cy+=(my-cy)*.18; cur1.style.transform='translate('+cx+'px,'+cy+'px) translate(-50%,-50%)'; requestAnimationFrame(curLoop); })();
 document.addEventListener('mouseover',e=>{ if(e.target.closest('[data-cursor],a,button,.hcard,.rcard,.vcard')) cur1.classList.add('grow'); });
 document.addEventListener('mouseout',e=>{ if(e.target.closest('[data-cursor],a,button,.hcard,.rcard,.vcard')) cur1.classList.remove('grow'); });
