@@ -68,6 +68,32 @@ a{ color:var(--gold); text-decoration:none; }
 @keyframes trail{ 0%{opacity:.9; transform:translate(-50%,-50%) scale(1) rotate(0);} 100%{opacity:0; transform:translate(-50%,26px) scale(.35) rotate(140deg);} }
 @media (hover:none),(pointer:coarse){ .trail{ display:none; } }
 
+/* ---------- Gold dust (ambient particles) ---------- */
+.dust{ position:fixed; inset:0; z-index:0; pointer-events:none; }
+
+/* ---------- Blooming flowers (SVG) ---------- */
+.bloom-flower{ display:inline-block; line-height:0; }
+.bloom-flower svg{ width:100%; height:100%; overflow:visible; display:block; }
+.bloom-flower .pb{ transform:scale(0); transform-box:fill-box; transform-origin:50% 100%; transition:transform 1.1s cubic-bezier(.18,.9,.28,1); }
+.bloom-flower.bloomed .pb{ transform:scale(1); }
+.bloom-flower .cr{ transform:scale(0); transform-box:fill-box; transform-origin:50% 50%; transition:transform .6s ease .5s; }
+.bloom-flower.bloomed .cr{ transform:scale(1); }
+.bloom-row{ display:flex; justify-content:center; align-items:flex-end; gap:clamp(1rem,5vw,3rem); margin-top:3.4rem; }
+.bloom-row .bloom-flower{ width:clamp(44px,9vw,80px); height:clamp(44px,9vw,80px); filter:drop-shadow(0 6px 14px rgba(201,24,74,.2)); }
+
+/* ---------- Finale bouquet (progressive assembly) ---------- */
+.bouquet{ position:relative; width:min(500px,86vw); aspect-ratio:1 / .82; margin:0 auto 2.4rem; }
+.bq-stems{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+.bq-stems path{ fill:none; stroke:rgba(150,138,86,.5); stroke-width:1.1; stroke-linecap:round;
+  stroke-dasharray:130; stroke-dashoffset:130; transition:stroke-dashoffset 1.2s ease; }
+.bouquet.bloomed .bq-stems path{ stroke-dashoffset:0; }
+.bouquet .bloom-flower{ position:absolute; width:clamp(50px,15%,88px); aspect-ratio:1; transform:translate(-50%,-50%);
+  filter:drop-shadow(0 8px 18px rgba(0,0,0,.35)); }
+.bq-knot{ position:absolute; left:50%; bottom:-1%; width:22px; height:22px; margin-left:-11px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, var(--gold-soft), var(--gold)); box-shadow:0 4px 12px rgba(0,0,0,.4);
+  opacity:0; transition:opacity .6s ease .3s; }
+.bouquet.bloomed .bq-knot{ opacity:1; }
+
 /* ---------- Gate ---------- */
 .gate{ position:fixed; inset:0; z-index:3000; display:flex; align-items:center; justify-content:center; text-align:center; padding:2rem;
   background:radial-gradient(circle at 50% 40%, #2a0a12 0%, var(--bg) 70%); }
@@ -303,6 +329,7 @@ footer{ text-align:center; padding:3rem 1.5rem 4rem; font-size:.72rem; letter-sp
 <div class="cursor" id="cur"></div><div class="cursor-dot" id="curDot"></div>
 <div class="grain"></div>
 <div class="ambient" id="ambient"></div>
+<canvas class="dust" id="dust"></canvas>
 
 <!-- Lock screen: unlocks automatically on July 21 at 00:00 -->
 <div class="lock" id="lock">
@@ -375,6 +402,7 @@ footer{ text-align:center; padding:3rem 1.5rem 4rem; font-size:.72rem; letter-sp
         <div class="unit" data-anim="up"><b id="seconds">00</b><small>Seconds</small></div>
       </div>
       <p class="counter__note" data-anim="fade">and every one of them with you.</p>
+      <div class="bloom-row" id="bloomRow" aria-hidden="true"></div>
     </div>
   </section>
 
@@ -454,6 +482,7 @@ footer{ text-align:center; padding:3rem 1.5rem 4rem; font-size:.72rem; letter-sp
   <!-- Finale -->
   <section class="finale">
     <div class="wrap">
+      <div class="bouquet" id="bouquet" aria-hidden="true"><svg class="bq-stems" id="bqStems" viewBox="0 0 100 100" preserveAspectRatio="none"></svg><span class="bq-knot"></span></div>
       <h2 data-anim="up">To many<br>more, <em>my love</em></h2>
       <p data-anim="fade">This was only the first month. I can't wait for every one that follows — all of them with you.</p>
     </div>
@@ -542,6 +571,9 @@ This is only the beginning — and I couldn't be happier that it's you.
 Always yours. 🤍`
 };
 /* ========================================================= */
+
+/* ---------- reduced motion preference ---------- */
+const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ---------- media list ---------- */
 const media = [];
@@ -657,8 +689,62 @@ function makePetal(container,dur){
   container.appendChild(p); setTimeout(()=>p.remove(),d*1000+400);
 }
 function petal(){ makePetal(ambient); }
-for(let i=0;i<8;i++) setTimeout(()=>makePetal(ambient),i*260);
-setInterval(petal,850);
+if(!RM){ for(let i=0;i<8;i++) setTimeout(()=>makePetal(ambient),i*260); setInterval(petal,850); }
+
+/* ---------- Blooming flowers + bouquet + gold dust + magnetic ---------- */
+const FLOWERS=[
+  {p:'#f7c9d4',p2:'#f0aebf',c:'#e7c36b'},
+  {p:'#f4b8c6',p2:'#e89bb0',c:'#f2d98d'},
+  {p:'#f9d6c0',p2:'#efb191',c:'#d99a5b'},
+  {p:'#f2c1cf',p2:'#e6a0b4',c:'#e7c36b'}
+];
+function flowerSVG(f){
+  let g=''; const N=8;
+  for(let i=0;i<N;i++){ const a=i*(360/N);
+    g+='<g transform="rotate('+a+')"><ellipse class="pb" cx="0" cy="-18" rx="8.5" ry="18" fill="'+f.p+'" style="transition-delay:'+(i*0.04).toFixed(2)+'s"/></g>'; }
+  for(let i=0;i<N;i++){ const a=i*(360/N)+22.5;
+    g+='<g transform="rotate('+a+')"><ellipse class="pb" cx="0" cy="-11" rx="6" ry="11" fill="'+f.p2+'" style="transition-delay:'+(0.12+i*0.03).toFixed(2)+'s"/></g>'; }
+  return '<svg viewBox="-40 -42 80 82" aria-hidden="true">'+g+'<circle class="cr" r="7" fill="'+f.c+'"/></svg>';
+}
+function makeFlower(f,cls){ const s=document.createElement('span'); s.className='bloom-flower'+(cls?' '+cls:''); s.innerHTML=flowerSVG(f); return s; }
+
+const bloomRow=document.getElementById('bloomRow');
+if(bloomRow){ [0,1,2].forEach(i=>bloomRow.appendChild(makeFlower(FLOWERS[i%FLOWERS.length]))); }
+
+const bouquet=document.getElementById('bouquet'), bqStems=document.getElementById('bqStems');
+const bqPts=[{x:50,y:9},{x:33,y:16},{x:67,y:16},{x:20,y:30},{x:80,y:30},{x:10,y:47},{x:90,y:47}];
+if(bouquet && bqStems){
+  let paths='';
+  bqPts.forEach(pt=>{ const cx=(50+pt.x)/2+(pt.x<50?-6:6), cy=(96+pt.y)/2;
+    paths+='<path d="M50 97 Q'+cx.toFixed(1)+' '+cy.toFixed(1)+' '+pt.x+' '+pt.y+'"/>'; });
+  bqStems.innerHTML=paths;
+  bqPts.forEach((pt,i)=>{ const fl=makeFlower(FLOWERS[i%FLOWERS.length]); fl.style.left=pt.x+'%'; fl.style.top=pt.y+'%'; bouquet.appendChild(fl); });
+}
+function bloomBouquet(){ if(!bouquet) return; bouquet.classList.add('bloomed');
+  bouquet.querySelectorAll('.bloom-flower').forEach((fl,i)=>setTimeout(()=>fl.classList.add('bloomed'), 260+i*190)); }
+
+/* Gold dust particles */
+if(!RM){
+  const dust=document.getElementById('dust'), dctx=dust.getContext('2d'); let dW,dH;
+  function dResize(){ dW=dust.width=innerWidth; dH=dust.height=innerHeight; }
+  dResize(); addEventListener('resize',dResize);
+  const parts=[], N=Math.min(90,Math.floor(innerWidth/16));
+  for(let i=0;i<N;i++) parts.push({ x:Math.random()*dW, y:Math.random()*dH, r:.6+Math.random()*1.8, s:.12+Math.random()*.4, o:.12+Math.random()*.5, tw:Math.random()*6.28, dr:(Math.random()-.5)*.3 });
+  (function dLoop(){ dctx.clearRect(0,0,dW,dH);
+    for(const p of parts){ p.y-=p.s; p.x+=Math.sin(p.tw)*.2+p.dr; p.tw+=.01; if(p.y<-6){ p.y=dH+6; p.x=Math.random()*dW; }
+      const fl=.5+Math.sin(p.tw*2)*.5; dctx.beginPath(); dctx.arc(p.x,p.y,p.r,0,6.283);
+      dctx.fillStyle='rgba(231,195,107,'+(p.o*fl).toFixed(3)+')'; dctx.fill(); }
+    requestAnimationFrame(dLoop); })();
+}
+
+/* Magnetic buttons (desktop) */
+if(window.matchMedia('(hover:hover) and (pointer:fine)').matches && !RM){
+  document.querySelectorAll('.btn,.btn-yes').forEach(el=>{
+    el.addEventListener('mousemove',e=>{ const r=el.getBoundingClientRect();
+      el.style.transform='translate('+((e.clientX-r.left-r.width/2)*.3)+'px,'+((e.clientY-r.top-r.height/2)*.4)+'px)'; });
+    el.addEventListener('mouseleave',()=>{ el.style.transform=''; });
+  });
+}
 
 /* ---------- burst + confetti ---------- */
 function burst(x,y,n){ const e=['💛','❤️','💕','✨','💗']; for(let i=0;i<n;i++){ const h=document.createElement('span'); h.className='burst';
@@ -774,7 +860,7 @@ const cur1=document.getElementById('cur'),curDot=document.getElementById('curDot
 let mx=innerWidth/2,my=innerHeight/2,cx=mx,cy=my;
 let lastTrail=0;
 addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; curDot.style.transform='translate('+mx+'px,'+my+'px) translate(-50%,-50%)';
-  const now=Date.now(); if(now-lastTrail>55){ lastTrail=now; const t=document.createElement('span'); t.className='trail';
+  const now=Date.now(); if(!RM && now-lastTrail>55){ lastTrail=now; const t=document.createElement('span'); t.className='trail';
     const c=PC[Math.random()*PC.length|0]; t.style.setProperty('--pc',c[0]); t.style.left=mx+'px'; t.style.top=my+'px';
     document.body.appendChild(t); setTimeout(()=>t.remove(),1100); } });
 (function curLoop(){ cx+=(mx-cx)*.18; cy+=(my-cy)*.18; cur1.style.transform='translate('+cx+'px,'+cy+'px) translate(-50%,-50%)'; requestAnimationFrame(curLoop); })();
@@ -825,6 +911,12 @@ window.addEventListener('load',()=>{
       scrollTrigger:{ trigger:el, start:'top 90%' }, delay:(i%3)*.06 });
   });
 
+  /* Flowers bloom as they enter the viewport */
+  gsap.utils.toArray('.bloom-row .bloom-flower').forEach((el,i)=>{
+    ScrollTrigger.create({ trigger:'.bloom-row', start:'top 86%', once:true, onEnter:()=>setTimeout(()=>el.classList.add('bloomed'), i*170) });
+  });
+  ScrollTrigger.create({ trigger:'.finale', start:'top 72%', once:true, onEnter:bloomBouquet });
+
   /* ACT I — cinematic reel: pin + scrub through frames */
   ScrollTrigger.create({
     trigger:'#reel', start:'top top', end:'+='+(frameEls.length*55)+'%',
@@ -859,6 +951,7 @@ function basicReveal(){
   // Reel becomes a simple vertical set of frames
   frameEls.forEach(f=>{ f.style.position='relative'; f.style.opacity=1; f.style.height='60vh'; });
   document.getElementById('reelStage').style.height='auto';
+  document.querySelectorAll('.bloom-flower').forEach(el=>el.classList.add('bloomed')); bloomBouquet();
 }
 function buildManifesto(){
   const el=document.getElementById('manifesto'); const goldWords=['know','same'];
