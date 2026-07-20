@@ -237,7 +237,7 @@ main{ position:relative; z-index:2; }
   background:radial-gradient(circle at 50% 34%, rgba(52,20,10,.94), rgba(6,2,3,.985)); }
 .loveletter.open{ display:flex; }
 .ll__petals{ position:absolute; inset:0; overflow:hidden; pointer-events:none; }
-.scroll{ position:relative; width:min(720px,94vw); max-height:88vh; opacity:0; transform:scale(.82) rotate(-3deg); }
+.scroll{ position:relative; width:min(760px,94vw); max-height:90vh; opacity:0; transform:scale(.82) rotate(-3deg); }
 .scroll.in{ opacity:1; transform:scale(1) rotate(0deg); transition:opacity 1.1s ease, transform 1.2s cubic-bezier(.2,.9,.2,1); }
 .scroll__char,.scroll__bg{ position:absolute; inset:0; border-radius:10px; filter:url(#burntedge); }
 .scroll__char{ inset:-16px; background:#22110a; filter:url(#burntedge) blur(4px); opacity:.92; }
@@ -255,16 +255,24 @@ main{ position:relative; z-index:2; }
 .scroll__flower.bl{ bottom:-16px; left:-6px; transform:rotate(-150deg); }
 .scroll__flower.br{ bottom:-16px; right:-8px; transform:rotate(150deg); }
 @keyframes sway{ 0%,100%{ transform:translateY(0) rotate(var(--r,0deg)); } 50%{ transform:translateY(-6px) rotate(calc(var(--r,0deg) + 6deg)); } }
-.scroll__content{ position:relative; z-index:2; overflow-y:auto; max-height:88vh; padding:clamp(1.9rem,5vw,3.6rem) clamp(1.6rem,5vw,3.4rem); }
-.scroll__content::-webkit-scrollbar{ width:7px; }
-.scroll__content::-webkit-scrollbar-thumb{ background:rgba(120,66,22,.45); border-radius:8px; }
+.scroll__content{ position:relative; z-index:2; overflow-y:auto; max-height:90vh; -webkit-overflow-scrolling:touch; overscroll-behavior:contain;
+  padding:clamp(1.9rem,5vw,3.4rem) clamp(1.4rem,4.5vw,3rem) clamp(3rem,7vw,4rem); }
+.scroll__content::-webkit-scrollbar{ width:8px; }
+.scroll__content::-webkit-scrollbar-track{ background:rgba(120,66,22,.12); border-radius:8px; }
+.scroll__content::-webkit-scrollbar-thumb{ background:rgba(120,66,22,.5); border-radius:8px; }
+.scroll__hint{ position:absolute; left:0; right:0; bottom:8px; z-index:4; text-align:center; pointer-events:none;
+  font-family:'Jost',sans-serif; font-size:.66rem; letter-spacing:.28em; text-transform:uppercase; color:#7a2e1e;
+  padding:1.6rem 0 .5rem; background:linear-gradient(transparent, rgba(238,221,180,.9) 55%); border-radius:0 0 10px 10px;
+  animation:hintbob 1.8s ease-in-out infinite; transition:opacity .4s ease; }
+.scroll__hint.gone{ opacity:0; }
+@keyframes hintbob{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(4px); } }
 .ll-lang{ display:flex; justify-content:center; gap:.4rem; margin-bottom:1.4rem; }
 .ll-lang button{ background:transparent; border:1px solid rgba(122,46,30,.4); color:#7a2e1e; padding:.32rem .95rem; border-radius:100px;
   font-family:'Jost',sans-serif; font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; cursor:pointer; transition:all .25s ease; }
 .ll-lang button.on{ background:#7a2e1e; color:#f6e8ca; }
 .scroll__name{ font-family:'Dancing Script',cursive; font-weight:700; font-size:clamp(2.8rem,10vw,4.6rem); color:#7a2e1e; text-align:center; line-height:1; }
 .scroll__deco{ text-align:center; color:#a5643a; letter-spacing:.5em; font-size:.7rem; margin:.3rem 0 1.7rem; }
-.scroll__text{ font-family:'Cormorant Garamond',serif; font-size:clamp(1.06rem,2.9vw,1.28rem); line-height:1.92; color:#42291a; white-space:pre-line; }
+.scroll__text{ font-family:'Cormorant Garamond',serif; font-size:clamp(1.15rem,3.2vw,1.38rem); line-height:1.95; color:#42291a; white-space:pre-line; }
 .scroll__sign{ font-family:'Dancing Script',cursive; font-weight:600; font-size:clamp(1.6rem,5vw,2.2rem); color:#7a2e1e; text-align:right; margin-top:1.5rem; }
 .ll-close{ position:absolute; top:clamp(1rem,4vw,2.4rem); right:clamp(1rem,4vw,2.4rem); z-index:6; width:46px; height:46px; border-radius:50%;
   border:1px solid rgba(231,195,107,.5); background:rgba(20,7,10,.55); backdrop-filter:blur(6px); color:var(--gold); cursor:pointer; font-size:1.1rem; }
@@ -474,7 +482,7 @@ footer{ text-align:center; padding:3rem 1.5rem 4rem; font-size:.72rem; letter-sp
     <span class="scroll__flower tr" style="--r:28deg">🌸</span>
     <span class="scroll__flower bl" style="--r:-150deg">🌸</span>
     <span class="scroll__flower br" style="--r:150deg">🌹</span>
-    <div class="scroll__content">
+    <div class="scroll__content" id="llContent" data-lenis-prevent>
       <div class="ll-lang">
         <button id="llEn" class="on">English</button>
         <button id="llEs">Español</button>
@@ -484,6 +492,7 @@ footer{ text-align:center; padding:3rem 1.5rem 4rem; font-size:.72rem; letter-sp
       <p class="scroll__text" id="llText"></p>
       <div class="scroll__sign" id="llSign"></div>
     </div>
+    <div class="scroll__hint" id="llHint">scroll ↓</div>
   </div>
 </div>
 
@@ -726,7 +735,9 @@ Si has leído hasta este punto, debes estar aburrida, lo sé, porque soy aburrid
 const loveletter=document.getElementById('loveletter'),llScroll=document.getElementById('llScroll'),
       llText=document.getElementById('llText'),llSign=document.getElementById('llSign'),
       llEn=document.getElementById('llEn'),llEs=document.getElementById('llEs'),
-      llClose=document.getElementById('llClose'),llPetals=document.getElementById('llPetals');
+      llClose=document.getElementById('llClose'),llPetals=document.getElementById('llPetals'),
+      llContent=document.getElementById('llContent'),llHint=document.getElementById('llHint');
+llContent.addEventListener('scroll',()=>{ if(llContent.scrollTop>20) llHint.classList.add('gone'); else llHint.classList.remove('gone'); });
 let llLangSet=false;
 function setLang(l){ llText.textContent=LETTER[l].body; llSign.textContent=LETTER[l].sign;
   llEn.classList.toggle('on',l==='en'); llEs.classList.toggle('on',l==='es'); }
@@ -737,6 +748,7 @@ function openLoveLetter(){
   if(!llLangSet){ setLang('en'); llLangSet=true; }
   loveletter.classList.add('open');
   if(window.lenis) lenis.stop();
+  llContent.scrollTop=0; llHint.classList.remove('gone');
   setTimeout(()=>llScroll.classList.add('in'),60);
   if(!llPetalTimer) llPetalTimer=setInterval(()=>makePetal(llPetals,7+Math.random()*5),420);
 }
