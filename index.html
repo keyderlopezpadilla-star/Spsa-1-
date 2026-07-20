@@ -260,6 +260,17 @@ main{ position:relative; z-index:2; }
 /* ---------- WebGL 3D petal field (Three.js) ---------- */
 .three3d{ position:fixed; inset:0; z-index:0; pointer-events:none; }
 
+/* ---------- Modeled 3D rose ---------- */
+.rose3d{ position:relative; min-height:100svh; display:flex; align-items:flex-end; justify-content:center; overflow:hidden;
+  background:radial-gradient(circle at 50% 42%, #2a0a12 0%, var(--bg) 72%); }
+.rose3d__canvas{ position:absolute; inset:0; width:100%; height:100%; z-index:1; }
+.rose3d__cap{ position:relative; z-index:2; text-align:center; padding-bottom:12vh; }
+.rose3d__cap h2{ font-size:clamp(2rem,6vw,4rem); }
+.rose-fallback .rose3d__canvas{ display:none; }
+.rose-fallback .rose3d__cap{ padding-bottom:8vh; }
+.rose-fallback::before{ content:"🌹"; position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  font-size:clamp(5rem,20vw,11rem); z-index:1; filter:drop-shadow(0 20px 50px rgba(201,24,74,.4)); animation:sway 5s ease-in-out infinite; }
+
 /* ---------- Apple-style light editorial chapter (Reasons) ---------- */
 .reasons{ background:radial-gradient(130% 100% at 50% -10%, #fefaf5, #f3e6d8 92%); color:#4a1024;
   padding:clamp(7rem,17vh,13rem) 0; }
@@ -417,6 +428,15 @@ footer{ text-align:center; padding:3rem 1.5rem 4rem; font-size:.72rem; letter-sp
       </div>
       <p class="counter__note" data-anim="fade">and every one of them with you.</p>
       <div class="bloom-row" id="bloomRow" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- Modeled 3D rose (Three.js) -->
+  <section class="rose3d" id="rose3d">
+    <canvas class="rose3d__canvas" id="roseCanvas"></canvas>
+    <div class="wrap rose3d__cap">
+      <span class="eyebrow" data-anim="fade">Just because</span>
+      <h2 data-anim="up">A rose that never wilts</h2>
     </div>
   </section>
 
@@ -730,6 +750,52 @@ let three3D=false;
     renderer.render(scene,cam);
   })();
   three3D=true;
+})();
+
+/* ---------- Modeled 3D rose (Three.js), rendered only when in view ---------- */
+(function initRose(){
+  const canvas=document.getElementById('roseCanvas'), section=document.getElementById('rose3d');
+  if(!canvas||!section) return;
+  if(RM || !window.THREE){ section.classList.add('rose-fallback'); return; }
+  let renderer;
+  try{ renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true}); }catch(e){ section.classList.add('rose-fallback'); return; }
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  const scene=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(45,1,0.1,100); cam.position.set(0,0,6.8); cam.lookAt(0,0,0);
+  scene.add(new THREE.AmbientLight(0xffd9c0,0.55));
+  const key=new THREE.DirectionalLight(0xfff2e0,1.15); key.position.set(3,6,4); scene.add(key);
+  const rim=new THREE.PointLight(0xff7d97,1.3,40); rim.position.set(-5,2,-3); scene.add(rim);
+  const gld=new THREE.PointLight(0xe7c36b,0.9,40); gld.position.set(5,-2,3); scene.add(gld);
+  function petalGeo(){
+    const g=new THREE.PlaneGeometry(1,1.5,12,16), p=g.attributes.position;
+    for(let i=0;i<p.count;i++){ let x=p.getX(i), y=p.getY(i); const ty=(y+0.75)/1.5;
+      const w=Math.pow(Math.sin(Math.PI*Math.min(1,Math.max(0,ty))),0.7); x=x*(0.28+0.95*w);
+      const xc=Math.max(-1,Math.min(1,x)); const cup=-Math.cos(xc*Math.PI)*0.16; const curl=Math.pow(ty,1.8)*0.6;
+      p.setX(i,x); p.setZ(i,cup+curl); }
+    g.translate(0,0.75,0); g.computeVertexNormals(); return g;
+  }
+  const pg=petalGeo(), rose=new THREE.Group();
+  const layers=innerWidth<640?26:42, golden=2.39996323;
+  for(let i=0;i<layers;i++){ const t=i/layers;
+    const mat=new THREE.MeshStandardMaterial({side:THREE.DoubleSide, roughness:0.62, metalness:0.05});
+    mat.color.setHSL(0.965 - t*0.02, 0.5, 0.58 + t*0.15);
+    const m=new THREE.Mesh(pg,mat); m.scale.setScalar(0.35 + t*1.0);
+    const pivot=new THREE.Object3D(); pivot.rotation.y=i*golden;
+    const arm=new THREE.Object3D(); arm.rotation.x=0.10 + t*1.32; arm.add(m);
+    pivot.add(arm); rose.add(pivot);
+  }
+  rose.position.y=-0.9; scene.add(rose);
+  function size(){ const w=canvas.clientWidth||innerWidth, h=canvas.clientHeight||innerHeight;
+    renderer.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix(); }
+  addEventListener('resize',size); size();
+  let vis=false; new IntersectionObserver(es=>es.forEach(e=>{ vis=e.isIntersecting; }),{threshold:0.04}).observe(section);
+  let tmx=0,tmy=0; addEventListener('mousemove',e=>{ tmx=e.clientX/innerWidth-.5; tmy=e.clientY/innerHeight-.5; },{passive:true});
+  (function loop(){ requestAnimationFrame(loop); if(!vis || document.hidden) return;
+    rose.rotation.y+=0.004;
+    rose.rotation.z+=((tmx*0.3)-rose.rotation.z)*0.05;
+    rose.rotation.x+=((0.32 - tmy*0.3)-rose.rotation.x)*0.05;
+    renderer.render(scene,cam);
+  })();
 })();
 
 /* ---------- Rose petals (2D fallback) ---------- */
