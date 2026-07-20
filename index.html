@@ -257,6 +257,19 @@ main{ position:relative; z-index:2; }
 .np-btn.playing{ animation:spin 6s linear infinite; }
 @keyframes spin{ to{ transform:rotate(360deg); } }
 
+/* ---------- WebGL 3D petal field (Three.js) ---------- */
+.three3d{ position:fixed; inset:0; z-index:0; pointer-events:none; }
+
+/* ---------- Apple-style light editorial chapter (Reasons) ---------- */
+.reasons{ background:radial-gradient(130% 100% at 50% -10%, #fefaf5, #f3e6d8 92%); color:#4a1024;
+  padding:clamp(7rem,17vh,13rem) 0; }
+.reasons .eyebrow{ color:#c07a35; }
+.reasons__head h2{ color:#5a1226; }
+.rcard{ background:#fffdfb; border:1px solid rgba(122,46,30,.12); box-shadow:0 24px 60px rgba(120,60,30,.14); }
+.rcard .num{ color:#c98a3a; }
+.rcard h3{ color:#7a2e1e; }
+.rcard p{ color:rgba(74,16,36,.66); }
+
 /* ---------- Hidden love letter (antique burnt parchment) ---------- */
 .svgdefs{ position:absolute; width:0; height:0; overflow:hidden; }
 .loveletter{ position:fixed; inset:0; z-index:4500; display:none; align-items:center; justify-content:center; padding:clamp(1rem,4vw,3rem);
@@ -329,6 +342,7 @@ footer{ text-align:center; padding:3rem 1.5rem 4rem; font-size:.72rem; letter-sp
 <div class="cursor" id="cur"></div><div class="cursor-dot" id="curDot"></div>
 <div class="grain"></div>
 <div class="ambient" id="ambient"></div>
+<canvas class="three3d" id="threeCanvas"></canvas>
 <canvas class="dust" id="dust"></canvas>
 
 <!-- Lock screen: unlocks automatically on July 21 at 00:00 -->
@@ -539,6 +553,7 @@ footer{ text-align:center; padding:3rem 1.5rem 4rem; font-size:.72rem; letter-sp
 <button class="np-btn" id="npBtn" aria-label="Play or pause music" title="Until I Found You — Stephen Sanchez" data-cursor>🎵</button>
 
 <!-- Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
@@ -674,7 +689,50 @@ function tick(){ let d=Date.now()-start; if(d<0)d=0;
 }
 tick(); setInterval(tick,1000);
 
-/* ---------- Rose petals ---------- */
+/* ---------- WebGL 3D petal field (Three.js) — with graceful fallback ---------- */
+let three3D=false;
+(function init3D(){
+  if(RM || !window.THREE) return;
+  const canvas=document.getElementById('threeCanvas'); if(!canvas) return;
+  let renderer;
+  try{ renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true}); }catch(e){ return; }
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  renderer.setSize(innerWidth,innerHeight);
+  const scene=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,0.1,100); cam.position.z=18;
+  // Procedural petal texture (no external asset)
+  const tc=document.createElement('canvas'); tc.width=tc.height=128; const g2=tc.getContext('2d');
+  const rg=g2.createRadialGradient(64,84,4,64,66,66);
+  rg.addColorStop(0,'rgba(255,255,255,0.98)'); rg.addColorStop(.55,'rgba(255,255,255,0.8)'); rg.addColorStop(1,'rgba(255,255,255,0)');
+  g2.fillStyle=rg; g2.beginPath(); g2.moveTo(64,10);
+  g2.bezierCurveTo(116,42,110,116,64,122); g2.bezierCurveTo(18,116,12,42,64,10); g2.closePath(); g2.fill();
+  const tex=new THREE.CanvasTexture(tc);
+  const geo=new THREE.PlaneGeometry(1,1.4);
+  const cols=[0xffd0da,0xffb3c6,0xf7d9a0,0xff9db0,0xffffff,0xf4b8c6,0xe7c36b];
+  const N=innerWidth<640?42:84; const petals=[];
+  function reset(m,first){ m.position.set((Math.random()-.5)*44, first?(Math.random()*40-20):20, (Math.random()-.5)*20);
+    const s=.4+Math.random()*.7; m.scale.set(s,s,s); }
+  for(let i=0;i<N;i++){
+    const mat=new THREE.MeshBasicMaterial({map:tex,transparent:true,opacity:.42+Math.random()*.46,depthWrite:false,side:THREE.DoubleSide,color:cols[i%cols.length]});
+    const m=new THREE.Mesh(geo,mat); reset(m,true);
+    m.rotation.set(Math.random()*6.28,Math.random()*6.28,Math.random()*6.28);
+    m.userData={sp:.02+Math.random()*.05, sway:Math.random()*6.28, rx:(Math.random()-.5)*.02, ry:(Math.random()-.5)*.02, rz:(Math.random()-.5)*.02, amp:.006+Math.random()*.014};
+    scene.add(m); petals.push(m);
+  }
+  let tmx=0,tmy=0,cxp=0,cyp=0,vis=true;
+  addEventListener('mousemove',e=>{ tmx=(e.clientX/innerWidth-.5); tmy=(e.clientY/innerHeight-.5); },{passive:true});
+  addEventListener('resize',()=>{ cam.aspect=innerWidth/innerHeight; cam.updateProjectionMatrix(); renderer.setSize(innerWidth,innerHeight); });
+  document.addEventListener('visibilitychange',()=>{ vis=!document.hidden; });
+  (function loop(){ requestAnimationFrame(loop); if(!vis) return;
+    for(const m of petals){ const u=m.userData; m.position.y-=u.sp; u.sway+=.01; m.position.x+=Math.sin(u.sway)*u.amp;
+      m.rotation.x+=u.rx; m.rotation.y+=u.ry; m.rotation.z+=u.rz; if(m.position.y<-20) reset(m,false); }
+    cxp+=((tmx*5)-cxp)*.04; cyp+=((-tmy*4)-cyp)*.04; cam.position.x=cxp; cam.position.y=cyp; cam.lookAt(0,0,0);
+    renderer.render(scene,cam);
+  })();
+  three3D=true;
+})();
+
+/* ---------- Rose petals (2D fallback) ---------- */
 const ambient=document.getElementById('ambient');
 const PC=[['#ffd0da','#ff8fa3'],['#ffb3c6','#ff5c7c'],['#f7d9a0','#e7c36b'],['#ff9db0','#c9184a'],['#ffffff','#ffc2cf']];
 function makePetal(container,dur){
@@ -689,7 +747,7 @@ function makePetal(container,dur){
   container.appendChild(p); setTimeout(()=>p.remove(),d*1000+400);
 }
 function petal(){ makePetal(ambient); }
-if(!RM){ for(let i=0;i<8;i++) setTimeout(()=>makePetal(ambient),i*260); setInterval(petal,850); }
+if(!RM && !three3D){ for(let i=0;i<8;i++) setTimeout(()=>makePetal(ambient),i*260); setInterval(petal,850); }
 
 /* ---------- Blooming flowers + bouquet + gold dust + magnetic ---------- */
 const FLOWERS=[
@@ -723,8 +781,8 @@ if(bouquet && bqStems){
 function bloomBouquet(){ if(!bouquet) return; bouquet.classList.add('bloomed');
   bouquet.querySelectorAll('.bloom-flower').forEach((fl,i)=>setTimeout(()=>fl.classList.add('bloomed'), 260+i*190)); }
 
-/* Gold dust particles */
-if(!RM){
+/* Gold dust particles (only when 3D field is not active) */
+if(!RM && !three3D){
   const dust=document.getElementById('dust'), dctx=dust.getContext('2d'); let dW,dH;
   function dResize(){ dW=dust.width=innerWidth; dH=dust.height=innerHeight; }
   dResize(); addEventListener('resize',dResize);
