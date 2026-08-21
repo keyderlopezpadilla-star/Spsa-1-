@@ -1,0 +1,4 @@
+# Los originales del móvil (HEIC y JPEG sin comprimir) NO se publican:
+# son 62 MB y los navegadores no saben mostrar HEIC.
+# Las versiones que sí se usan están en media/m2/ como p01.jpg, p02.jpg, ...
+fotos-originales/

@@ -831,30 +831,48 @@ const CONFIG = {
   /* --- fechas --- */
   startDate: "2026-06-21T00:00:00",   // el día que se hicieron novios
 
-  /* --- fotos del mes 2 --- */
-  dir: "media/m2/",                   // carpeta donde van las fotos
-  photos: [],                         // si lo dejas vacío, busca p01, p02, p03… solo
+  /* --- fotos del mes 2 ---
+     p01–p06 son de este mes. p07–p16 son del primer mes, reutilizadas para que
+     la tira y las polaroids no se vieran vacías (36 de las fotos que subiste
+     eran .heic y los navegadores no saben mostrar ese formato: mira
+     fotos-originales/LEEME.md).
+     Para añadir más: súbelas a media/m2/ y añádelas aquí en orden.
+     Si dejas esta lista vacía, la página las busca sola (p01, p02, p03…).      */
+  dir: "media/m2/",
+  photos: [
+    "p01.jpg","p02.jpg","p03.jpg","p04.jpg","p05.jpg","p06.jpg",
+    "p07.jpg","p08.jpg","p09.jpg","p10.jpg","p11.jpg","p12.jpg",
+    "p13.jpg","p14.jpg","p15.jpg","p16.jpg"
+  ],
   exts: ["jpg","jpeg","png","webp"],
-  maxScan: 48,                        // hasta cuántas fotos busca
+  maxScan: 48,
 
   /* ==========================================================
      ✎  TEXTOS A MANO DEBAJO DE CADA FOTO
-     La clave es el número de la foto (1 = p01.jpg, 2 = p02.jpg…)
-     Escribe lo que quieras. Si dejas una vacía, no pasa nada.
+     La clave es la posición de la foto (1 = la primera de la lista de arriba).
+     Escribe lo que quieras. Si dejas una vacía no pasa nada: el hueco se
+     queda reservado con unos puntos suspensivos muy tenues.
+     Solo puse las fechas que se podían saber con seguridad; el resto es tuyo.
      ========================================================== */
   captions: {
-    1:  "el día que empezó el segundo mes",
+    /* --- de este mes --- */
+    1:  "6 de agosto",
     2:  "",
-    3:  "esa risa tuya",
+    3:  "",
     4:  "",
-    5:  "mi lugar favorito eres tú",
+    5:  "21 de agosto · dos meses",
     6:  "",
-    7:  "no me acuerdo qué dijiste, me acuerdo cómo me sentí",
+    /* --- del primer mes --- */
+    7:  "del primer mes",
     8:  "",
-    9:  "un martes cualquiera, contigo",
+    9:  "",
     10: "",
-    11: "el mar de tus ojos",
+    11: "",
     12: "",
+    13: "",
+    14: "",
+    15: "",
+    16: "",
   }
 };
 /* ========================================================================= */

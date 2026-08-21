@@ -5,11 +5,12 @@ Sitio de aniversario, escrito por capítulos. Un capítulo por mes.
 ## Estructura
 
 ```
-index.html      → pantalla de la clave + selector de capítulos
-mes-1.html      → Capítulo I  · Nuestro primer mes (21 jun — 21 jul)
-mes-2.html      → Capítulo II · Dos meses contigo (21 jul — 21 ago)
-media/          → fotos y videos del Capítulo I  (f01…f56.jpg, v1…v5.mp4)
-media/m2/       → fotos y música del Capítulo II (p01…pNN.jpg, audio)
+index.html          → pantalla de la clave + selector de capítulos
+mes-1.html          → Capítulo I  · Nuestro primer mes (21 jun — 21 jul)
+mes-2.html          → Capítulo II · Dos meses contigo (21 jul — 21 ago)
+media/              → fotos y videos del Capítulo I  (f01…f56.jpg, v1…v5.mp4)
+media/m2/           → fotos y música del Capítulo II (p01…p16.jpg, audio)
+fotos-originales/   → los originales del móvil, sin publicar (respaldo)
 ```
 
 La clave de acceso es **`iloveyou`**. No distingue mayúsculas, acentos ni espacios.
@@ -18,23 +19,38 @@ Para cambiarla: edita la constante `PASSPHRASE` en `index.html`.
 
 ---
 
-## Cómo añadir las fotos del Capítulo II
+## Las fotos del Capítulo II
 
-Van todas en `media/m2/`, numeradas **desde `p01`** y sin saltos:
+Ahora mismo hay **16 fotos publicadas** en `media/m2/` (`p01.jpg` … `p16.jpg`),
+listadas en `CONFIG.photos` dentro de `mes-2.html`:
 
-```
-media/m2/p01.jpg
-media/m2/p02.jpg
-media/m2/p03.jpg
-...
-```
+- **`p01`–`p06`** son de este mes, las 6 que se pudieron usar de las 42 que subiste.
+- **`p07`–`p16`** son del primer mes, reutilizadas para que la tira de película y
+  las polaroids no se vieran vacías.
 
-Se aceptan `.jpg`, `.jpeg`, `.png` y `.webp`, pero **todas con la misma extensión**.
-La página las detecta sola: no hay que tocar el código.
+Todas están reducidas a 1600 px de lado largo y calidad 82: **3.2 MB en total**,
+frente a los 62 MB de los originales.
 
-> Consejo: antes de subirlas, bájalas a un ancho máximo de ~1600 px y calidad 80.
-> Las 56 fotos del Capítulo I pesan casi 10 MB y eso hace que la página cargue lenta
-> en el móvil con datos.
+### ⚠️ Faltan 36 fotos, y hay que convertirlas antes
+
+De las 42 que subiste, **36 son `.heic`**, y ese formato **no se puede mostrar en
+la web**: ni Chrome, ni Firefox, ni Edge lo soportan. Si se pusieran tal cual, a
+ella le saldrían imágenes rotas en casi cualquier móvil.
+
+Están guardadas en `fotos-originales/` (esa carpeta no se publica) y ahí mismo,
+en `fotos-originales/LEEME.md`, están las tres formas de convertirlas — la más
+fácil es mandártelas por WhatsApp a ti mismo, que las convierte solo.
+
+### Para añadir más fotos
+
+Súbelas a `media/m2/` continuando la numeración (`p17.jpg`, `p18.jpg`, …) y
+añádelas a la lista `CONFIG.photos` de `mes-2.html`. Si dejas esa lista vacía,
+la página vuelve a detectarlas sola siempre que empiecen en `p01` y no haya
+saltos.
+
+> Consejo: 1600 px de lado largo y calidad 80 es suficiente. Las 56 fotos del
+> Capítulo I pesan casi 10 MB sin comprimir, y eso hace que esa página cargue
+> lenta en el móvil con datos.
 
 ### Los textos escritos a mano
 
