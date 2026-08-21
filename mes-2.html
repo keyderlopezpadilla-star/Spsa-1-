@@ -277,7 +277,10 @@ main{ position:relative; z-index:4; }
 .film__strip{ position:relative; display:flex; align-items:stretch; gap:0; padding:0 8vw; will-change:transform;
   background:linear-gradient(180deg,#1B1310,#241A14 18%,#241A14 82%,#150E0A);
   box-shadow:0 26px 54px rgba(50,30,12,.42), inset 0 0 40px rgba(0,0,0,.6); }
-.film__cell{ position:relative; flex:0 0 auto; width:clamp(210px,30vw,340px);
+/* el ancho manda, pero se limita por la altura de la pantalla para que la tira
+   entera quepa y quede centrada también en pantallas bajas o en horizontal */
+.film__cell{ position:relative; flex:0 0 auto;
+  width:min(clamp(210px,30vw,340px), 56svh);
   padding:clamp(2rem,4vw,2.6rem) clamp(.6rem,1.2vw,1rem) clamp(1rem,2vw,1.4rem); }
 /* perforaciones */
 .film__strip::before,.film__strip::after{ content:''; position:absolute; left:0; right:0; z-index:1;
@@ -1614,8 +1617,12 @@ function initMotion(){
     gsap.to(strip, {
       x: () => -shift(), ease:'none',
       scrollTrigger:{
-        trigger:'#film', start:'top top', end:() => '+=' + (shift() + innerHeight*0.5),
-        pin:'#filmPin', scrub:1, invalidateOnRefresh:true
+        /* el disparador tiene que ser el propio elemento que se fija.
+           Si se usa la sección, ScrollTrigger congela la tira donde esté en
+           ese instante, es decir por debajo de la cabecera, y se va al fondo
+           de la pantalla en lugar de quedar centrada. */
+        trigger:'#filmPin', start:'top top', end:() => '+=' + (shift() + innerHeight*0.5),
+        pin:'#filmPin', scrub:1, invalidateOnRefresh:true, anticipatePin:1
       }
     });
   }
