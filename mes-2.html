@@ -131,6 +131,9 @@ main{ position:relative; z-index:4; }
 .back.show:hover{ opacity:1; background:var(--wine); color:var(--paper-hi); border-color:var(--wine); }
 
 /* ================= TOCADISCOS DE VINILO ================= */
+/* el iframe de YouTube existe pero no se ve: solo se usa como fuente de audio */
+.ytbox{ position:fixed; left:18px; bottom:18px; width:150px; height:84px;
+  opacity:.001; pointer-events:none; z-index:1; overflow:hidden; }
 .player{ position:fixed; right:clamp(12px,3vw,26px); bottom:clamp(12px,3vw,26px); z-index:70;
   width:clamp(96px,20vw,132px); opacity:0; transform:translateY(24px) scale(.9); pointer-events:none;
   transition:opacity .9s ease, transform .9s cubic-bezier(.2,.9,.25,1); }
@@ -585,23 +588,18 @@ footer a{ color:rgba(201,169,106,.7); text-decoration:none; }
 </div>
 
 <!-- ============ TOCADISCOS ============ -->
-<audio id="song" loop preload="metadata">
-  <source src="media/m2/everything-everywhere.mp3" type="audio/mpeg">
-  <source src="media/m2/everything_everywhere.mp3" type="audio/mpeg">
-  <source src="media/m2/song.mp3" type="audio/mpeg">
-  <source src="media/m2/everything-everywhere.m4a" type="audio/mp4">
-  <source src="media/m2/song.m4a" type="audio/mp4">
-  <source src="media/m2/everything-everywhere.ogg" type="audio/ogg">
-</audio>
+<!-- Reproductor de YouTube, oculto: el control visible es el vinilo -->
+<div class="ytbox"><div id="ytplayer"></div></div>
+
 <div class="player" id="player">
-  <button class="deck" id="deck" aria-label="Reproducir o pausar la música">
+  <button class="deck" id="deck" aria-label="Poner o quitar la música">
     <span class="deck__disc"></span>
     <span class="deck__shine"></span>
     <span class="deck__label"><b>K &amp; S</b><i>Cap. II</i></span>
     <span class="deck__hole"></span>
     <span class="deck__arm"><b></b><i></i></span>
   </button>
-  <p class="player__cap"><b>Everything Everywhere</b>nuestro disco</p>
+  <p class="player__cap" id="playerCap"><b>Everywhere, Everything</b>Noah Kahan</p>
 </div>
 
 <main id="main">
@@ -786,6 +784,7 @@ footer a{ color:rgba(201,169,106,.7); text-decoration:none; }
 
 <footer>
   K &amp; S · Capítulo II · Hecho a mano con todo mi amor ·
+  Música: <a href="https://www.youtube.com/watch?v=dJPdkhsr0gU" target="_blank" rel="noopener">Everywhere, Everything — Noah Kahan</a> ·
   <a href="index.html">volver a los capítulos</a>
 </footer>
 
@@ -1246,44 +1245,77 @@ env?.addEventListener('click', () => { if(letterShown) openLetter(); });
 /* =========================================================================
    TOCADISCOS
    ========================================================================= */
-const song = $('song'), deck = $('deck'), player = $('player');
-let audioOK = true;
+const deck = $('deck'), player = $('player');
+
+/* --- la canción, desde YouTube (igual que en el Capítulo I) --- */
+const VIDEO_ID = "dJPdkhsr0gU";   // Everywhere, Everything — Noah Kahan
+const VOLUMEN  = 72;              // 0 a 100
+
+let yt = null, ytReady = false, wantPlay = false, ytFailed = false;
 
 function markNoDisc(){
-  if(!audioOK) return;
-  audioOK = false;
+  if(ytFailed) return;
+  ytFailed = true;
   player.classList.add('empty');
   deck.setAttribute('aria-disabled','true');
-  player.querySelector('.player__cap').innerHTML = '<b>sin disco aún</b>falta el audio';
+  $('playerCap').innerHTML = '<b>el disco no carga</b>revisa la conexión';
 }
-/* Chrome no siempre emite 'error' en el <audio> cuando fallan todas las <source>:
-   se queda en networkState 3 (NETWORK_NO_SOURCE). Comprobamos las dos cosas. */
-song.addEventListener('error', markNoDisc);
-song.addEventListener('canplay', () => {
-  audioOK = true;
-  player.classList.remove('empty');
-  deck.removeAttribute('aria-disabled');
-});
-function checkDisc(){
-  if(song.error || song.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) markNoDisc();
-}
-setTimeout(checkDisc, 2200);
-setTimeout(checkDisc, 6000);
 
-song.addEventListener('play',  () => deck.classList.add('playing'));
-song.addEventListener('pause', () => deck.classList.remove('playing'));
+/* la API de YouTube llama a esta función global cuando termina de cargar */
+window.onYouTubeIframeAPIReady = function(){
+  yt = new YT.Player('ytplayer', {
+    width: '150', height: '84', videoId: VIDEO_ID,
+    playerVars: {
+      autoplay: 0, controls: 0, rel: 0, modestbranding: 1, playsinline: 1,
+      loop: 1, playlist: VIDEO_ID        // playlist = mismo id -> se repite sola
+    },
+    events: {
+      onReady: () => {
+        ytReady = true;
+        player.classList.remove('empty');
+        deck.removeAttribute('aria-disabled');
+        if(wantPlay) playSong();
+      },
+      onStateChange: e => {
+        if(e.data === YT.PlayerState.PLAYING) deck.classList.add('playing');
+        else deck.classList.remove('playing');
+        /* por si el loop de playerVars no entra */
+        if(e.data === YT.PlayerState.ENDED){ yt.seekTo(0); yt.playVideo(); }
+      },
+      onError: markNoDisc
+    }
+  });
+};
+
+/* carga la API */
+(function(){
+  const s = document.createElement('script');
+  s.src = 'https://www.youtube.com/iframe_api';
+  s.onerror = markNoDisc;
+  document.head.appendChild(s);
+})();
+/* si en 9 s no hay reproductor, es que YouTube no cargó */
+setTimeout(() => { if(!ytReady) markNoDisc(); }, 9000);
+
 function playSong(){
-  if(!audioOK) return;
-  song.volume = 0;
-  const p = song.play();
-  if(p && p.catch) p.catch(() => {});
-  /* fade in suave */
-  let v = 0;
-  const fade = setInterval(() => { v = Math.min(.72, v + .03); song.volume = v; if(v >= .72) clearInterval(fade); }, 90);
+  if(!ytReady || !yt){ wantPlay = true; return; }
+  try{
+    yt.setVolume(0);
+    yt.playVideo();
+    let v = 0;                                   // fade in, para que no entre de golpe
+    const fade = setInterval(() => {
+      v = Math.min(VOLUMEN, v + 4);
+      try{ yt.setVolume(v); }catch(_){}
+      if(v >= VOLUMEN) clearInterval(fade);
+    }, 90);
+  }catch(e){ markNoDisc(); }
 }
+
 deck.addEventListener('click', () => {
-  if(!audioOK) return;
-  song.paused ? playSong() : song.pause();
+  if(!ytReady || !yt) return;
+  try{
+    yt.getPlayerState() === YT.PlayerState.PLAYING ? yt.pauseVideo() : playSong();
+  }catch(_){}
 });
 
 /* =========================================================================

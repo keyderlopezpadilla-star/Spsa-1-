@@ -71,25 +71,28 @@ con tipografía manuscrita.
 
 ---
 
-## Cómo añadir la música
+## La música
 
-El archivo va en `media/m2/` con uno de estos nombres (el que sea, el primero que
-exista es el que suena):
+Suena **«Everywhere, Everything» de Noah Kahan**, desde YouTube, igual que el
+Capítulo I: hay un reproductor de YouTube escondido en la página y el control
+visible es el disco de vinilo de la esquina. Se toca para poner y quitar la
+música; gira mientras suena y el brazo baja sobre el disco. La canción se repite
+en bucle y entra con un *fade in* para que no arranque de golpe.
 
+Empieza a sonar al pulsar «Comenzar» en la portada del capítulo. Ese clic es
+imprescindible: los navegadores no permiten reproducir sonido sin que la persona
+toque algo primero.
+
+Para cambiar la canción, edita esta línea de `mes-2.html` con el id del vídeo
+(la parte que va después de `v=` en la dirección de YouTube):
+
+```js
+const VIDEO_ID = "dJPdkhsr0gU";   // Everywhere, Everything — Noah Kahan
+const VOLUMEN  = 72;              // 0 a 100
 ```
-media/m2/everything-everywhere.mp3
-media/m2/everything_everywhere.mp3
-media/m2/song.mp3
-media/m2/everything-everywhere.m4a
-media/m2/song.m4a
-media/m2/everything-everywhere.ogg
-```
 
-Si no hay ningún archivo, el tocadiscos aparece apagado con el texto «sin disco aún»
-y el resto de la página funciona igual.
-
-El control es el disco de vinilo de la esquina: se toca para poner y quitar la música.
-Gira mientras suena y el brazo baja sobre el disco.
+Si YouTube no carga (sin conexión, o un bloqueador de anuncios), el vinilo se
+apaga y avisa, y el resto de la página sigue funcionando con normalidad.
 
 ---
 
