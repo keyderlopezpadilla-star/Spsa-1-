@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<!-- Access guard -->
+<script>try{if(localStorage.getItem('ks_key')!=='1'){location.replace('index.html');}}catch(e){}</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#05060F">
+<meta name="description" content="Capítulo III — Nuestro propio universo.">
+<title>Capítulo III — Nuestro propio universo · K &amp; S</title>
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Capítulo III — Nuestro propio universo">
+<meta property="og:description" content="Tres meses bajo el mismo cielo. El universo continúa expandiéndose…">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9C%A8%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Dancing+Script:wght@500;600;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; }
+:root{
+  --space:#05060F;        /* negro azulado */
+  --space-2:#0A0D1F;
+  --deep:#10132E;         /* azul medianoche */
+  --violet:#221A4A;       /* violeta profundo */
+  --violet-2:#3A2A6B;
+  --moon:#EAF0FF;         /* blanco lunar */
+  --moon-soft:rgba(234,240,255,.62);
+  --moon-faint:rgba(234,240,255,.34);
+  --silver:#B9C4E0;
+  --gold:#E7C36B;
+  --gold-soft:#F2D98D;
+  --star:#DCE6FF;
+  --nebula-a:#5B3E9E;
+  --nebula-b:#1E4E8C;
+}
+html{ background:var(--space); }
+html.locked{ overflow:hidden; }
+html.lenis,html.lenis body{ height:auto; }
+.lenis.lenis-smooth{ scroll-behavior:auto !important; }
+.lenis.lenis-stopped{ overflow:hidden; }
+
+body{
+  font-family:'Cormorant Garamond',serif; font-size:clamp(1.02rem,2.4vw,1.16rem);
+  color:var(--moon); background:var(--space); overflow-x:hidden; -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{ font-family:'Fraunces',serif; font-weight:500; line-height:1.06; letter-spacing:-.01em; }
+::selection{ background:var(--violet-2); color:var(--moon); }
+a{ color:var(--gold); }
+img{ -webkit-user-drag:none; user-select:none; }
+canvas{ display:block; }
+
+/* ================= FONDO DE UNIVERSO ================= */
+.sky{ position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(1200px 800px at 76% 12%, rgba(91,62,158,.30), transparent 60%),
+    radial-gradient(1000px 700px at 18% 82%, rgba(30,78,140,.28), transparent 62%),
+    radial-gradient(900px 900px at 50% 50%, rgba(16,19,46,.6), transparent 70%),
+    linear-gradient(180deg, #05060F, #080A18 45%, #05060F); }
+#stars{ position:fixed; inset:0; z-index:1; pointer-events:none; }
+.grain{ position:fixed; inset:-60%; z-index:2; pointer-events:none; opacity:.05; mix-blend-mode:screen;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grain 8s steps(8) infinite; }
+@keyframes grain{ 0%{transform:translate(0,0);} 100%{transform:translate(-6%,4%);} }
+.vig{ position:fixed; inset:0; z-index:3; pointer-events:none;
+  box-shadow:inset 0 0 clamp(90px,20vw,280px) rgba(2,3,9,.9); }
+
+/* ================= HELPERS ================= */
+main{ position:relative; z-index:5; }
+.wrap{ max-width:1180px; margin:0 auto; padding:0 clamp(1.2rem,5vw,4rem); }
+.section{ position:relative; padding:clamp(6rem,15vh,12rem) 0; }
+.center{ text-align:center; }
+.eyebrow{ display:inline-block; font-family:'Jost',sans-serif; font-size:.6rem; letter-spacing:.46em;
+  text-transform:uppercase; color:var(--gold); }
+.hand{ font-family:'Dancing Script',cursive; }
+.h2{ font-family:'Fraunces',serif; font-size:clamp(2rem,6.4vw,3.6rem); font-weight:500; }
+.h2 em{ font-style:italic; color:var(--gold-soft); }
+.lede{ max-width:44ch; margin:1.2rem auto 0; color:var(--moon-soft); font-style:italic;
+  font-size:clamp(1.05rem,2.8vw,1.3rem); line-height:1.8; }
+.rule{ display:flex; align-items:center; justify-content:center; gap:.7rem; color:var(--gold); font-size:.66rem; }
+.rule::before,.rule::after{ content:''; height:1px; width:clamp(30px,10vw,90px);
+  background:linear-gradient(90deg,transparent,var(--gold)); }
+.rule::after{ background:linear-gradient(90deg,var(--gold),transparent); }
+.rule i{ width:5px; height:5px; background:var(--gold); border-radius:50%; box-shadow:0 0 8px var(--gold); }
+
+/* ================= APERTURA (entrada al observatorio) ================= */
+.open{ position:fixed; inset:0; z-index:60; display:flex; align-items:center; justify-content:center; text-align:center;
+  padding:2rem; background:radial-gradient(ellipse at 50% 46%, #0C1030 0%, var(--space) 72%); }
+.open.gone{ opacity:0; pointer-events:none; transform:scale(1.06); transition:opacity 1.4s ease, transform 1.6s ease; }
+.open__inner{ max-width:440px; }
+.open__star{ width:88px; height:88px; margin:0 auto 2rem; cursor:pointer; background:none; border:none; padding:0;
+  position:relative; }
+.open__star::before{ content:''; position:absolute; inset:0; border-radius:50%;
+  background:radial-gradient(circle, rgba(220,230,255,.9), rgba(120,150,255,.28) 42%, transparent 70%);
+  animation:breathe 3.2s ease-in-out infinite; }
+.open__star::after{ content:''; position:absolute; left:50%; top:50%; width:6px; height:6px; margin:-3px 0 0 -3px;
+  border-radius:50%; background:#fff; box-shadow:0 0 14px 4px rgba(220,230,255,.8); }
+@keyframes breathe{ 0%,100%{ transform:scale(1); opacity:.85; } 50%{ transform:scale(1.22); opacity:1; } }
+.open p{ color:var(--moon-soft); font-style:italic; font-size:clamp(1.1rem,3.2vw,1.4rem); line-height:1.7; }
+.open__hint{ margin-top:1.8rem; font-family:'Jost',sans-serif; font-size:.62rem; letter-spacing:.32em;
+  text-transform:uppercase; color:var(--moon-faint); animation:hint 2.4s ease-in-out infinite; }
+@keyframes hint{ 0%,100%{ opacity:.4; } 50%{ opacity:1; } }
+
+/* ================= NAV ================= */
+.back{ position:fixed; top:16px; left:16px; z-index:55; display:inline-flex; align-items:center; gap:.5rem;
+  padding:.5rem 1rem; border:1px solid rgba(185,196,224,.28); border-radius:100px;
+  background:rgba(10,13,31,.6); backdrop-filter:blur(8px); color:var(--silver); text-decoration:none;
+  font-family:'Jost',sans-serif; font-size:.58rem; letter-spacing:.24em; text-transform:uppercase;
+  opacity:0; pointer-events:none; transition:opacity .7s ease, background .3s ease; }
+.back.show{ opacity:.75; pointer-events:auto; }
+.back.show:hover{ opacity:1; background:var(--violet); border-color:var(--gold); color:var(--moon); }
+
+/* ================= REPRODUCTOR: planeta + lunas orbitando ================= */
+.ytbox{ position:fixed; left:18px; bottom:18px; width:150px; height:84px; opacity:.001; pointer-events:none; z-index:1; overflow:hidden; }
+.player{ position:fixed; right:clamp(10px,3vw,26px); bottom:clamp(10px,3vw,26px); z-index:55;
+  width:clamp(104px,22vw,140px); opacity:0; transform:translateY(24px) scale(.9); pointer-events:none;
+  transition:opacity .9s ease, transform .9s cubic-bezier(.2,.9,.25,1); }
+.player.show{ opacity:1; transform:none; pointer-events:auto; }
+.orbit{ position:relative; width:100%; aspect-ratio:1; cursor:pointer; border:none; background:none; padding:0; }
+.orbit__ring{ position:absolute; border:1px solid rgba(185,196,224,.16); border-radius:50%; }
+.orbit__ring.r1{ inset:16%; }
+.orbit__ring.r2{ inset:4%; transform:rotate(24deg) scaleY(.62); }
+.orbit__spin{ position:absolute; inset:0; animation:spin 8s linear infinite; animation-play-state:paused; transform-origin:50% 50%; }
+.orbit__spin.s2{ animation-duration:13s; animation-direction:reverse; }
+.orbit.playing .orbit__spin{ animation-play-state:running; }
+@keyframes spin{ to{ transform:rotate(360deg); } }
+.moon-body{ position:absolute; left:50%; top:50%; width:40%; height:40%; margin:-20% 0 0 -20%; border-radius:50%;
+  background:radial-gradient(circle at 34% 30%, #F6F1FF, #C9BCEF 44%, #6E5FA6 100%);
+  box-shadow:0 0 22px rgba(160,150,235,.5), inset -4px -4px 10px rgba(40,26,74,.6); }
+.moon-body::before{ content:''; position:absolute; width:20%; height:20%; top:26%; left:30%; border-radius:50%;
+  background:rgba(90,74,140,.5); box-shadow:34% 120% 0 -1px rgba(90,74,140,.4); }
+/* planetas que orbitan */
+.planet{ position:absolute; border-radius:50%; }
+.planet.p1{ width:15%; height:15%; top:2%; left:42.5%;
+  background:radial-gradient(circle at 34% 30%, #F2D98D, var(--gold) 60%, #8a5b1e);
+  box-shadow:0 0 10px rgba(231,195,107,.7); }
+.planet.p2{ width:11%; height:11%; top:44.5%; left:0%;
+  background:radial-gradient(circle at 34% 30%, #9fd0ff, #2E6FB0 65%, #163d63);
+  box-shadow:0 0 9px rgba(90,150,220,.7); }
+.player__cap{ margin-top:.55rem; padding:.32rem .5rem .36rem; border-radius:6px; text-align:center;
+  background:rgba(10,13,31,.72); backdrop-filter:blur(6px); border:1px solid rgba(185,196,224,.18);
+  font-family:'Jost',sans-serif; font-size:.44rem; letter-spacing:.2em; text-transform:uppercase; color:var(--moon-faint); line-height:1.6; }
+.player__cap b{ display:block; font-family:'Cormorant Garamond',serif; font-size:.76rem; letter-spacing:.03em;
+  text-transform:none; font-style:italic; color:var(--gold-soft); line-height:1.25; }
+.player.empty .orbit{ cursor:default; filter:grayscale(.5) opacity(.6); }
+
+/* ================= HERO + constelación K&S ================= */
+.hero{ position:relative; min-height:100svh; display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:clamp(5rem,12vh,8rem) 0; }
+.hero__chapter{ font-family:'Jost',sans-serif; font-size:.66rem; letter-spacing:.6em; color:var(--gold);
+  text-transform:uppercase; margin-bottom:1.6rem; }
+.hero__title{ font-size:clamp(2.4rem,9vw,5.6rem); font-weight:500; letter-spacing:-.02em; }
+.hero__title em{ font-style:italic; color:var(--gold-soft); }
+.hero__sub{ margin-top:1.4rem; color:var(--moon-soft); font-style:italic; font-size:clamp(1.1rem,3.2vw,1.5rem); }
+.hero__const{ width:min(360px,80vw); margin:clamp(2.4rem,6vh,3.6rem) auto 0; }
+.hero__const svg{ width:100%; height:auto; overflow:visible; }
+.hero__const .cl{ stroke:rgba(220,230,255,.4); stroke-width:1; stroke-dasharray:200; stroke-dashoffset:200;
+  animation:draw 2.6s ease forwards .6s; }
+@keyframes draw{ to{ stroke-dashoffset:0; } }
+.hero__const .cs{ fill:#fff; opacity:0; animation:pop .5s ease forwards; }
+.hero__const .cs.glow{ filter:drop-shadow(0 0 6px rgba(220,230,255,.9)); }
+@keyframes pop{ to{ opacity:1; } }
+.hero__cue{ margin-top:clamp(2.2rem,7vh,3.6rem); font-family:'Jost',sans-serif; font-size:.56rem;
+  letter-spacing:.4em; text-transform:uppercase; color:var(--moon-faint);
+  display:flex; flex-direction:column; align-items:center; gap:.7rem; }
+.hero__cue i{ width:1px; height:44px; background:linear-gradient(180deg,var(--gold),transparent);
+  animation:cue 2.4s ease-in-out infinite; transform-origin:top; }
+@keyframes cue{ 0%,100%{ transform:scaleY(.35); opacity:.4; } 50%{ transform:scaleY(1); opacity:1; } }
+
+/* ================= TRES MESES, TRES ASTROS ================= */
+.astros__head{ text-align:center; margin-bottom:clamp(3rem,8vh,5rem); }
+.astros{ display:flex; flex-wrap:wrap; justify-content:center; gap:clamp(2rem,7vw,5rem); }
+.astro{ position:relative; width:clamp(150px,40vw,210px); text-align:center; cursor:pointer;
+  background:none; border:none; padding:0; color:inherit; }
+.astro__orb{ width:clamp(74px,18vw,104px); height:clamp(74px,18vw,104px); margin:0 auto 1.4rem; border-radius:50%;
+  position:relative; transition:transform .5s ease; }
+.astro:hover .astro__orb{ transform:scale(1.08); }
+.astro__orb::after{ content:''; position:absolute; inset:-40%; border-radius:50%;
+  background:radial-gradient(circle, var(--g,rgba(231,195,107,.4)), transparent 66%); opacity:.5; }
+.astro.a1 .astro__orb{ background:radial-gradient(circle at 34% 30%, #ffe6c2, var(--gold) 58%, #7a4f18); box-shadow:0 0 26px rgba(231,195,107,.5); }
+.astro.a2 .astro__orb{ background:radial-gradient(circle at 34% 30%, #f3d9ff, #9a6fce 58%, #4a2e73); box-shadow:0 0 26px rgba(154,111,206,.5); --g:rgba(154,111,206,.4); }
+.astro.a3 .astro__orb{ background:radial-gradient(circle at 34% 30%, #cfe4ff, #4f86c9 55%, #1e4670); box-shadow:0 0 30px rgba(90,150,220,.6); --g:rgba(90,150,220,.45); }
+.astro__n{ font-family:'Fraunces',serif; font-size:1.3rem; font-style:italic; color:var(--moon); }
+.astro__t{ display:block; font-family:'Jost',sans-serif; font-size:.58rem; letter-spacing:.24em;
+  text-transform:uppercase; color:var(--gold); margin-top:.5rem; }
+.astro__say{ margin-top:.9rem; min-height:2.6em; color:var(--moon-soft); font-style:italic; font-size:.98rem;
+  opacity:0; transform:translateY(6px); transition:opacity .5s ease, transform .5s ease; line-height:1.5; }
+.astro.on .astro__say{ opacity:1; transform:none; }
+
+/* ================= MAPA ESTELAR (galería) ================= */
+.map{ position:relative; }
+.map__head{ text-align:center; margin-bottom:clamp(2.4rem,7vh,4rem); }
+.map__field{ position:relative; width:100%; }
+.map__field canvas{ position:absolute; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; }
+.map__stars{ position:relative; z-index:1; display:grid; gap:clamp(1rem,2.4vw,1.6rem);
+  grid-template-columns:repeat(auto-fill, minmax(clamp(64px,10vw,104px), 1fr)); }
+.starpic{ position:relative; aspect-ratio:1; border:none; background:none; padding:0; cursor:pointer;
+  border-radius:50%; overflow:visible; }
+.starpic__dot{ position:absolute; inset:22%; border-radius:50%; overflow:hidden;
+  box-shadow:0 0 0 1px rgba(185,196,224,.25), 0 0 14px rgba(150,180,255,.28);
+  transition:inset .5s cubic-bezier(.2,.9,.25,1), box-shadow .5s ease; }
+.starpic__dot img{ width:100%; height:100%; object-fit:cover; filter:brightness(.82) saturate(.9); transition:filter .5s ease; }
+.starpic.big .starpic__dot{ inset:8%; box-shadow:0 0 0 1px rgba(231,195,107,.4), 0 0 22px rgba(231,195,107,.4); }
+.starpic:hover .starpic__dot{ inset:6%; box-shadow:0 0 0 1px rgba(234,240,255,.7), 0 0 26px rgba(180,205,255,.7); }
+.starpic:hover .starpic__dot img{ filter:brightness(1.05) saturate(1.05); }
+.starpic__halo{ position:absolute; inset:0; border-radius:50%; pointer-events:none;
+  background:radial-gradient(circle, rgba(210,225,255,.5), transparent 62%); opacity:.5;
+  animation:twinkle 4s ease-in-out infinite; }
+.starpic.big .starpic__halo{ background:radial-gradient(circle, rgba(231,195,107,.55), transparent 62%); }
+@keyframes twinkle{ 0%,100%{ opacity:.28; transform:scale(.9); } 50%{ opacity:.6; transform:scale(1.08); } }
+.map__note{ text-align:center; margin-top:clamp(2rem,5vh,3rem); font-family:'Dancing Script',cursive;
+  font-size:1.3rem; color:var(--moon-faint); }
+
+/* ================= ESTRELLA FUGAZ (interacción secreta) ================= */
+.wish{ position:relative; min-height:86svh; display:flex; align-items:center; justify-content:center;
+  text-align:center; overflow:hidden; }
+.wish__inner{ position:relative; z-index:2; max-width:520px; }
+.wish__sky{ position:absolute; inset:0; z-index:1; cursor:crosshair; }
+.shooting{ position:absolute; z-index:2; width:118px; height:2px; pointer-events:auto; cursor:pointer;
+  background:linear-gradient(90deg, transparent, rgba(234,240,255,.2), #fff);
+  border-radius:2px; filter:drop-shadow(0 0 6px rgba(200,220,255,.9)); }
+.shooting::after{ content:''; position:absolute; right:-3px; top:50%; width:8px; height:8px; margin-top:-4px;
+  border-radius:50%; background:#fff; box-shadow:0 0 12px 4px rgba(220,235,255,.9); }
+.wish__caught{ position:fixed; z-index:6; pointer-events:none; font-size:1.2rem; animation:caught 1s ease-out forwards; }
+@keyframes caught{ to{ transform:translateY(-40px) scale(.4); opacity:0; } }
+.wish h2{ font-size:clamp(1.8rem,6vw,3rem); }
+.wish h2 em{ font-style:italic; color:var(--gold-soft); }
+.wish__hint{ margin-top:1.4rem; font-family:'Jost',sans-serif; font-size:.62rem; letter-spacing:.28em;
+  text-transform:uppercase; color:var(--moon-faint); }
+.wish__caughtmsg{ margin-top:1.6rem; color:var(--gold-soft); font-style:italic; font-size:1.2rem; display:none; }
+.wish__caughtmsg.show{ display:block; }
+.wish__open{ margin-top:1.4rem; display:none; background:transparent; border:1px solid rgba(231,195,107,.5);
+  color:var(--gold-soft); padding:.8rem 1.9rem; border-radius:100px; cursor:pointer; font-family:'Jost',sans-serif;
+  font-size:.62rem; letter-spacing:.24em; text-transform:uppercase; transition:all .35s ease; }
+.wish__open.show{ display:inline-block; }
+.wish__open:hover{ background:var(--gold); color:#1a1330; }
+
+/* ================= MOMENTO ÍNTIMO (la luna) ================= */
+.luna{ position:relative; min-height:92svh; display:flex; align-items:center; justify-content:center; text-align:center; }
+.luna__inner{ max-width:560px; }
+.luna__moon{ width:clamp(120px,30vw,190px); height:clamp(120px,30vw,190px); margin:0 auto clamp(2rem,6vh,3rem);
+  border-radius:50%; cursor:pointer; border:none; padding:0; position:relative;
+  background:radial-gradient(circle at 36% 30%, #FBFCFF, #D6DEF4 46%, #8A93B8 100%);
+  box-shadow:0 0 60px rgba(180,195,255,.35), inset -12px -12px 30px rgba(60,70,110,.5);
+  transition:transform .6s ease, box-shadow .6s ease; }
+.luna__moon:hover{ transform:scale(1.04); box-shadow:0 0 80px rgba(200,215,255,.5), inset -12px -12px 30px rgba(60,70,110,.5); }
+.luna__moon::before{ content:''; position:absolute; width:22%; height:22%; top:24%; left:26%; border-radius:50%; background:rgba(120,130,170,.4); }
+.luna__moon::after{ content:''; position:absolute; width:15%; height:15%; top:58%; left:56%; border-radius:50%; background:rgba(120,130,170,.34); }
+.luna__phrase{ font-family:'Fraunces',serif; font-style:italic; font-size:clamp(1.4rem,4.6vw,2.4rem);
+  line-height:1.4; color:var(--moon); }
+.luna__phrase em{ color:var(--gold-soft); }
+.luna__hint{ margin-top:1.6rem; font-family:'Jost',sans-serif; font-size:.6rem; letter-spacing:.3em;
+  text-transform:uppercase; color:var(--moon-faint); animation:hint 2.6s ease-in-out infinite; }
+.luna__more{ max-width:48ch; margin:1.8rem auto 0; color:var(--moon-soft); font-style:italic; line-height:1.85;
+  max-height:0; overflow:hidden; opacity:0; transition:max-height 1.2s ease, opacity 1.2s ease, margin 1.2s ease; }
+.luna__more.show{ max-height:600px; opacity:1; }
+.luna__hint.gone{ display:none; }
+
+/* ================= FINAL ================= */
+.end{ position:relative; min-height:100svh; display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; }
+.end__inner{ position:relative; z-index:2; }
+.end__const{ width:min(340px,80vw); margin:0 auto clamp(2rem,6vh,3rem); }
+.end__const svg{ width:100%; height:auto; overflow:visible; }
+.end__const .cl{ stroke:rgba(231,195,107,.5); stroke-width:1; stroke-dasharray:220; stroke-dashoffset:220; }
+.end__const.on .cl{ animation:draw 2.4s ease forwards; }
+.end__const .cs{ fill:#fff; filter:drop-shadow(0 0 5px rgba(231,195,107,.8)); }
+.end h2{ font-size:clamp(1.9rem,6vw,3.4rem); }
+.end h2 em{ font-style:italic; color:var(--gold-soft); }
+.end__sub{ max-width:44ch; margin:1.6rem auto 0; color:var(--moon-soft); font-style:italic; line-height:1.8; }
+.end__expand{ margin-top:clamp(2rem,6vh,3rem); font-family:'Jost',sans-serif; font-size:clamp(.86rem,2.6vw,1.2rem);
+  letter-spacing:.34em; text-transform:uppercase; color:var(--gold); }
+.end__expand span{ animation:dots 1.8s infinite; }
+.end__expand span:nth-child(2){ animation-delay:.3s; } .end__expand span:nth-child(3){ animation-delay:.6s; }
+@keyframes dots{ 0%,100%{ opacity:.2; } 50%{ opacity:1; } }
+.end__save{ margin-top:2.4rem; background:transparent; border:1px solid rgba(231,195,107,.5); color:var(--gold-soft);
+  padding:.9rem 2.1rem; border-radius:100px; cursor:pointer; font-family:'Jost',sans-serif; font-size:.62rem;
+  letter-spacing:.26em; text-transform:uppercase; transition:all .4s ease; }
+.end__save:hover{ background:var(--gold-soft); color:#1a1330; }
+.end__tip{ display:none; max-width:34ch; margin:1.3rem auto 0; font-family:'Jost',sans-serif; font-size:.62rem;
+  letter-spacing:.06em; color:var(--moon-faint); line-height:1.8; }
+.end__tip.show{ display:block; }
+.end__done{ display:none; margin-top:1rem; font-family:'Dancing Script',cursive; font-size:1.4rem; color:var(--gold-soft); }
+.end__done.show{ display:block; }
+footer{ position:relative; z-index:5; text-align:center; padding:2.6rem 1.5rem 3.4rem; color:var(--moon-faint);
+  font-family:'Jost',sans-serif; font-size:.56rem; letter-spacing:.24em; text-transform:uppercase; }
+footer a{ color:var(--silver); text-decoration:none; }
+
+/* ================= LA CARTA (cápsula del universo) ================= */
+.read{ position:fixed; inset:0; z-index:70; display:none; align-items:center; justify-content:center;
+  padding:clamp(.6rem,3vw,2.4rem); background:radial-gradient(ellipse at 50% 30%, rgba(20,16,52,.94), rgba(3,4,12,.98)); }
+.read.open{ display:flex; }
+.read__sheet{ position:relative; width:min(700px,96vw); max-height:94svh; overflow:hidden; border-radius:14px;
+  opacity:0; transform:translateY(40px) scale(.94); }
+.read__sheet.in{ opacity:1; transform:none; transition:opacity 1s ease, transform 1.15s cubic-bezier(.2,.9,.25,1); }
+.read__bg{ position:absolute; inset:0; border-radius:14px; border:1px solid rgba(185,196,224,.2);
+  background:
+    radial-gradient(700px 400px at 20% 0%, rgba(91,62,158,.34), transparent 60%),
+    radial-gradient(700px 400px at 90% 100%, rgba(30,78,140,.32), transparent 60%),
+    linear-gradient(180deg, #0C1030, #10132E 55%, #0A0D1F);
+  box-shadow:0 30px 80px rgba(0,0,0,.6); }
+.read__content{ position:relative; z-index:2; max-height:94svh; overflow-y:auto;
+  padding:clamp(1.9rem,5vw,3.4rem) clamp(1.4rem,5vw,3.2rem) clamp(3.4rem,7vw,4.4rem);
+  -webkit-overflow-scrolling:touch; overscroll-behavior:contain; text-align:center; }
+.read__content::-webkit-scrollbar{ width:7px; }
+.read__content::-webkit-scrollbar-thumb{ background:rgba(185,196,224,.35); border-radius:8px; }
+.read__lang{ display:flex; justify-content:center; gap:.4rem; margin-bottom:1.8rem; }
+.read__lang button{ background:transparent; border:1px solid rgba(185,196,224,.34); color:var(--silver);
+  padding:.3rem .95rem; border-radius:100px; cursor:pointer; font-family:'Jost',sans-serif;
+  font-size:.56rem; letter-spacing:.2em; text-transform:uppercase; transition:all .3s ease; }
+.read__lang button.on{ background:var(--gold); color:#1a1330; border-color:var(--gold); }
+.read__orn{ display:flex; align-items:center; justify-content:center; gap:.55rem; color:var(--gold); margin-bottom:1rem; }
+.read__orn i{ width:5px; height:5px; background:currentColor; border-radius:50%; box-shadow:0 0 8px var(--gold); }
+.read__orn i:nth-child(2){ width:7px; height:7px; }
+.read__to{ font-family:'Dancing Script',cursive; font-weight:700; font-size:clamp(1.9rem,7vw,3rem); color:var(--gold-soft); line-height:1.15; }
+.read__rule{ width:clamp(80px,26vw,150px); height:1px; margin:1.2rem auto 1.9rem; background:linear-gradient(90deg,transparent,var(--gold),transparent); }
+.read__text{ font-family:'Cormorant Garamond',serif; font-size:clamp(1.08rem,3vw,1.3rem); line-height:2;
+  color:var(--moon); text-align:center; white-space:pre-line; max-width:56ch; margin:0 auto; }
+.read__sign{ font-family:'Dancing Script',cursive; font-weight:600; font-size:clamp(1.7rem,5.4vw,2.3rem); color:var(--gold-soft); margin-top:1.8rem; }
+.read__star{ width:54px; height:54px; margin:1.4rem auto 0; position:relative; }
+.read__star::before{ content:''; position:absolute; inset:0; border-radius:50%;
+  background:radial-gradient(circle, rgba(220,230,255,.9), rgba(120,150,255,.3) 45%, transparent 70%); }
+.read__star::after{ content:''; position:absolute; left:50%; top:50%; width:6px; height:6px; margin:-3px 0 0 -3px;
+  border-radius:50%; background:#fff; box-shadow:0 0 12px 3px rgba(220,230,255,.8); }
+.read__actions{ margin-top:2.6rem; padding-top:1.8rem; position:relative; }
+.read__actions::before{ content:''; position:absolute; top:0; left:50%; width:clamp(70px,22vw,130px); height:1px;
+  margin-left:calc(clamp(70px,22vw,130px) / -2); background:linear-gradient(90deg,transparent,var(--gold),transparent); }
+.read__keep{ font-family:'Dancing Script',cursive; font-size:1.15rem; color:var(--moon-faint); margin-bottom:1.1rem; }
+.read__btns{ display:flex; flex-wrap:wrap; gap:.6rem; justify-content:center; }
+.read__btns button{ background:transparent; border:1px solid rgba(231,195,107,.4); color:var(--gold-soft);
+  padding:.62rem 1.4rem; border-radius:100px; cursor:pointer; font-family:'Jost',sans-serif;
+  font-size:.58rem; letter-spacing:.2em; text-transform:uppercase; transition:background .3s ease, color .3s ease; }
+.read__btns button:hover{ background:var(--gold); color:#1a1330; border-color:var(--gold); }
+.read__hint{ position:absolute; left:0; right:0; bottom:0; z-index:4; text-align:center; pointer-events:none;
+  font-family:'Jost',sans-serif; font-size:.54rem; letter-spacing:.28em; text-transform:uppercase; color:var(--silver);
+  padding:2.2rem 0 .85rem; border-radius:0 0 14px 14px;
+  background:linear-gradient(transparent, rgba(10,13,31,.6) 32%, rgba(10,13,31,.95) 70%);
+  animation:bob 1.9s ease-in-out infinite; transition:opacity .4s ease; }
+.read__hint.gone{ opacity:0; }
+@keyframes bob{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(4px); } }
+.read__hint .chev{ display:inline-block; width:5px; height:5px; margin:0 0 2px .5rem; vertical-align:middle;
+  border-right:1.3px solid currentColor; border-bottom:1.3px solid currentColor; transform:rotate(45deg); }
+.read__close{ position:absolute; top:clamp(.6rem,3vw,1.6rem); right:clamp(.6rem,3vw,1.6rem); z-index:6;
+  width:42px; height:42px; border-radius:50%; border:1px solid rgba(185,196,224,.4);
+  background:rgba(10,13,31,.6); backdrop-filter:blur(6px); color:var(--silver); cursor:pointer; font-size:1rem; }
+
+/* ================= LIGHTBOX (foto rodeada de luz) ================= */
+.lb{ position:fixed; inset:0; z-index:65; display:none; align-items:center; justify-content:center;
+  padding:clamp(1rem,4vw,3rem); background:radial-gradient(ellipse at 50% 50%, rgba(20,16,52,.9), rgba(3,4,12,.98)); }
+.lb.open{ display:flex; }
+.lb__pane{ position:relative; }
+.lb__pane img{ display:block; max-width:min(88vw,780px); max-height:74svh; object-fit:contain; border-radius:8px;
+  box-shadow:0 0 0 1px rgba(185,196,224,.3), 0 0 60px rgba(140,170,255,.4), 0 30px 70px rgba(0,0,0,.7); }
+.lb__cap{ position:absolute; left:0; right:0; bottom:-2.4rem; text-align:center; color:var(--moon-soft);
+  font-family:'Dancing Script',cursive; font-size:1.2rem; }
+.lb__btn{ position:absolute; background:rgba(185,196,224,.1); color:var(--moon); border:1px solid rgba(185,196,224,.3);
+  width:48px; height:48px; border-radius:50%; cursor:pointer; font-size:1.4rem; display:flex; align-items:center; justify-content:center; transition:background .3s ease; }
+.lb__btn:hover{ background:rgba(185,196,224,.24); }
+.lb__prev{ left:2%; top:50%; transform:translateY(-50%); }
+.lb__next{ right:2%; top:50%; transform:translateY(-50%); }
+.lb__close{ top:3%; right:3%; width:42px; height:42px; font-size:1rem; }
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+}
+
+/* ================= IMPRESIÓN / GUARDAR EN PDF ================= */
+@media print{
+  @page{ margin:20mm 18mm; }
+  html,body{ background:#fff !important; height:auto !important; overflow:visible !important; }
+  body > *{ display:none !important; }
+  body > .read{ display:block !important; }
+  .sky,#stars,.grain,.vig,.player,.ytbox,.back{ display:none !important; }
+  .read{ position:static !important; inset:auto !important; padding:0 !important; background:none !important; }
+  .read__close,.read__hint,.read__lang,.read__actions,.read__bg{ display:none !important; }
+  .read__sheet{ width:100% !important; max-height:none !important; overflow:visible !important; opacity:1 !important;
+    transform:none !important; box-shadow:none !important; border-radius:0 !important; }
+  .read__content{ max-height:none !important; overflow:visible !important; padding:0 !important; }
+  .read__to,.read__sign{ color:#2A2060 !important; }
+  .read__text{ color:#141018 !important; font-size:12.5pt !important; line-height:1.85 !important; max-width:none !important; orphans:3; widows:3; }
+  .read__rule{ background:#8A6A2C !important; }
+  .read__star{ display:none !important; }
+}
+</style>
+</head>
+<body>
+
+<script>document.documentElement.classList.add('locked');</script>
+
+<div class="sky"></div>
+<canvas id="stars"></canvas>
+<div class="grain"></div>
+<div class="vig"></div>
+
+<a class="back" id="back" href="index.html">‹ Capítulos</a>
+
+<!-- ============ ENTRADA AL OBSERVATORIO ============ -->
+<div class="open" id="opener">
+  <div class="open__inner">
+    <div class="rule"><i></i></div>
+    <p style="margin:1.6rem 0 .4rem">Hay personas que llegan a tu vida</p>
+    <p style="color:var(--gold-soft)">y terminan convirtiéndose en todo tu cielo.</p>
+    <button class="open__star" id="openBtn" aria-label="Abrir el universo"></button>
+    <p class="open__hint">toca la estrella</p>
+  </div>
+</div>
+
+<!-- ============ REPRODUCTOR ============ -->
+<div class="ytbox"><div id="ytplayer"></div></div>
+<div class="player" id="player">
+  <button class="orbit" id="orbit" aria-label="Poner o quitar la música">
+    <span class="orbit__ring r1"></span>
+    <span class="orbit__ring r2"></span>
+    <span class="moon-body"></span>
+    <span class="orbit__spin s1"><span class="planet p1"></span></span>
+    <span class="orbit__spin s2"><span class="planet p2"></span></span>
+  </button>
+  <p class="player__cap" id="playerCap"><b>Nuestra canción</b>Capítulo III</p>
+</div>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="hero__chapter" data-anim>Capítulo Tercero</p>
+      <h1 class="hero__title" data-anim>Nuestro propio<br><em>universo</em></h1>
+      <p class="hero__sub" data-anim>Tres meses encontrándote en todas partes.</p>
+      <div class="hero__const" data-anim>
+        <svg id="constKS" viewBox="0 0 300 120" aria-label="Constelación K y S"></svg>
+      </div>
+      <p class="hero__cue"><i></i>desliza</p>
+    </div>
+  </section>
+
+  <!-- ============ TRES ASTROS ============ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="astros__head">
+        <span class="eyebrow" data-anim>Tres meses, tres astros</span>
+        <h2 class="h2" data-anim style="margin-top:1rem">Cada uno, <em>una luz</em></h2>
+      </div>
+      <div class="astros">
+        <button class="astro a1" data-say="El sol con el que empezó todo, cuando aún no sabíamos lo que venía.">
+          <span class="astro__orb"></span>
+          <span class="astro__n">I</span>
+          <span class="astro__t">Donde empezó todo</span>
+          <p class="astro__say"></p>
+        </button>
+        <button class="astro a2" data-say="Nuestra historia clásica, la que se sintió como toda una vida.">
+          <span class="astro__orb"></span>
+          <span class="astro__n">II</span>
+          <span class="astro__t">Nuestra historia clásica</span>
+          <p class="astro__say"></p>
+        </button>
+        <button class="astro a3" data-say="Y este: nuestro propio universo, donde te encuentro en todas partes.">
+          <span class="astro__orb"></span>
+          <span class="astro__n">III</span>
+          <span class="astro__t">Nuestro propio universo</span>
+          <p class="astro__say"></p>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MAPA ESTELAR ============ -->
+  <section class="section map" id="map">
+    <div class="wrap">
+      <div class="map__head">
+        <span class="eyebrow" data-anim>Mapa estelar</span>
+        <h2 class="h2" data-anim style="margin-top:1rem">Cada foto, <em>una estrella</em></h2>
+        <p class="lede" data-anim>Todo lo que este mes brilló. Desliza y se van dibujando las constelaciones; toca una estrella para verla de cerca.</p>
+      </div>
+      <div class="map__field">
+        <canvas id="mapLines"></canvas>
+        <div class="map__stars" id="mapStars"></div>
+      </div>
+      <p class="map__note">nuestro cielo, del 21 de agosto al 21 de septiembre</p>
+    </div>
+  </section>
+
+  <!-- ============ ESTRELLA FUGAZ ============ -->
+  <section class="wish" id="wish">
+    <div class="wish__sky" id="wishSky"></div>
+    <div class="wish__inner">
+      <span class="eyebrow" data-anim>Pide un deseo</span>
+      <h2 data-anim style="margin-top:1rem">Cruza una <em>estrella fugaz</em></h2>
+      <p class="wish__hint" id="wishHint">atrápala antes de que se apague</p>
+      <p class="wish__caughtmsg" id="wishCaught">La atrapaste. Como me atrapaste a mí. 🤍</p>
+      <button class="wish__open" id="wishOpen">Leer lo que pedí</button>
+    </div>
+  </section>
+
+  <!-- ============ MOMENTO ÍNTIMO (LUNA) ============ -->
+  <section class="luna" id="luna">
+    <div class="luna__inner">
+      <button class="luna__moon" id="lunaMoon" aria-label="Tocar la luna"></button>
+      <p class="luna__phrase">Entre todos los lugares posibles,<br>mi lugar favorito sigue siendo <em>a tu lado</em>.</p>
+      <p class="luna__hint" id="lunaHint">toca la luna</p>
+      <p class="luna__more" id="lunaMore">No importa dónde estemos ni qué tan lejos empezó todo: el cielo cambia,
+        las estrellas se mueven, y aun así siempre te encuentro. Si el universo es tan grande,
+        me sigue pareciendo increíble que en medio de todo terminara girando a tu alrededor.</p>
+    </div>
+  </section>
+
+  <!-- ============ FINAL ============ -->
+  <section class="end" id="end">
+    <div class="end__inner">
+      <div class="end__const" id="endConst">
+        <svg viewBox="0 0 300 120" aria-label="Constelación S y K"></svg>
+      </div>
+      <h2 data-anim>Tres meses bajo <em>el mismo cielo</em></h2>
+      <p class="end__sub" data-anim>Y todavía quiero descubrir contigo todo lo que falta.</p>
+      <p class="end__expand" data-anim>El universo continúa expandiéndose<span>.</span><span>.</span><span>.</span></p>
+      <button class="end__save" id="saveBtn">Guardar este capítulo</button>
+      <p class="end__tip" id="saveTip">en iPhone: Compartir → «Añadir a inicio».<br>en Android: menú (tres puntos) → «Añadir a pantalla de inicio».</p>
+      <p class="end__done" id="saveDone">Guardado. Te espero bajo el mismo cielo. 🤍</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  K &amp; S · Capítulo III · Hecho con todo el universo que llevo dentro ·
+  Música: <a id="songLink" href="#" target="_blank" rel="noopener">nuestra canción</a> ·
+  <a href="index.html">volver a los capítulos</a>
+</footer>
+
+<!-- ============ LA CARTA (cápsula del universo) ============ -->
+<div class="read" id="read">
+  <button class="read__close" id="readClose" aria-label="Cerrar">×</button>
+  <div class="read__sheet" id="readSheet">
+    <div class="read__bg"></div>
+    <div class="read__content" id="readContent" data-lenis-prevent>
+      <div class="read__lang">
+        <button id="langEs" class="on">Español</button>
+        <button id="langEn">English</button>
+      </div>
+      <p class="read__orn"><i></i><i></i><i></i></p>
+      <p class="read__to" id="readTo">Para Samanta,<br>mi amor…</p>
+      <div class="read__rule"></div>
+      <p class="read__text" id="readText"></p>
+      <p class="read__sign" id="readSign">Keyder…</p>
+      <div class="read__star"></div>
+      <div class="read__actions">
+        <p class="read__keep" id="readKeep">para que te la quedes</p>
+        <div class="read__btns">
+          <button id="btnPdf" type="button">Guardar en PDF</button>
+          <button id="btnTxt" type="button">Descargar el texto</button>
+        </div>
+      </div>
+    </div>
+    <p class="read__hint" id="readHint">desliza para leer <b class="chev"></b></p>
+  </div>
+</div>
+
+<!-- ============ LIGHTBOX ============ -->
+<div class="lb" id="lb">
+  <button class="lb__btn lb__close" id="lbClose" aria-label="Cerrar">×</button>
+  <button class="lb__btn lb__prev" id="lbPrev" aria-label="Anterior">‹</button>
+  <div class="lb__pane"><img id="lbImg" src="" alt=""><p class="lb__cap" id="lbCap"></p></div>
+  <button class="lb__btn lb__next" id="lbNext" aria-label="Siguiente">›</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script>
+/* =======================================================================
+   ✎  AQUÍ SE PERSONALIZA TODO
+   ======================================================================= */
+const CONFIG = {
+  dir: "media/m3/",
+  exts: ["jpg","jpeg","png","webp"],
+  maxScan: 120,
+
+  /* --- música (YouTube), igual que en los otros capítulos --- */
+  VIDEO_ID: "OFcKm-5jSQE",
+  VOLUMEN: 72,
+
+  /* las estrellas más grandes del mapa (posiciones 1 = p01) */
+  destacadas: [1],
+
+  /* fotos del mapa estelar; vacío = autodetección p01, p02, p03… */
+  photos: [],
+  captions: {}
+};
+/* ======================================================================= */
+
+const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $  = id => document.getElementById(id);
+const pad = n => String(n).padStart(2,'0');
+
+/* =======================================================================
+   LA CARTA
+   ======================================================================= */
+const LETTER = {
+  es: {
+    to: "Para Samanta,<br>mi amor…",
+    sign: "Keyder…",
+    body:
+`Hoy se cumplen tres meses.
+
+Tres meses pueden parecer poco cuando se cuentan en un calendario, pero cuando pienso en todo lo que hemos vivido, en cada conversación, cada risa, cada abrazo y cada momento a tu lado, siento que dentro de estos meses cabe una historia mucho más grande.
+
+En la primera carta te hablé de lo imposible que parecía que nos encontráramos. De dos personas de lugares distintos, con idiomas y costumbres diferentes, que tenían muy pocas probabilidades de coincidir y que, aun así, terminaron frente a frente. En la segunda te confesé lo loco que estaba por ti, aunque estoy seguro de que para ese momento ya lo sabías.
+
+Hoy quiero hablarte de algo más sencillo, pero mucho más importante: de la forma en que te has convertido en parte de mi vida.
+
+Ya no eres solamente la chica hermosa que me puso nervioso la primera vez que la vi. Tampoco eres solo la dueña de esos ojos en los que podría perderme durante horas. Ahora eres la persona que busco con la mirada, la primera en la que pienso cuando me ocurre algo bonito y también la persona con la que quiero hablar cuando el día no sale bien.
+
+Te has convertido en esa presencia que hace que todo se sienta un poco más tranquilo. En la voz que quiero escuchar, en los brazos donde quiero descansar y en la sonrisa que todavía consigue cambiar por completo mi día.
+
+Me sigue pareciendo increíble recordar cómo comenzó todo. Un “hello, how are you”, seguido de mi inolvidable “my English is so bad”, terminó llevándonos hasta aquí. A veces pienso en todas las cosas que tuvieron que suceder exactamente de la manera en que sucedieron para que pudiéramos conocernos. Y cuanto más lo pienso, más afortunado me siento.
+
+Entre tantas personas, tantos lugares y tantos caminos posibles, terminé encontrándote a ti. Quizá tú a mí.
+
+Pero lo que más me gusta de nosotros no es únicamente nuestra historia ni lo improbable de nuestro encuentro. Lo que más me gusta es cómo me siento cuando estoy contigo. Me gusta que podamos hablar de cualquier cosa, reírnos de tonterías o simplemente quedarnos en silencio sin que ese silencio se sienta vacío. Me gusta despertar, mirar a mi lado y saber que estás allí. Me gusta saber que hasta un día común puede convertirse en un recuerdo bonito solo porque lo compartí contigo.
+
+Contigo he aprendido que el amor no siempre necesita grandes momentos. A veces también vive en las cosas pequeñas: en una mirada, en una caricia, en una conversación que se alarga sin darnos cuenta, en preocuparnos el uno por el otro o en esa tranquilidad de saber que al final del día seguimos aquí.
+
+No quiero decirte que soy perfecto, porque sabes que no lo soy. Tengo errores, inseguridades y muchas cosas que todavía estoy aprendiendo. Habrá momentos en los que no encuentre las palabras correctas o no sepa expresar todo lo que llevo dentro. Pero incluso cuando me cueste decirlo, quiero que nunca dudes de lo importante que eres para mí.
+
+No puedo prometerte que todos los días serán fáciles ni que nunca tendremos diferencias. Lo que sí puedo prometerte es que quiero aprender a amarte cada vez mejor. Quiero escucharte, cuidarte, respetarte y estar a tu lado cuando estés feliz, pero también cuando necesites apoyo, paciencia o simplemente alguien que se quede contigo en silencio.
+
+No quiero ser solamente una parte de tus momentos bonitos. Quiero ser tu compañero en la vida real: en los días tranquilos, en los días complicados, en las mañanas lentas, en las noches largas y en todos esos momentos que todavía no conocemos.
+
+Tres meses después, sigo sintiendo nervios cuando te miro demasiado. Sigo pensando que eres la chica más hermosa que he visto. Sigo enamorado de tus ojos, de tu sonrisa, de tu voz, de tus expresiones y de esas pequeñas cosas tuyas que quizá tú ni siquiera notas, pero que yo guardo como si fueran tesoros.
+
+Y, al mismo tiempo, siento algo nuevo.
+
+Ya no se trata solamente de la emoción de haberte conocido. Se trata de la certeza de querer seguir eligiéndote.
+
+Quiero seguir conociéndote, incluso en las partes de ti que todavía no he descubierto. Quiero celebrar tus sueños, acompañarte en tus miedos y verte crecer. Quiero que tú también puedas conocerme de verdad, con mis virtudes y mis defectos, y que juntos podamos construir algo sincero, bonito y fuerte.
+
+No sé exactamente qué nos espera ni cuántos capítulos tendrá nuestra historia. Pero sí sé que quiero continuar escribiéndola contigo, sin prisa, un día a la vez y una página después de la otra.
+
+Gracias por estos tres meses, Samanta. Gracias por aquella primera sonrisa, por la noche en el columpio, por cada despertar a tu lado y por todos los recuerdos que ya llevan tu nombre. Gracias por cruzar tantos caminos hasta llegar al mío y por permitir que yo forme parte del tuyo.
+
+Si alguna vez vuelves a preguntarme qué fue lo mejor que encontré estando tan lejos de casa, la respuesta siempre serás tú.
+
+Tú eres mi coincidencia favorita, mi lugar tranquilo y la persona con la que quiero seguir descubriendo todo lo que viene.
+
+Tres meses contigo y todavía siento que apenas estamos comenzando.
+
+Y si esto es solamente el principio, entonces quiero vivir contigo todo lo que falta.
+
+Te amo, Samanta. Más que ayer, menos que mañana.`
+  },
+  en: {
+    to: "For Samanta,<br>my love…",
+    sign: "Yours, Keyder…",
+    body:
+`Today marks three months.
+
+Three months may seem like little when you count them on a calendar, but when I think about everything we have lived — every conversation, every laugh, every embrace and every moment by your side — I feel that a much larger story fits inside these months.
+
+In the first letter I told you how impossible it seemed that we would ever meet. Two people from different places, with different languages and customs, who had very little chance of ever crossing paths, and who still ended up face to face. In the second one I confessed how crazy I was about you, though I am sure that by then you already knew.
+
+Today I want to tell you about something simpler, but far more important: the way you have become a part of my life.
+
+You are no longer only the beautiful girl who made me nervous the first time I saw her. Nor are you only the owner of those eyes I could get lost in for hours. Now you are the person I look for with my eyes, the first one I think of when something good happens to me, and also the person I want to talk to when the day doesn't go well.
+
+You have become that presence that makes everything feel a little calmer. The voice I want to hear, the arms where I want to rest, and the smile that still manages to change my whole day.
+
+It still amazes me to remember how it all began. A “hello, how are you,” followed by my unforgettable “my English is so bad,” ended up leading us all the way here. Sometimes I think about all the things that had to happen exactly the way they happened for us to meet. And the more I think about it, the luckier I feel.
+
+Among so many people, so many places and so many possible paths, I ended up finding you. Maybe you found me.
+
+But what I love most about us is not only our story, nor how improbable our meeting was. What I love most is how I feel when I am with you. I love that we can talk about anything, laugh at silly things, or simply stay in silence without that silence feeling empty. I love waking up, looking beside me and knowing that you are there. I love knowing that even an ordinary day can become a beautiful memory just because I shared it with you.
+
+With you I have learned that love does not always need grand moments. Sometimes it also lives in the small things: a glance, a caress, a conversation that stretches on without us noticing, worrying about each other, or the calm of knowing that at the end of the day we are still here.
+
+I won't tell you that I am perfect, because you know I am not. I have flaws, insecurities and many things I am still learning. There will be moments when I can't find the right words or don't know how to express everything I carry inside. But even when it's hard to say it, I want you to never doubt how important you are to me.
+
+I can't promise you that every day will be easy, or that we will never have our differences. What I can promise is that I want to learn to love you better and better. I want to listen to you, care for you, respect you, and stand by you when you are happy, but also when you need support, patience, or simply someone to stay with you in silence.
+
+I don't want to be only a part of your beautiful moments. I want to be your companion in real life: in the quiet days, in the complicated ones, in the slow mornings, in the long nights, and in all those moments we don't know yet.
+
+Three months later, I still get nervous when I look at you too much. I still think you are the most beautiful girl I have ever seen. I am still in love with your eyes, your smile, your voice, your expressions, and those little things about you that maybe you don't even notice, but that I keep as if they were treasures.
+
+And at the same time, I feel something new.
+
+It is no longer only the excitement of having met you. It is the certainty of wanting to keep choosing you.
+
+I want to keep getting to know you, even the parts of you I haven't discovered yet. I want to celebrate your dreams, stand by you in your fears, and watch you grow. I want you to truly know me too, with my virtues and my flaws, and for us to build something honest, beautiful and strong together.
+
+I don't know exactly what awaits us, or how many chapters our story will have. But I do know that I want to keep writing it with you, without rushing, one day at a time and one page after another.
+
+Thank you for these three months, Samanta. Thank you for that first smile, for the night on the swing, for every waking up by your side, and for all the memories that already carry your name. Thank you for crossing so many paths until you reached mine, and for letting me be part of yours.
+
+If you ever ask me again what the best thing I found so far from home was, the answer will always be you.
+
+You are my favorite coincidence, my calm place, and the person I want to keep discovering everything that comes with.
+
+Three months with you and I still feel like we are only just beginning.
+
+And if this is only the beginning, then I want to live all that is left with you.
+
+I love you, Samanta. More than yesterday, less than tomorrow.`
+  }
+};
+
+/* =======================================================================
+   CAMPO DE ESTRELLAS DE FONDO
+   ======================================================================= */
+(function starfield(){
+  if(RM) return;
+  const c = $('stars'), ctx = c.getContext('2d');
+  let W, H, stars = [];
+  function size(){
+    W = c.width = innerWidth; H = c.height = innerHeight;
+    const N = Math.min(220, Math.floor(W*H/9000));
+    stars = [];
+    for(let i=0;i<N;i++) stars.push({
+      x:Math.random()*W, y:Math.random()*H, r:Math.random()*1.4+.3,
+      a:Math.random(), s:.004+Math.random()*.02, dx:(Math.random()-.5)*.05, dy:(Math.random()-.5)*.05
+    });
+  }
+  size(); addEventListener('resize', size);
+  (function loop(){
+    requestAnimationFrame(loop);
+    if(document.hidden) return;
+    ctx.clearRect(0,0,W,H);
+    for(const s of stars){
+      s.a += s.s; const tw = .5 + Math.sin(s.a)*.5;
+      s.x += s.dx; s.y += s.dy;
+      if(s.x<0)s.x=W; if(s.x>W)s.x=0; if(s.y<0)s.y=H; if(s.y>H)s.y=0;
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.283);
+      ctx.fillStyle = 'rgba(220,230,255,'+(0.15+tw*0.7).toFixed(3)+')'; ctx.fill();
+    }
+  })();
+})();
+
+/* =======================================================================
+   CONSTELACIONES K & S (hero) y S & K (final)
+   ======================================================================= */
+function constellation(svg, word, color){
+  /* puntos aproximados de dos letras dibujadas con estrellas */
+  const K = [[8,10],[8,55],[8,100],[40,10],[10,55],[40,100]];
+  const S = [[42,18],[14,10],[8,34],[36,58],[40,84],[12,98]];
+  const amp = word === 'KS' ? [K,S] : [S,K];
+  const gap = 150;
+  let dots = '', lines = '';
+  amp.forEach((letter, li) => {
+    const ox = 40 + li*gap;
+    letter.forEach((p, i) => {
+      const x = ox + p[0], y = 10 + p[1];
+      const glow = (i===0) ? ' glow' : '';
+      dots += `<circle class="cs${glow}" cx="${x}" cy="${y}" r="${i===0?3.2:2.2}" style="animation-delay:${(li*6+i)*0.12}s"/>`;
+      if(i>0){ const q=letter[i-1]; lines += `<line class="cl" x1="${ox+q[0]}" y1="${10+q[1]}" x2="${x}" y2="${y}"/>`; }
+    });
+  });
+  svg.innerHTML = lines + dots;
+  if(color) svg.querySelectorAll('.cs').forEach(c=>c.setAttribute('fill', color));
+}
+constellation($('constKS').querySelector ? $('constKS') : document.querySelector('#constKS'), 'KS');
+
+/* =======================================================================
+   FOTOS: autodetección p01, p02, …  (o CONFIG.photos)
+   ======================================================================= */
+function probe(src){
+  return new Promise(res => { const im = new Image(); im.onload=()=>res(true); im.onerror=()=>res(false); im.src=src; });
+}
+async function findPhotos(){
+  if(CONFIG.photos && CONFIG.photos.length){
+    return CONFIG.photos.map((src,i) => ({ n:i+1, src: src.includes('/') ? src : CONFIG.dir + src }));
+  }
+  let ext = null;
+  for(const e of CONFIG.exts){ if(await probe(CONFIG.dir + 'p01.' + e)){ ext = e; break; } }
+  if(!ext) return [];
+  const rest = Array.from({length: CONFIG.maxScan - 1}, (_,i) => i + 2);
+  const hits = await Promise.all(rest.map(async n => {
+    const src = CONFIG.dir + 'p' + pad(n) + '.' + ext;
+    return (await probe(src)) ? { n, src } : null;
+  }));
+  return [{ n:1, src: CONFIG.dir + 'p01.' + ext }].concat(hits.filter(Boolean));
+}
+
+/* =======================================================================
+   MAPA ESTELAR
+   ======================================================================= */
+let PHOTOS = [];
+function buildMap(list){
+  const host = $('mapStars'); if(!host) return;
+  const items = list.length ? list : Array.from({length:12},(_,i)=>({n:i+1, src:null}));
+  host.innerHTML = items.map(p => {
+    const big = CONFIG.destacadas.includes(p.n) ? ' big' : '';
+    const inner = p.src
+      ? '<span class="starpic__dot"><img src="'+p.src+'" alt="" loading="lazy" decoding="async"></span>'
+      : '<span class="starpic__dot"></span>';
+    return '<button class="starpic'+big+'" data-n="'+p.n+'" aria-label="Estrella '+p.n+'">'
+      +      '<span class="starpic__halo"></span>' + inner + '</button>';
+  }).join('');
+  drawLines();
+}
+/* líneas que conectan las estrellas (constelación) */
+function drawLines(){
+  const canvas = $('mapLines'), field = canvas.parentElement;
+  if(!canvas || !field) return;
+  const stars = [...field.querySelectorAll('.starpic')];
+  const rect = field.getBoundingClientRect();
+  canvas.width = rect.width; canvas.height = rect.height;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  const pts = stars.map(s => { const r=s.getBoundingClientRect(); return { x:r.left-rect.left+r.width/2, y:r.top-rect.top+r.height/2 }; });
+  ctx.strokeStyle = 'rgba(150,180,255,.16)'; ctx.lineWidth = 1;
+  ctx.beginPath();
+  for(let i=1;i<pts.length;i++){ ctx.moveTo(pts[i-1].x,pts[i-1].y); ctx.lineTo(pts[i].x,pts[i].y); }
+  ctx.stroke();
+}
+addEventListener('resize', drawLines);
+
+/* =======================================================================
+   LIGHTBOX (foto rodeada de luz)
+   ======================================================================= */
+let lbI = 0;
+const lb = $('lb'), lbImg = $('lbImg'), lbCap = $('lbCap');
+function renderLB(){
+  const p = PHOTOS[lbI]; if(!p || !p.src) return;
+  lbImg.src = p.src;
+  const cap = (CONFIG.captions[p.n] || '').trim();
+  lbCap.textContent = cap || ('estrella ' + pad(p.n) + ' de ' + pad(PHOTOS.length));
+}
+function openLB(n){
+  const i = PHOTOS.findIndex(p => p.n === n);
+  if(i < 0 || !PHOTOS[i].src) return;
+  lbI = i; renderLB(); lb.classList.add('open');
+  if(window.lenis) lenis.stop();
+}
+function closeLB(){ lb.classList.remove('open'); if(window.lenis && started) lenis.start(); }
+function moveLB(s){ lbI = (lbI + s + PHOTOS.length) % PHOTOS.length; renderLB(); }
+$('lbClose').onclick = closeLB; $('lbPrev').onclick = ()=>moveLB(-1); $('lbNext').onclick = ()=>moveLB(1);
+lb.addEventListener('click', e => { if(e.target === lb) closeLB(); });
+addEventListener('keydown', e => {
+  if(!lb.classList.contains('open')) return;
+  if(e.key==='Escape') closeLB(); if(e.key==='ArrowLeft') moveLB(-1); if(e.key==='ArrowRight') moveLB(1);
+});
+document.addEventListener('click', e => {
+  const t = e.target.closest('.starpic');
+  if(t && t.dataset.n) openLB(+t.dataset.n);
+});
+
+/* =======================================================================
+   TRES ASTROS
+   ======================================================================= */
+document.querySelectorAll('.astro').forEach(a => {
+  a.querySelector('.astro__say').textContent = a.dataset.say;
+  a.addEventListener('click', () => {
+    const on = a.classList.contains('on');
+    document.querySelectorAll('.astro').forEach(x => x.classList.remove('on'));
+    if(!on) a.classList.add('on');
+  });
+});
+
+/* =======================================================================
+   ESTRELLA FUGAZ
+   ======================================================================= */
+(function shootingStars(){
+  const sky = $('wishSky'), hint = $('wishHint'), caught = $('wishCaught'), openBtn = $('wishOpen');
+  if(!sky) return;
+  let caughtCount = 0, timer = null, active = false;
+
+  function launch(){
+    if(document.hidden) return;
+    const star = document.createElement('div');
+    star.className = 'shooting';
+    const r = sky.getBoundingClientRect();
+    const fromLeft = Math.random() > .5;
+    const y = 10 + Math.random() * (r.height * 0.6);
+    const dur = 1600 + Math.random()*900;
+    star.style.top = y + 'px';
+    star.style.left = (fromLeft ? -140 : r.width + 20) + 'px';
+    star.style.transform = 'rotate(' + (fromLeft ? 14 : 166) + 'deg)';
+    sky.appendChild(star);
+    const travel = r.width + 200;
+    const endX = fromLeft ? travel : -travel;
+    star.animate(
+      [{ transform:star.style.transform+' translateX(0)', opacity:0 },
+       { opacity:1, offset:.15 },
+       { opacity:1, offset:.8 },
+       { transform:star.style.transform+' translateX('+endX+'px)', opacity:0 }],
+      { duration:dur, easing:'linear' }
+    ).onfinish = () => star.remove();
+
+    const grab = () => {
+      if(!star.isConnected) return;
+      caughtCount++;
+      const rr = star.getBoundingClientRect();
+      const spark = document.createElement('div');
+      spark.className = 'wish__caughtmsg'; // reuse gold
+      const s2 = document.createElement('div');
+      s2.className = 'wish__caught'; s2.textContent = '🤍';
+      s2.style.left = rr.left+'px'; s2.style.top = rr.top+'px';
+      document.body.appendChild(s2); setTimeout(()=>s2.remove(), 1000);
+      star.remove();
+      caught.classList.add('show'); openBtn.classList.add('show'); hint.style.opacity = '.3';
+    };
+    star.addEventListener('click', grab);
+    star.addEventListener('mouseenter', grab);
+    star.addEventListener('touchstart', e => { e.preventDefault(); grab(); }, {passive:false});
+  }
+
+  function start(){ if(active) return; active = true; launch(); timer = setInterval(()=>{ if(Math.random()>.35) launch(); }, 2600); }
+  function stop(){ active = false; clearInterval(timer); }
+
+  const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? start() : stop()), {threshold:.2});
+  io.observe($('wish'));
+
+  openBtn.addEventListener('click', openLetter);
+})();
+
+/* =======================================================================
+   LUNA (momento íntimo)
+   ======================================================================= */
+$('lunaMoon').addEventListener('click', () => {
+  $('lunaMore').classList.add('show');
+  $('lunaHint').classList.add('gone');
+});
+
+/* =======================================================================
+   LA CARTA
+   ======================================================================= */
+let curLang = 'es', started = false, letterSeen = false;
+const T = {
+  es: { keep:'para que te la quedes', pdf:'Guardar en PDF', txt:'Descargar el texto' },
+  en: { keep:'so you can keep it',    pdf:'Save as PDF',    txt:'Download the text' }
+};
+const read = $('read'), readSheet = $('readSheet'), readContent = $('readContent'),
+      readText = $('readText'), readTo = $('readTo'), readSign = $('readSign'), readHint = $('readHint');
+
+function setLang(l){
+  const L = LETTER[l]; curLang = l;
+  readText.textContent = L.body;
+  readTo.innerHTML = L.to;
+  readSign.textContent = L.sign;
+  $('langEs').classList.toggle('on', l==='es');
+  $('langEn').classList.toggle('on', l==='en');
+  $('readKeep').textContent = T[l].keep;
+  $('btnPdf').textContent = T[l].pdf;
+  $('btnTxt').textContent = T[l].txt;
+  document.documentElement.setAttribute('lang', l);
+}
+$('langEs').addEventListener('click', ()=>setLang('es'));
+$('langEn').addEventListener('click', ()=>setLang('en'));
+setLang('es');
+
+function openLetter(){
+  read.classList.add('open');
+  if(window.lenis) lenis.stop();
+  readContent.scrollTop = 0; readHint.classList.remove('gone');
+  setTimeout(()=>readSheet.classList.add('in'), 60);
+  letterSeen = true;
+}
+function closeLetter(){ read.classList.remove('open'); readSheet.classList.remove('in'); if(window.lenis && started) lenis.start(); }
+$('readClose').addEventListener('click', closeLetter);
+read.addEventListener('click', e => { if(e.target===read) closeLetter(); });
+readContent.addEventListener('scroll', () => readHint.classList.toggle('gone', readContent.scrollTop > 24));
+addEventListener('keydown', e => { if(e.key==='Escape' && read.classList.contains('open')) closeLetter(); });
+
+/* guardar la carta */
+const plano = s => s.replace(/<br\s*\/?>/gi,'\n').replace(/<[^>]+>/g,'').trim();
+function cartaEnTexto(){
+  const L = LETTER[curLang];
+  return [ plano(L.to), '', L.body, '', L.sign, '',
+    curLang==='es' ? 'K & S · Capítulo III · 21 de septiembre de 2026'
+                   : 'K & S · Chapter III · September 21, 2026' ].join('\n');
+}
+$('btnPdf').addEventListener('click', () => {
+  const antes = document.title;
+  document.title = curLang==='es' ? 'Carta para Samanta — Capítulo III' : 'A letter for Samanta — Chapter III';
+  readHint.classList.add('gone');
+  const restaurar = () => { document.title = antes; };
+  window.addEventListener('afterprint', restaurar, { once:true });
+  setTimeout(()=>{ window.print(); setTimeout(restaurar, 1500); }, 60);
+});
+$('btnTxt').addEventListener('click', () => {
+  const nombre = curLang==='es' ? 'Carta de Keyder - Capitulo III.txt' : 'A letter from Keyder - Chapter III.txt';
+  const blob = new Blob(['\ufeff' + cartaEnTexto()], { type:'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = nombre;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 4000);
+});
+
+/* =======================================================================
+   MÚSICA (YouTube), como en los otros capítulos
+   ======================================================================= */
+const orbit = $('orbit'), player = $('player');
+let yt = null, ytReady = false, wantPlay = false, ytFailed = false;
+$('songLink').href = 'https://youtu.be/' + CONFIG.VIDEO_ID;
+
+function markNoDisc(){
+  if(ytFailed) return; ytFailed = true;
+  player.classList.add('empty'); orbit.setAttribute('aria-disabled','true');
+  $('playerCap').innerHTML = '<b>sin señal</b>el planeta no carga';
+}
+window.onYouTubeIframeAPIReady = function(){
+  yt = new YT.Player('ytplayer', {
+    width:'150', height:'84', videoId:CONFIG.VIDEO_ID,
+    playerVars:{ autoplay:0, controls:0, rel:0, modestbranding:1, playsinline:1, loop:1, playlist:CONFIG.VIDEO_ID },
+    events:{
+      onReady:()=>{ ytReady=true; player.classList.remove('empty'); orbit.removeAttribute('aria-disabled'); if(wantPlay) playSong(); },
+      onStateChange:e=>{
+        if(e.data===YT.PlayerState.PLAYING) orbit.classList.add('playing'); else orbit.classList.remove('playing');
+        if(e.data===YT.PlayerState.ENDED){ yt.seekTo(0); yt.playVideo(); }
+      },
+      onError: markNoDisc
+    }
+  });
+};
+(function(){ const s=document.createElement('script'); s.src='https://www.youtube.com/iframe_api'; s.onerror=markNoDisc; document.head.appendChild(s); })();
+setTimeout(()=>{ if(!ytReady) markNoDisc(); }, 9000);
+
+function playSong(){
+  if(!ytReady || !yt){ wantPlay = true; return; }
+  try{
+    yt.setVolume(0); yt.playVideo();
+    let v = 0; const fade = setInterval(()=>{ v=Math.min(CONFIG.VOLUMEN, v+4); try{ yt.setVolume(v); }catch(_){} if(v>=CONFIG.VOLUMEN) clearInterval(fade); }, 90);
+  }catch(e){ markNoDisc(); }
+}
+orbit.addEventListener('click', () => {
+  if(!ytReady || !yt) return;
+  try{ yt.getPlayerState()===YT.PlayerState.PLAYING ? yt.pauseVideo() : playSong(); }catch(_){}
+});
+
+/* =======================================================================
+   GUARDAR LA PÁGINA
+   ======================================================================= */
+const saveBtn = $('saveBtn');
+if(saveBtn){
+  try{ if(localStorage.getItem('ks_m3_saved')) $('saveDone').classList.add('show'); }catch(_){}
+  saveBtn.addEventListener('click', () => {
+    $('saveTip').classList.add('show'); $('saveDone').classList.add('show');
+    try{ localStorage.setItem('ks_m3_saved','1'); }catch(_){}
+  });
+}
+
+/* =======================================================================
+   APERTURA + SCROLL + ANIMACIONES
+   ======================================================================= */
+const opener = $('opener');
+$('openBtn').addEventListener('click', () => {
+  opener.classList.add('gone');
+  document.documentElement.classList.remove('locked');
+  started = true;
+  $('back').classList.add('show');
+  player.classList.add('show');
+  playSong();
+  if(window.lenis) lenis.start();
+  setTimeout(()=>{ opener.style.display='none'; if(window.ScrollTrigger) ScrollTrigger.refresh(); }, 1400);
+});
+
+function basicReveal(){
+  document.documentElement.classList.add('no-gsap');
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if(e.isIntersecting){ e.target.style.opacity=1; e.target.style.transform='none'; io.unobserve(e.target); }
+  }), {threshold:.12});
+  document.querySelectorAll('[data-anim]').forEach(el => {
+    el.style.opacity=0; el.style.transition='opacity .9s ease, transform .9s ease'; io.observe(el);
+  });
+  const ec = $('endConst'); if(ec){ ec.classList.add('on'); constellation(ec.querySelector('svg'),'SK','#fff'); }
+}
+function initMotion(){
+  if(!(window.gsap && window.ScrollTrigger)){ basicReveal(); return; }
+  gsap.registerPlugin(ScrollTrigger);
+  if(window.Lenis){
+    window.lenis = new Lenis({ lerp:.09, smoothWheel:true });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(t=>lenis.raf(t*1000)); gsap.ticker.lagSmoothing(0);
+    if(!started) lenis.stop();
+  }
+  gsap.utils.toArray('[data-anim]').forEach(el => {
+    gsap.from(el, { y:40, opacity:0, duration:1.15, ease:'power3.out', scrollTrigger:{ trigger:el, start:'top 90%' } });
+  });
+  /* estrellas del mapa: aparecen escalonadas + redibuja líneas */
+  gsap.utils.toArray('.starpic').forEach((el,i) => {
+    gsap.from(el, { scale:0, opacity:0, duration:.7, ease:'back.out(1.7)', delay:(i%8)*.05,
+      scrollTrigger:{ trigger:'#map', start:'top 70%' } });
+  });
+  ScrollTrigger.create({ trigger:'#map', start:'top 60%', onEnter:()=>setTimeout(drawLines, 900), onRefresh:drawLines });
+  /* constelación final */
+  const ec = $('endConst');
+  if(ec){ constellation(ec.querySelector('svg'),'SK','#fff');
+    ScrollTrigger.create({ trigger:'#end', start:'top 60%', once:true, onEnter:()=>ec.classList.add('on') }); }
+  ScrollTrigger.refresh();
+}
+
+/* =======================================================================
+   ARRANQUE
+   ======================================================================= */
+(async function boot(){
+  let list = [];
+  try{ list = await findPhotos(); }catch(_){}
+  PHOTOS = list;
+  buildMap(list);
+  if(document.readyState==='complete') initMotion();
+  else addEventListener('load', initMotion, { once:true });
+  setTimeout(()=>{ if(window.ScrollTrigger) ScrollTrigger.refresh(); drawLines(); }, 1300);
+})();
+</script>
+</body>
+</html>
