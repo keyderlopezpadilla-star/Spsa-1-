@@ -6,12 +6,38 @@ Sitio de aniversario, escrito por capítulos. Un capítulo por mes.
 
 ```
 index.html          → pantalla de la clave + selector de capítulos
-mes-1.html          → Capítulo I  · Nuestro primer mes (21 jun — 21 jul)
-mes-2.html          → Capítulo II · Dos meses contigo (21 jul — 21 ago)
+mes-1.html          → Capítulo I   · Nuestro primer mes (21 jun — 21 jul)
+mes-2.html          → Capítulo II  · Dos meses contigo (21 jul — 21 ago)
+mes-3.html          → Capítulo III · Nuestro propio universo (21 ago — 21 sep)
 media/              → fotos y videos del Capítulo I  (f01…f56.jpg, v1…v5.mp4)
-media/m2/           → fotos y música del Capítulo II (p01…p16.jpg, audio)
+media/m2/           → fotos del Capítulo II (p01…p42.jpg, q01…q20.jpg)
+media/m3/           → fotos del Capítulo III (p01…p93.jpg)
 fotos-originales/   → los originales del móvil, sin publicar (respaldo)
 ```
+
+## Capítulo III — Nuestro propio universo
+
+Una experiencia nocturna y celestial, distinta del cine del primer mes y del
+romance vintage del segundo. Azul medianoche, violeta, blanco lunar y dorado;
+tipografías Fraunces, Cormorant Garamond y Dancing Script.
+
+| Sección | Qué es |
+|---|---|
+| Entrada | Una estrella que se toca para abrir el universo y arrancar la música |
+| Hero | «Nuestro propio universo» con las iniciales **K & S** dibujadas como constelación |
+| Tres astros | Un sol, una luna violeta y un planeta azul, uno por capítulo; al tocarlos aparece una frase |
+| Mapa estelar | Las 93 fotos del mes, cada una una estrella con halo, conectadas por líneas de constelación; se abren rodeadas de luz |
+| Estrella fugaz | Cruzan estrellas fugaces; al atrapar una se desbloquea la carta secreta |
+| La luna | Momento íntimo: al tocar la luna se revela un texto lento |
+| La carta | Cápsula del universo con la carta de los tres meses, Español / English y opción de guardarla |
+| Final | Las estrellas forman **S & K** y «El universo continúa expandiéndose…» |
+
+- Música: **[nuestra canción](https://youtu.be/OFcKm-5jSQE)** desde YouTube, con el
+  planeta y las lunas girando mientras suena. Se cambia en `CONFIG.VIDEO_ID`.
+- Las 93 fotos van ordenadas por su fecha real (23 ago — 14 sep), sin duplicados
+  (verificado con huella perceptual), reducidas a 1400 px: 14.8 MB frente a los
+  ~220 MB originales.
+- La foto más grande del mapa (la primera) se marca en `CONFIG.destacadas`.
 
 La clave de acceso es **`iloveyou`**. No distingue mayúsculas, acentos ni espacios.
 Se guarda en el navegador, así que solo hay que escribirla la primera vez.
