@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#140C1C">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Subir fotos">
+<title>Subir fotos — K &amp; S</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%B7%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; }
+:root{
+  --bg:#140C1C; --bg-2:#1E1428; --card:#251A31; --card-2:#2E2240;
+  --text:#FFF4EA; --dim:rgba(255,244,234,.66); --faint:rgba(255,244,234,.4);
+  --line:rgba(255,220,190,.14); --amber:#FFB46B; --coral:#FF8A6B; --rose:#EE7A94;
+  --ok:#7FD6A8; --warn:#FFC86B; --bad:#FF7A86;
+  --grad:linear-gradient(120deg,#FFB46B,#FF8A6B 45%,#EE7A94);
+  --serif:'Instrument Serif',Georgia,serif; --sans:'Manrope',system-ui,sans-serif;
+  --r:18px;
+}
+html{ -webkit-text-size-adjust:100%; }
+body{ font-family:var(--sans); background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; min-height:100svh;
+  background-image:radial-gradient(ellipse 120% 60% at 50% -10%, rgba(255,138,107,.22), transparent 60%),
+                   radial-gradient(ellipse 80% 50% at 100% 0%, rgba(238,122,148,.14), transparent 60%);
+  background-attachment:fixed; padding-bottom:120px; }
+button, input, select, textarea{ font:inherit; color:inherit; }
+button{ background:none; border:none; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+:focus-visible{ outline:2px solid var(--amber); outline-offset:2px; }
+.wrap{ width:min(860px,100%); margin:0 auto; padding:0 16px; }
+
+/* ---------- cabecera ---------- */
+header{ padding:max(18px,env(safe-area-inset-top)) 0 8px; }
+.bar{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.brand{ display:flex; align-items:center; gap:10px; font-size:.7rem; letter-spacing:.24em; text-transform:uppercase; color:var(--dim); }
+.brand i{ width:22px; height:22px; border-radius:50%; background:radial-gradient(circle at 40% 35%,#FFF1D6,#FFB46B 55%,#FF7A5A); box-shadow:0 0 16px rgba(255,160,100,.6); }
+.icon{ width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:1px solid var(--line); background:var(--bg-2); }
+.icon svg{ width:19px; height:19px; }
+h1{ font-family:var(--serif); font-weight:400; font-size:clamp(2.4rem,10vw,3.4rem); line-height:1; margin:1.4rem 0 .5rem; }
+h1 em{ font-style:italic; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.lead{ color:var(--dim); font-size:.95rem; line-height:1.55; }
+
+.select{ position:relative; margin-top:1.2rem; }
+.select select{ appearance:none; -webkit-appearance:none; width:100%; padding:.95rem 2.6rem .95rem 1rem; border-radius:14px;
+  background:var(--bg-2); border:1px solid var(--line); font-weight:600; }
+.select::after{ content:'⌄'; position:absolute; right:16px; top:50%; transform:translateY(-62%); color:var(--faint); pointer-events:none; }
+
+/* ---------- configuración ---------- */
+.panel{ margin-top:1.2rem; padding:1.2rem; border-radius:var(--r); background:var(--card); border:1px solid var(--line); }
+.panel h2{ font-family:var(--serif); font-weight:400; font-size:1.6rem; margin-bottom:.4rem; }
+.panel p{ color:var(--dim); font-size:.88rem; line-height:1.55; }
+.steps{ margin:1rem 0 1.1rem 1.1rem; color:var(--dim); font-size:.88rem; line-height:1.6; }
+.steps li{ margin-bottom:.35rem; }
+.steps b{ color:var(--text); }
+.steps a{ color:var(--amber); }
+.field{ display:block; margin-top:.8rem; }
+.field span{ display:block; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--faint); margin-bottom:.4rem; }
+.field input{ width:100%; padding:.85rem .95rem; border-radius:12px; background:var(--bg); border:1px solid var(--line); outline:none; }
+.field input:focus{ border-color:rgba(255,180,107,.6); }
+.row{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
+.btn{ display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:.9rem 1.3rem; border-radius:99px;
+  font-weight:700; font-size:.82rem; letter-spacing:.04em; transition:transform .2s ease, opacity .2s ease, background .2s ease; }
+.btn:active{ transform:scale(.97); }
+.btn--main{ background:var(--grad); color:#2A1020; box-shadow:0 10px 30px rgba(255,120,100,.3); }
+.btn--ghost{ border:1px solid var(--line); background:var(--bg-2); }
+.btn[disabled]{ opacity:.45; pointer-events:none; }
+.actions{ display:flex; gap:8px; flex-wrap:wrap; margin-top:1rem; }
+.msg{ margin-top:.8rem; font-size:.85rem; min-height:1.2em; }
+.msg.ok{ color:var(--ok); } .msg.bad{ color:var(--bad); }
+
+/* ---------- zona para elegir ---------- */
+.drop{ position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:.5rem;
+  margin-top:1.2rem; padding:2.2rem 1rem; border-radius:24px; border:1.5px dashed rgba(255,180,107,.4);
+  background:linear-gradient(160deg, rgba(255,180,107,.08), rgba(238,122,148,.05)); transition:background .3s ease, border-color .3s ease; }
+.drop.over{ background:rgba(255,180,107,.16); border-color:var(--amber); }
+.drop input{ position:absolute; inset:0; opacity:0; cursor:pointer; }
+.drop__plus{ width:62px; height:62px; border-radius:50%; background:var(--grad); display:flex; align-items:center; justify-content:center;
+  color:#2A1020; font-size:2rem; font-weight:300; box-shadow:0 10px 30px rgba(255,120,100,.35); margin-bottom:.4rem; }
+.drop b{ font-size:1.05rem; }
+.drop small{ color:var(--faint); font-size:.78rem; line-height:1.5; }
+
+/* ---------- listas de fotos ---------- */
+.sec{ margin-top:2rem; }
+.sec__h{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:.8rem; }
+.sec__h h3{ font-family:var(--serif); font-weight:400; font-size:1.7rem; }
+.sec__h span{ font-size:.72rem; color:var(--faint); }
+.list{ display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr)); gap:10px; }
+.item{ display:grid; grid-template-columns:92px 1fr; gap:12px; padding:10px; border-radius:16px; background:var(--card); border:1px solid var(--line);
+  transition:opacity .3s ease, border-color .3s ease; }
+.item__img{ position:relative; width:92px; height:118px; border-radius:11px; overflow:hidden; background:var(--card-2); }
+.item__img img{ width:100%; height:100%; object-fit:cover; display:block; }
+.item__img .spin{ position:absolute; inset:0; margin:auto; width:26px; height:26px; border-radius:50%; border:2px solid var(--line); border-top-color:var(--amber); animation:spin 1s linear infinite; }
+@keyframes spin{ to{ transform:rotate(360deg); } }
+.item__body{ min-width:0; display:flex; flex-direction:column; gap:6px; }
+.item__top{ display:flex; justify-content:space-between; align-items:center; gap:6px; }
+.tag{ font-size:.62rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:.25rem .5rem; border-radius:99px; background:var(--card-2); color:var(--dim); white-space:nowrap; }
+.tag.ok{ color:#163A26; background:var(--ok); } .tag.warn{ color:#3A2A08; background:var(--warn); } .tag.bad{ color:#3A0A10; background:var(--bad); }
+.x{ width:30px; height:30px; border-radius:50%; color:var(--faint); border:1px solid var(--line); font-size:.8rem; flex:none; }
+.item input[type=text], .item input[type=datetime-local]{ width:100%; padding:.55rem .65rem; border-radius:10px; background:var(--bg); border:1px solid var(--line);
+  font-size:.82rem; outline:none; min-width:0; }
+.item input:focus{ border-color:rgba(255,180,107,.6); }
+.item input[type=datetime-local]{ color-scheme:dark; }
+.item__note{ font-size:.7rem; color:var(--faint); line-height:1.4; }
+.item__note b{ color:var(--warn); font-weight:600; }
+.item.del{ opacity:.45; border-color:rgba(255,122,134,.5); }
+.item.del .item__img img{ filter:grayscale(1); }
+.item.skip{ opacity:.55; }
+.link{ font-size:.72rem; color:var(--amber); text-decoration:underline; text-underline-offset:2px; align-self:flex-start; }
+.none{ color:var(--faint); font-size:.88rem; padding:1rem 0; }
+
+/* ---------- barra inferior ---------- */
+.dock{ position:fixed; left:0; right:0; bottom:0; z-index:20; padding:12px 16px max(12px,env(safe-area-inset-bottom));
+  background:linear-gradient(180deg, rgba(20,12,28,0), rgba(20,12,28,.94) 30%); }
+.dock__in{ width:min(860px,100%); margin:0 auto; display:flex; align-items:center; gap:12px; padding:10px 10px 10px 16px;
+  border-radius:99px; background:rgba(37,26,49,.92); border:1px solid var(--line); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
+.dock__sum{ flex:1; font-size:.8rem; color:var(--dim); line-height:1.3; }
+.dock__sum b{ color:var(--text); }
+
+/* ---------- progreso ---------- */
+.ov{ position:fixed; inset:0; z-index:40; display:flex; align-items:center; justify-content:center; padding:16px;
+  background:rgba(12,6,18,.78); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); opacity:0; pointer-events:none; transition:opacity .3s ease; }
+.ov.open{ opacity:1; pointer-events:auto; }
+.ov__card{ width:min(420px,100%); padding:1.6rem 1.4rem; border-radius:24px; background:var(--card); border:1px solid var(--line); text-align:center; }
+.ov__sun{ width:64px; height:64px; margin:0 auto 1rem; border-radius:50%; background:radial-gradient(circle at 40% 35%,#FFF1D6,#FFB46B 55%,#FF7A5A);
+  box-shadow:0 0 40px rgba(255,160,100,.55); animation:pulse 1.8s ease-in-out infinite; }
+.ov.done .ov__sun{ animation:none; }
+@keyframes pulse{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.1); } }
+.ov h4{ font-family:var(--serif); font-weight:400; font-size:1.8rem; }
+.ov p{ color:var(--dim); font-size:.9rem; margin-top:.4rem; line-height:1.5; }
+.meter{ height:6px; border-radius:99px; background:var(--bg); overflow:hidden; margin:1.2rem 0 .4rem; }
+.meter i{ display:block; height:100%; width:0; background:var(--grad); transition:width .3s ease; }
+.ov .actions{ justify-content:center; }
+[hidden]{ display:none !important; }
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <div class="bar">
+    <span class="brand"><i></i>K &amp; S · fotos</span>
+    <button class="icon" id="gear" aria-label="Configuración">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    </button>
+  </div>
+  <h1>Subir <em>fotos</em></h1>
+  <p class="lead">Elige las fotos desde el móvil. Se ordenan solas por la fecha en que las tomaste, se comprimen aquí mismo y quedan publicadas en el capítulo con un solo toque.</p>
+  <div class="select"><select id="chapter" aria-label="Capítulo"></select></div>
+</header>
+
+<main class="wrap">
+
+  <!-- ===== configuración (solo la primera vez) ===== -->
+  <section class="panel" id="setup" hidden>
+    <h2>Conectar con GitHub</h2>
+    <p>Solo se hace una vez en este móvil. La llave se guarda únicamente aquí, en este navegador.</p>
+    <ol class="steps">
+      <li>Abre <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com → Fine-grained token</a>.</li>
+      <li>En <b>Repository access</b> elige <b>Only select repositories</b> y marca solo este repositorio.</li>
+      <li>En <b>Permissions → Contents</b> elige <b>Read and write</b>. Nada más.</li>
+      <li>Crea el token, cópialo y pégalo abajo.</li>
+    </ol>
+    <label class="field"><span>Token</span><input id="token" type="password" placeholder="github_pat_…" autocomplete="off" autocapitalize="off" spellcheck="false"></label>
+    <div class="row">
+      <label class="field"><span>Usuario</span><input id="owner" autocapitalize="off" spellcheck="false"></label>
+      <label class="field"><span>Repositorio</span><input id="repo" autocapitalize="off" spellcheck="false"></label>
+      <label class="field"><span>Rama</span><input id="branch" autocapitalize="off" spellcheck="false"></label>
+    </div>
+    <div class="actions">
+      <button class="btn btn--main" id="saveCfg">Conectar</button>
+      <button class="btn btn--ghost" id="forget" hidden>Olvidar en este móvil</button>
+      <button class="btn btn--ghost" id="closeCfg" hidden>Cerrar</button>
+    </div>
+    <p class="msg" id="cfgMsg"></p>
+  </section>
+
+  <!-- ===== elegir ===== -->
+  <section id="app" hidden>
+    <label class="drop" id="drop">
+      <input type="file" id="files" accept="image/*,.heic,.heif" multiple>
+      <span class="drop__plus">+</span>
+      <b>Elegir fotos</b>
+      <small>De la galería o la cámara. JPG, PNG o HEIC.<br>Se reducen a 1400 px y se les quita la ubicación GPS.</small>
+    </label>
+
+    <div class="sec" id="queueSec" hidden>
+      <div class="sec__h"><h3>Nuevas</h3><span id="queueInfo"></span></div>
+      <div class="list" id="queue"></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec__h"><h3>Ya publicadas</h3><span id="pubInfo">cargando…</span></div>
+      <div class="list" id="published"></div>
+    </div>
+  </section>
+</main>
+
+<div class="dock" id="dock" hidden>
+  <div class="dock__in">
+    <div class="dock__sum" id="sum">Nada que publicar todavía</div>
+    <button class="btn btn--main" id="publish" disabled>Publicar</button>
+  </div>
+</div>
+
+<div class="ov" id="ov">
+  <div class="ov__card">
+    <div class="ov__sun"></div>
+    <h4 id="ovT">Publicando…</h4>
+    <p id="ovP">No cierres esta pantalla.</p>
+    <div class="meter"><i id="ovBar"></i></div>
+    <div class="actions" id="ovAct" hidden>
+      <a class="btn btn--main" id="ovSee" href="#">Ver el capítulo</a>
+      <button class="btn btn--ghost" id="ovClose">Seguir subiendo</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =======================================================================
+   CAPÍTULOS — para el V, añade una línea más aquí
+   ======================================================================= */
+const CHAPTERS = [
+  { id:'m4', name:'Capítulo IV · A la orilla de ti', dir:'media/m4/', page:'mes-4.html' }
+];
+const DEFAULTS = { owner:'keyderlopezpadilla-star', repo:'Spsa-1-', branch:'main' };
+const MAX_SIDE = 1400, QUALITY = .82, DUP_DIST = 6;
+const LIBS = {
+  exifr:   'https://cdn.jsdelivr.net/npm/exifr@7.1.3/dist/full.umd.js',
+  heic2any:'https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js'
+};
+/* ======================================================================= */
+
+const $ = id => document.getElementById(id);
+const store = {
+  get(k, d){ try{ const v = localStorage.getItem('ks_up_'+k); return v === null ? d : v; }catch(_){ return d; } },
+  set(k, v){ try{ localStorage.setItem('ks_up_'+k, v); }catch(_){} },
+  del(k){ try{ localStorage.removeItem('ks_up_'+k); }catch(_){} }
+};
+const cfg = () => ({ token:store.get('token',''), owner:store.get('owner',DEFAULTS.owner), repo:store.get('repo',DEFAULTS.repo), branch:store.get('branch',DEFAULTS.branch) });
+let chapter = CHAPTERS.find(c => c.id === store.get('chapter')) || CHAPTERS[0];
+
+/* estado */
+let manifest = { version:1, photos:[] };   // tal como está publicado
+let queue = [];                             // fotos nuevas en proceso
+const removed = new Set();                  // archivos publicados marcados para borrar
+const edits = new Map();                    // file → { caption?, taken? }
+
+/* =======================================================================
+   GITHUB
+   ======================================================================= */
+async function gh(path, opts = {}){
+  const c = cfg();
+  const r = await fetch('https://api.github.com/repos/' + c.owner + '/' + c.repo + path, {
+    ...opts,
+    headers:{ 'Authorization':'Bearer ' + c.token, 'Accept':'application/vnd.github+json', 'X-GitHub-Api-Version':'2022-11-28',
+      ...(opts.body ? { 'Content-Type':'application/json' } : {}), ...(opts.headers || {}) }
+  });
+  if(!r.ok){
+    const e = new Error('GitHub ' + r.status); e.status = r.status;
+    try{ e.detail = (await r.json()).message; }catch(_){}
+    throw e;
+  }
+  return r.status === 204 ? null : (opts.raw ? r : r.json());
+}
+const b64ToText = b => new TextDecoder().decode(Uint8Array.from(atob(b.replace(/\s/g,'')), c => c.charCodeAt(0)));
+
+async function fetchManifest(ref){
+  try{
+    const j = await gh('/contents/' + chapter.dir + 'manifest.json?ref=' + encodeURIComponent(ref));
+    const m = JSON.parse(b64ToText(j.content));
+    m.photos = Array.isArray(m.photos) ? m.photos : [];
+    return m;
+  }catch(e){
+    if(e.status === 404) return { version:1, photos:[] };
+    throw e;
+  }
+}
+
+function blobToB64(blob){
+  return new Promise((res, rej) => {
+    const fr = new FileReader();
+    fr.onload = () => res(String(fr.result).split(',')[1]);
+    fr.onerror = rej; fr.readAsDataURL(blob);
+  });
+}
+
+/* =======================================================================
+   PROCESADO DE IMÁGENES — todo ocurre en el móvil
+   ======================================================================= */
+const loaded = {};
+function lib(name){
+  if(!loaded[name]) loaded[name] = new Promise((res, rej) => {
+    const s = document.createElement('script'); s.src = LIBS[name];
+    s.onload = () => res(window[name]); s.onerror = () => { loaded[name] = null; rej(new Error('No se pudo cargar ' + name)); };
+    document.head.appendChild(s);
+  });
+  return loaded[name];
+}
+const isHeic = f => /hei[cf]/i.test(f.type) || /\.hei[cf]$/i.test(f.name);
+const pad = n => String(n).padStart(2,'0');
+const naive = d => d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate()) + 'T' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds());
+
+/* la fecha real: EXIF → nombre del archivo → fecha del archivo */
+async function readTaken(file){
+  try{
+    const exifr = await lib('exifr');
+    const x = await exifr.parse(file, ['DateTimeOriginal','CreateDate']);
+    const d = x && (x.DateTimeOriginal || x.CreateDate);
+    if(d instanceof Date && !isNaN(d)) return { taken:naive(d), src:'exif' };
+  }catch(_){}
+  let m = /(20\d{2})(\d{2})(\d{2})[_-](\d{2})(\d{2})(\d{2})/.exec(file.name);
+  if(m) return { taken:`${m[1]}-${m[2]}-${m[3]}T${m[4]}:${m[5]}:${m[6]}`, src:'nombre' };
+  m = /(20\d{2})-(\d{2})-(\d{2}) at (\d{1,2})\.(\d{2})\.(\d{2})/.exec(file.name);
+  if(m) return { taken:`${m[1]}-${m[2]}-${m[3]}T${pad(m[4])}:${m[5]}:${m[6]}`, src:'nombre' };
+  return { taken:naive(new Date(file.lastModified || Date.now())), src:'archivo' };
+}
+
+function decode(blob){
+  return new Promise((res, rej) => {
+    const url = URL.createObjectURL(blob), img = new Image();
+    img.onload = () => res({ img, url }); img.onerror = () => { URL.revokeObjectURL(url); rej(new Error('decode')); };
+    img.src = url;
+  });
+}
+
+async function processFile(file){
+  const { taken, src } = await readTaken(file);
+  let dec;
+  try{ dec = await decode(file); }
+  catch(e){
+    if(!isHeic(file)) throw new Error('Formato no compatible');
+    const heic2any = await lib('heic2any');
+    let out = await heic2any({ blob:file, toType:'image/jpeg', quality:.92 });
+    if(Array.isArray(out)) out = out[0];
+    dec = await decode(out);
+  }
+  const { img, url } = dec;
+  const k = Math.min(1, MAX_SIDE / Math.max(img.naturalWidth, img.naturalHeight));
+  const w = Math.round(img.naturalWidth*k), h = Math.round(img.naturalHeight*k);
+  const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
+  const cx = cv.getContext('2d'); cx.imageSmoothingEnabled = true; cx.imageSmoothingQuality = 'high';
+  cx.drawImage(img, 0, 0, w, h);
+  URL.revokeObjectURL(url);
+  const blob = await new Promise((res, rej) => cv.toBlob(b => b ? res(b) : rej(new Error('encode')), 'image/jpeg', QUALITY));
+  /* huella perceptual (dHash 64 bits) + color medio */
+  const s = document.createElement('canvas'); s.width = 9; s.height = 8;
+  const sx = s.getContext('2d', { willReadFrequently:true }); sx.drawImage(cv, 0, 0, 9, 8);
+  const px = sx.getImageData(0,0,9,8).data;
+  const lum = i => px[i*4]*.299 + px[i*4+1]*.587 + px[i*4+2]*.114;
+  let bits = 0n, R = 0, G = 0, B = 0;
+  for(let y=0;y<8;y++) for(let x=0;x<8;x++){ bits = (bits << 1n) | (lum(y*9+x) > lum(y*9+x+1) ? 1n : 0n); }
+  for(let i=0;i<72;i++){ R += px[i*4]; G += px[i*4+1]; B += px[i*4+2]; }
+  const hex = v => Math.round(v*.7).toString(16).padStart(2,'0');
+  return { blob, w, h, taken, dateSrc:src, hash:bits.toString(16).padStart(16,'0'),
+           color:'#' + hex(R/72) + hex(G/72) + hex(B/72), thumb:URL.createObjectURL(blob) };
+}
+
+const hamming = (a, b) => { let x = BigInt('0x'+a) ^ BigInt('0x'+b), n = 0; while(x){ n += Number(x & 1n); x >>= 1n; } return n; };
+function findDup(hash, selfId){
+  for(const p of manifest.photos){ if(!removed.has(p.file) && p.hash && hamming(hash, p.hash) <= DUP_DIST) return 'ya publicada';
+  }
+  for(const q of queue){ if(q.id !== selfId && q.hash && q.state !== 'skip' && hamming(hash, q.hash) <= DUP_DIST) return 'repetida en esta tanda'; }
+  return null;
+}
+
+/* =======================================================================
+   COLA
+   ======================================================================= */
+let qid = 0, working = false;
+function addFiles(list){
+  const files = [...list].filter(f => /^image\//.test(f.type) || isHeic(f));
+  if(!files.length) return;
+  files.forEach(f => queue.push({ id:++qid, file:f, state:'wait', caption:'', include:true }));
+  renderQueue(); pump();
+}
+async function pump(){
+  if(working) return; working = true;
+  let q;
+  while((q = queue.find(x => x.state === 'wait'))){
+    q.state = 'work'; renderQueue();
+    try{
+      Object.assign(q, await processFile(q.file));
+      const dup = findDup(q.hash, q.id);
+      q.state = dup ? 'dup' : 'ready'; q.dupWhy = dup; q.include = !dup;
+    }catch(e){ q.state = 'error'; q.err = e.message; q.include = false; }
+    renderQueue();
+  }
+  working = false;
+}
+const fileName = q => q.taken.replace(/[-:]/g,'').replace('T','-') + '-' + q.hash.slice(0,6) + '.jpg';
+
+function renderQueue(){
+  $('queueSec').hidden = !queue.length;
+  const host = $('queue');
+  const ready = queue.filter(q => q.include && (q.state === 'ready' || q.state === 'dup')).length;
+  const busy = queue.filter(q => q.state === 'wait' || q.state === 'work').length;
+  $('queueInfo').textContent = busy ? 'preparando ' + busy + '…' : ready + ' lista' + (ready === 1 ? '' : 's');
+  host.innerHTML = queue.map(q => {
+    let tag = '<span class="tag">en espera</span>', note = '';
+    if(q.state === 'work') tag = '<span class="tag">preparando</span>';
+    if(q.state === 'ready') tag = '<span class="tag ok">lista</span>';
+    if(q.state === 'dup') tag = q.include ? '<span class="tag warn">se subirá igual</span>' : '<span class="tag warn">repetida</span>';
+    if(q.state === 'error') tag = '<span class="tag bad">error</span>';
+    if(q.state === 'dup') note = '<span class="item__note"><b>Parece ' + q.dupWhy + '.</b></span><button class="link" data-act="force">' + (q.include ? 'no subirla' : 'subirla igualmente') + '</button>';
+    if(q.state === 'error') note = '<span class="item__note">' + q.err + '</span>';
+    if((q.state === 'ready' || q.state === 'dup') && q.dateSrc !== 'exif') note += '<span class="item__note"><b>Fecha aproximada</b> (del ' + q.dateSrc + '). Corrígela si hace falta.</span>';
+    const fields = (q.state === 'ready' || q.state === 'dup')
+      ? '<input type="text" data-f="caption" placeholder="Un texto (opcional)" value="' + esc(q.caption) + '" maxlength="140">'
+      + '<input type="datetime-local" data-f="taken" step="60" value="' + q.taken.slice(0,16) + '">'
+      : '';
+    return '<div class="item' + (q.include || q.state === 'wait' || q.state === 'work' ? '' : ' skip') + '" data-id="' + q.id + '">'
+      + '<div class="item__img">' + (q.thumb ? '<img src="' + q.thumb + '" alt="">' : '<span class="spin"></span>') + '</div>'
+      + '<div class="item__body"><div class="item__top">' + tag + '<button class="x" data-act="drop" aria-label="Quitar">✕</button></div>'
+      + fields + note + '</div></div>';
+  }).join('');
+  updateDock();
+}
+const esc = s => String(s || '').replace(/[&<>"]/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]));
+
+$('queue').addEventListener('click', e => {
+  const b = e.target.closest('[data-act]'); if(!b) return;
+  const q = queue.find(x => x.id === +b.closest('.item').dataset.id); if(!q) return;
+  if(b.dataset.act === 'drop'){ if(q.thumb) URL.revokeObjectURL(q.thumb); queue = queue.filter(x => x !== q); }
+  if(b.dataset.act === 'force') q.include = !q.include;
+  renderQueue();
+});
+$('queue').addEventListener('change', e => {
+  const f = e.target.dataset.f; if(!f) return;
+  const q = queue.find(x => x.id === +e.target.closest('.item').dataset.id); if(!q) return;
+  if(f === 'caption') q.caption = e.target.value.trim();
+  if(f === 'taken' && e.target.value){ q.taken = e.target.value + ':00'; q.dateSrc = 'exif'; renderQueue(); }
+});
+
+/* =======================================================================
+   PUBLICADAS
+   ======================================================================= */
+async function loadPublished(){
+  $('pubInfo').textContent = 'cargando…';
+  try{
+    manifest = await fetchManifest(cfg().branch);
+    renderPublished();
+  }catch(e){
+    $('pubInfo').textContent = '';
+    $('published').innerHTML = '<p class="none">No se pudo leer el capítulo (' + (e.detail || e.message) + '). Revisa la configuración.</p>';
+  }
+}
+function renderPublished(){
+  const list = [...manifest.photos].sort((a,b) => (a.taken||'').localeCompare(b.taken||''));
+  $('pubInfo').textContent = list.length + ' foto' + (list.length === 1 ? '' : 's');
+  $('published').innerHTML = list.length ? list.map(p => {
+    const ed = edits.get(p.file) || {};
+    const cap = ed.caption !== undefined ? ed.caption : (p.caption || '');
+    const del = removed.has(p.file);
+    return '<div class="item' + (del ? ' del' : '') + '" data-file="' + esc(p.file) + '">'
+      + '<div class="item__img" style="background:' + (p.color || 'var(--card-2)') + '"><img data-src="' + esc(p.file) + '" alt="" loading="lazy"></div>'
+      + '<div class="item__body"><div class="item__top"><span class="tag">' + (p.taken || '').slice(0,16).replace('T',' · ') + '</span>'
+      + '<button class="x" data-act="del" aria-label="' + (del ? 'No borrar' : 'Borrar') + '">' + (del ? '↺' : '✕') + '</button></div>'
+      + '<input type="text" data-f="caption" placeholder="Un texto (opcional)" value="' + esc(cap) + '" maxlength="140"' + (del ? ' disabled' : '') + '>'
+      + (del ? '<span class="item__note"><b>Se borrará al publicar.</b></span>' : '')
+      + '</div></div>';
+  }).join('') : '<p class="none">Todavía no hay fotos en este capítulo.</p>';
+  $('published').querySelectorAll('img[data-src]').forEach(loadThumb);
+  updateDock();
+}
+/* miniatura: primero desde la web; si aún no está desplegada, desde GitHub */
+function loadThumb(img){
+  const file = img.dataset.src;
+  img.onerror = async () => {
+    img.onerror = null;
+    try{
+      const r = await gh('/contents/' + chapter.dir + file + '?ref=' + encodeURIComponent(cfg().branch), { raw:true, headers:{ Accept:'application/vnd.github.raw' } });
+      img.src = URL.createObjectURL(await r.blob());
+    }catch(_){}
+  };
+  img.src = chapter.dir + file;
+}
+$('published').addEventListener('click', e => {
+  const b = e.target.closest('[data-act="del"]'); if(!b) return;
+  const f = b.closest('.item').dataset.file;
+  removed.has(f) ? removed.delete(f) : removed.add(f);
+  renderPublished();
+});
+$('published').addEventListener('change', e => {
+  if(e.target.dataset.f !== 'caption') return;
+  const f = e.target.closest('.item').dataset.file;
+  const p = manifest.photos.find(x => x.file === f);
+  const v = e.target.value.trim();
+  if(p && (p.caption || '') === v) edits.delete(f); else edits.set(f, { caption:v });
+  updateDock();
+});
+
+/* =======================================================================
+   PUBLICAR — un único commit con todo
+   ======================================================================= */
+function pending(){
+  const add = queue.filter(q => q.include && (q.state === 'ready' || q.state === 'dup'));
+  return { add, del:[...removed], edit:[...edits.keys()].filter(f => !removed.has(f)) };
+}
+function updateDock(){
+  const p = pending(), busy = queue.some(q => q.state === 'wait' || q.state === 'work');
+  const parts = [];
+  if(p.add.length) parts.push('<b>' + p.add.length + '</b> nueva' + (p.add.length === 1 ? '' : 's'));
+  if(p.del.length) parts.push('<b>' + p.del.length + '</b> a borrar');
+  if(p.edit.length) parts.push('<b>' + p.edit.length + '</b> texto' + (p.edit.length === 1 ? '' : 's'));
+  $('sum').innerHTML = busy ? 'Preparando fotos…' : (parts.length ? parts.join(' · ') : 'Nada que publicar todavía');
+  $('publish').disabled = busy || !parts.length;
+}
+
+function progress(k, title, text){
+  $('ovBar').style.width = Math.round(k*100) + '%';
+  if(title) $('ovT').textContent = title;
+  if(text) $('ovP').textContent = text;
+}
+async function publish(){
+  const p = pending(); if(!p.add.length && !p.del.length && !p.edit.length) return;
+  const ov = $('ov'); ov.classList.add('open'); ov.classList.remove('done'); $('ovAct').hidden = true;
+  progress(0, 'Publicando…', 'No cierres esta pantalla.');
+  const c = cfg();
+  try{
+    /* 1. subir cada foto como blob (una vez; sirve para los reintentos) */
+    let done = 0;
+    const todo = p.add.filter(q => !q.blobSha);
+    const worker = async () => {
+      let q;
+      while((q = todo.shift())){
+        const r = await gh('/git/blobs', { method:'POST', body:JSON.stringify({ content:await blobToB64(q.blob), encoding:'base64' }) });
+        q.blobSha = r.sha; done++;
+        progress(.85*done/p.add.length, null, 'Subiendo ' + done + ' de ' + p.add.length + '…');
+      }
+    };
+    await Promise.all([worker(), worker(), worker()]);
+
+    /* 2. commit atómico; si alguien publicó entre medias, se reintenta sobre lo nuevo */
+    progress(.88, null, 'Guardando en el capítulo…');
+    let ok = false, lastErr = null, newCommit = null;
+    for(let attempt = 0; attempt < 4 && !ok; attempt++){
+      const ref = await gh('/git/ref/heads/' + encodeURIComponent(c.branch));
+      const head = ref.object.sha;
+      const commit = await gh('/git/commits/' + head);
+      const fresh = await fetchManifest(head);
+      const present = new Set(fresh.photos.map(x => x.file));
+      const tree = [];
+      /* borrar */
+      const dels = p.del.filter(f => present.has(f));
+      fresh.photos = fresh.photos.filter(x => !p.del.includes(x.file));
+      dels.forEach(f => tree.push({ path:chapter.dir + f, mode:'100644', type:'blob', sha:null }));
+      /* textos */
+      fresh.photos.forEach(x => { const ed = edits.get(x.file); if(ed && ed.caption !== undefined) x.caption = ed.caption; });
+      /* nuevas */
+      p.add.forEach(q => {
+        const file = fileName(q);
+        tree.push({ path:chapter.dir + file, mode:'100644', type:'blob', sha:q.blobSha });
+        const entry = { file, taken:q.taken, w:q.w, h:q.h, hash:q.hash, color:q.color, caption:q.caption || '' };
+        const i = fresh.photos.findIndex(x => x.file === file);
+        i >= 0 ? (fresh.photos[i] = entry) : fresh.photos.push(entry);
+      });
+      fresh.photos.sort((a,b) => (a.taken||'').localeCompare(b.taken||''));
+      fresh.version = 1; fresh.updated = new Date().toISOString();
+      tree.push({ path:chapter.dir + 'manifest.json', mode:'100644', type:'blob', content:JSON.stringify(fresh, null, 2) + '\n' });
+
+      const t = await gh('/git/trees', { method:'POST', body:JSON.stringify({ base_tree:commit.tree.sha, tree }) });
+      const bits = [];
+      if(p.add.length) bits.push(p.add.length + ' foto' + (p.add.length === 1 ? '' : 's') + ' nueva' + (p.add.length === 1 ? '' : 's'));
+      if(dels.length) bits.push(dels.length + ' borrada' + (dels.length === 1 ? '' : 's'));
+      if(p.edit.length) bits.push(p.edit.length + ' texto' + (p.edit.length === 1 ? '' : 's'));
+      const msg = chapter.name.split('·')[0].trim() + ': ' + bits.join(', ') + '\n\nPublicado desde subir.html';
+      newCommit = await gh('/git/commits', { method:'POST', body:JSON.stringify({ message:msg, tree:t.sha, parents:[head] }) });
+      try{
+        await gh('/git/refs/heads/' + encodeURIComponent(c.branch), { method:'PATCH', body:JSON.stringify({ sha:newCommit.sha, force:false }) });
+        ok = true; manifest = fresh;
+      }catch(e){ lastErr = e; if(e.status !== 422 && e.status !== 409) throw e; }
+    }
+    if(!ok) throw lastErr || new Error('No se pudo guardar');
+
+    /* 3. limpiar */
+    p.add.forEach(q => { if(q.thumb) URL.revokeObjectURL(q.thumb); });
+    queue = queue.filter(q => !p.add.includes(q));
+    removed.clear(); edits.clear();
+    renderQueue(); renderPublished();
+    ov.classList.add('done');
+    progress(1, '¡Publicado!', 'En un minuto aparece en el capítulo, mientras la web se actualiza.');
+    $('ovSee').href = chapter.page; $('ovAct').hidden = false;
+  }catch(e){
+    ov.classList.add('done');
+    const why = e.status === 401 ? 'El token no es válido o caducó.'
+              : e.status === 403 ? 'El token no tiene permiso de escritura (Contents: Read and write).'
+              : e.status === 404 ? 'No encuentro el repositorio o la rama. Revisa la configuración.'
+              : (e.detail || e.message);
+    progress(0, 'No se pudo publicar', why + ' Nada se ha perdido: las fotos siguen aquí.');
+    $('ovSee').href = '#'; $('ovAct').hidden = false; $('ovSee').hidden = true;
+    return;
+  }
+  $('ovSee').hidden = false;
+}
+$('publish').addEventListener('click', publish);
+$('ovClose').addEventListener('click', () => $('ov').classList.remove('open'));
+
+/* =======================================================================
+   CONFIGURACIÓN
+   ======================================================================= */
+function showSetup(open){
+  $('setup').hidden = !open;
+  const c = cfg();
+  $('token').value = c.token; $('owner').value = c.owner; $('repo').value = c.repo; $('branch').value = c.branch;
+  $('forget').hidden = !c.token; $('closeCfg').hidden = !c.token;
+  $('cfgMsg').textContent = ''; $('cfgMsg').className = 'msg';
+}
+$('gear').addEventListener('click', () => showSetup($('setup').hidden));
+$('closeCfg').addEventListener('click', () => showSetup(false));
+$('forget').addEventListener('click', () => { store.del('token'); location.reload(); });
+$('saveCfg').addEventListener('click', async () => {
+  const msg = $('cfgMsg'); msg.className = 'msg'; msg.textContent = 'Comprobando…';
+  store.set('token', $('token').value.trim()); store.set('owner', $('owner').value.trim() || DEFAULTS.owner);
+  store.set('repo', $('repo').value.trim() || DEFAULTS.repo); store.set('branch', $('branch').value.trim() || DEFAULTS.branch);
+  try{
+    const r = await gh('');
+    if(r.permissions && !r.permissions.push) throw Object.assign(new Error(''), { status:403 });
+    await gh('/git/ref/heads/' + encodeURIComponent(cfg().branch));
+    msg.className = 'msg ok'; msg.textContent = 'Conectado con ' + r.full_name + '.';
+    setTimeout(() => { showSetup(false); start(); }, 700);
+  }catch(e){
+    msg.className = 'msg bad';
+    msg.textContent = e.status === 401 ? 'Ese token no funciona. Cópialo de nuevo.'
+                    : e.status === 403 ? 'El token no tiene permiso de escritura en el repositorio.'
+                    : e.status === 404 ? 'No encuentro el repositorio o la rama.'
+                    : 'No se pudo conectar: ' + (e.detail || e.message);
+  }
+});
+
+/* =======================================================================
+   ARRANQUE
+   ======================================================================= */
+$('chapter').innerHTML = CHAPTERS.map(c => '<option value="' + c.id + '"' + (c === chapter ? ' selected' : '') + '>' + c.name + '</option>').join('');
+$('chapter').addEventListener('change', e => {
+  if(queue.length || removed.size || edits.size){
+    if(!confirm('Tienes cambios sin publicar en este capítulo. ¿Cambiar igualmente?')){ e.target.value = chapter.id; return; }
+  }
+  chapter = CHAPTERS.find(c => c.id === e.target.value); store.set('chapter', chapter.id);
+  queue = []; removed.clear(); edits.clear(); renderQueue(); loadPublished();
+});
+$('files').addEventListener('change', e => { addFiles(e.target.files); e.target.value = ''; });
+const drop = $('drop');
+['dragenter','dragover'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.add('over'); }));
+['dragleave','drop'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.remove('over'); }));
+drop.addEventListener('drop', e => addFiles(e.dataTransfer.files));
+addEventListener('beforeunload', e => { if(pending().add.length || removed.size || edits.size){ e.preventDefault(); e.returnValue = ''; } });
+
+function start(){
+  $('app').hidden = false; $('dock').hidden = false;
+  loadPublished();
+  lib('exifr').catch(() => {});      // precarga para que la primera foto vaya rápida
+}
+if(cfg().token){ start(); } else { showSetup(true); }
+</script>
+</body>
+</html>

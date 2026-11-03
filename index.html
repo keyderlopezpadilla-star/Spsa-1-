@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1A1210">
+<meta name="robots" content="noindex, nofollow">
 <meta name="description" content="Nuestra historia, capítulo por capítulo.">
 <title>K &amp; S — Nuestra historia</title>
 
@@ -106,14 +107,14 @@ body{
   color:rgba(201,169,106,.5); line-height:1.9; }
 
 /* ---------- selector de capítulos ---------- */
-.pick{ width:100%; max-width:940px; }
+.pick{ width:100%; max-width:1120px; }
 .pick__head{ margin-bottom:clamp(2.4rem,6vh,4rem); }
 .pick__head .rule{ margin-bottom:1.3rem; }
 .pick__head h1{ font-family:'Cinzel',serif; font-weight:500; font-size:clamp(1.5rem,5.5vw,2.4rem);
   letter-spacing:.2em; margin-bottom:.8rem; }
 .pick__head p{ color:rgba(244,235,220,.5); font-style:italic; font-size:clamp(1rem,3vw,1.16rem); }
 
-.cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(268px,100%),1fr));
+.cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr));
   gap:clamp(1.4rem,4vw,2.6rem); justify-content:center; }
 
 .card{ position:relative; display:block; text-align:center; cursor:pointer;
@@ -153,6 +154,17 @@ body{
   box-shadow:0 6px 16px rgba(0,0,0,.5), inset 0 -2px 6px rgba(0,0,0,.4), inset 0 2px 5px rgba(255,180,170,.2);
   display:flex; align-items:center; justify-content:center; font-family:'Cinzel',serif;
   font-size:.72rem; color:#E8C9AE; transform:rotate(9deg); }
+/* ventana del capítulo IV: un atardecer pintado, sin depender de una foto */
+.card__sunset{ position:absolute; inset:0; overflow:hidden;
+  background:linear-gradient(180deg,#2B2457 0%,#7A3E73 38%,#E8766A 58%,#FFB46B 66%); }
+.card__sunset::before{ content:''; position:absolute; left:50%; top:62%; width:34%; aspect-ratio:1; border-radius:50%;
+  transform:translate(-50%,-50%); background:radial-gradient(circle at 50% 40%,#FFF1D6,#FFB46B 55%,#FF7A5A);
+  box-shadow:0 0 40px rgba(255,170,100,.8); transition:top 1.4s cubic-bezier(.2,.8,.2,1); }
+.card__sunset::after{ content:''; position:absolute; left:0; right:0; top:66%; bottom:0;
+  background:
+    repeating-linear-gradient(180deg,rgba(255,205,150,.75) 0 2px,transparent 2px 7px) 50% 0/26% 62% no-repeat,
+    linear-gradient(180deg,#3A2140 0%,#4A2A48 60%,#C08A6A 100%); }
+.card:hover .card__sunset::before{ top:70%; }
 .card--soon{ cursor:default; filter:grayscale(.32); }
 .card--soon:hover{ transform:rotate(var(--rot,0deg)); box-shadow:0 20px 44px rgba(0,0,0,.5); }
 .card--soon .card__ttl{ color:var(--ink-soft); }
@@ -246,9 +258,20 @@ body{
         <p class="card__sub">tres meses encontrándote en todas partes</p>
         <span class="card__date">21 agosto — 21 septiembre</span>
       </a>
+      <!-- MES IV -->
+      <a class="card" href="mes-4.html" style="--rot:1.3deg">
+        <span class="card__wax">IV</span>
+        <div class="card__win">
+          <div class="card__sunset" aria-hidden="true"></div>
+        </div>
+        <span class="card__num">Capítulo Cuarto</span>
+        <h2 class="card__ttl">A la orilla de ti</h2>
+        <p class="card__sub">cuatro meses, y un atardecer que no se acaba</p>
+        <span class="card__date">21 septiembre — 21 octubre</span>
+      </a>
     </div>
 
-    <p class="pick__foot">y el universo sigue expandiéndose…</p>
+    <p class="pick__foot">y el sol sigue bajando, despacio, sobre nosotros…</p>
     <button class="pick__out" id="lockAgain">cerrar con cera de nuevo</button>
   </div>
 </div>

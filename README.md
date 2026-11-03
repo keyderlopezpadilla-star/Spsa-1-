@@ -9,9 +9,12 @@ index.html          → pantalla de la clave + selector de capítulos
 mes-1.html          → Capítulo I   · Nuestro primer mes (21 jun — 21 jul)
 mes-2.html          → Capítulo II  · Dos meses contigo (21 jul — 21 ago)
 mes-3.html          → Capítulo III · Nuestro propio universo (21 ago — 21 sep)
+mes-4.html          → Capítulo IV  · A la orilla de ti (21 sep — 21 oct)
+subir.html          → panel para subir fotos desde el móvil (no enlazado, noindex)
 media/              → fotos y videos del Capítulo I  (f01…f56.jpg, v1…v5.mp4)
 media/m2/           → fotos del Capítulo II (p01…p42.jpg, q01…q20.jpg)
 media/m3/           → fotos del Capítulo III (p01…p93.jpg)
+media/m4/           → fotos del Capítulo IV + manifest.json (los escribe subir.html)
 fotos-originales/   → los originales del móvil, sin publicar (respaldo)
 ```
 
@@ -42,6 +45,61 @@ tipografías Fraunces, Cormorant Garamond y Dancing Script.
 La clave de acceso es **`iloveyou`**. No distingue mayúsculas, acentos ni espacios.
 Se guarda en el navegador, así que solo hay que escribirla la primera vez.
 Para cambiarla: edita la constante `PASSPHRASE` en `index.html`.
+
+## Capítulo IV — A la orilla de ti
+
+Un atardecer en la orilla del mar que ocupa toda la página. No es una imagen:
+se dibuja en tiempo real con un shader WebGL (cielo, nubes, sol, mar con olas,
+el reflejo del sol en el agua, espuma y arena) y **el sol baja a medida que se
+hace scroll**. Al final de la página ya es de noche, con estrellas y la luna
+reflejada en el mar.
+
+| Sección | Qué es |
+|---|---|
+| Entrada | «A la orilla de ti». El botón está sobre el agua y al tocarlo arranca todo |
+| Hero | «Cuatro meses», con las letras apareciendo una a una |
+| Cuatro olas | Una tarjeta por capítulo, con su frase y el enlace a ese capítulo; al tocarlas se mueve el mar |
+| Hora dorada | Carrusel 3D con las fotos tomadas **de verdad** entre las 16:30 y las 20:00, según la hora de cada foto |
+| La marea | Todas las fotos agrupadas por día y en orden, con la hora de cada una, y contadores de fotos, días y atardeceres |
+| Escribe en la arena | Se dibuja con el dedo sobre arena mojada; una ola sube y lo borra |
+| La botella | Al tocarla salta el corcho y sale la carta (ES/EN, PDF y .txt) |
+| Final | Ya de noche: «El sol se esconde, pero nosotros nos quedamos.» |
+
+Interacciones: **tocar el mar crea ondas** en el agua, el sol sigue un poco el
+puntero, las fotos se inclinan con el ratón, y el visor se maneja deslizando con
+el dedo (izquierda/derecha para cambiar de foto, hacia abajo para cerrar).
+
+- La resolución del shader se ajusta sola si el móvil va lento. Si el navegador
+  no tiene WebGL, se muestra un atardecer en CSS.
+- **Música:** `CONFIG.VIDEO_ID` en `mes-4.html`. Mientras esté vacío, el
+  capítulo funciona sin música y el sol de la esquina no aparece.
+- **La carta** de `LETTER` es un borrador: cámbiala por la tuya.
+
+## Subir fotos desde el móvil — `subir.html`
+
+Abre `tu-web/subir.html` en el móvil. Ahí eliges las fotos y se publican en el
+capítulo con un toque. Todo se hace en el propio teléfono:
+
+1. Lee la **fecha real** de cada foto (EXIF; si no tiene, la saca del nombre
+   del archivo, como en las de WhatsApp) y las ordena solas.
+2. Convierte las **HEIC** a JPEG, reduce el lado largo a 1400 px y **quita el
+   EXIF y la ubicación GPS**.
+3. Detecta las **repetidas** con una huella perceptual, tanto entre las nuevas
+   como contra las ya publicadas.
+4. Publica todo en **un único commit** en GitHub (fotos + `manifest.json`).
+   Vercel redespliega y en ~1 minuto ya están en el capítulo.
+
+También sirve para poner un texto debajo de cada foto, corregir su fecha o
+borrar fotos ya publicadas.
+
+**Configuración (una sola vez por móvil):** crea un *fine-grained token* en
+GitHub → Settings → Developer settings → Personal access tokens, con acceso
+**solo a este repositorio** y el permiso **Contents: Read and write**. Pégalo
+en la pantalla de configuración. El token se guarda solo en ese navegador; se
+puede quitar con «Olvidar en este móvil».
+
+Por defecto publica en la rama `main`, que es la que despliega Vercel. Para un
+capítulo nuevo, añade una línea a `CHAPTERS` dentro de `subir.html`.
 
 ---
 
