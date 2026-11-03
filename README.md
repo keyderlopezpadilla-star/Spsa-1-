@@ -57,10 +57,10 @@ reflejada en el mar.
 | Sección | Qué es |
 |---|---|
 | Entrada | «A la orilla de ti». El botón está sobre el agua y al tocarlo arranca todo |
-| Hero | «Cuatro meses», con las letras apareciendo una a una |
+| Hero | «Cuatro meses», con las letras apareciendo una a una, y un contador en vivo de días, horas, minutos y segundos juntos desde el 21 de junio |
 | Cuatro olas | Una tarjeta por capítulo, con su frase y el enlace a ese capítulo; al tocarlas se mueve el mar |
 | Hora dorada | Carrusel 3D con las fotos tomadas **de verdad** entre las 16:30 y las 20:00, según la hora de cada foto |
-| La marea | Todas las fotos agrupadas por día y en orden, con la hora de cada una, y contadores de fotos, días y atardeceres |
+| La marea | Los **cuatro meses** en orden: cada capítulo con sus fotos agrupadas por día y con la hora exacta de cada una; arriba, un reloj indica el día y la hora de la foto que está pasando |
 | Escribe en la arena | Se dibuja con el dedo sobre arena mojada; una ola sube y lo borra |
 | La botella | Al tocarla salta el corcho y sale la carta (ES/EN, PDF y .txt) |
 | Final | Ya de noche: «El sol se esconde, pero nosotros nos quedamos.» |
@@ -71,6 +71,12 @@ el dedo (izquierda/derecha para cambiar de foto, hacia abajo para cerrar).
 
 - La resolución del shader se ajusta sola si el móvil va lento. Si el navegador
   no tiene WebGL, se muestra un atardecer en CSS.
+- **Fechas y horas exactas:** `media/recuerdos.json` guarda las fotos de los capítulos
+  I–III con su fecha y hora reales (EXIF, hora local del móvil). Se obtuvieron
+  emparejando cada foto publicada con su original de `fotos-originales/` por huella
+  perceptual: 133 de 135 fotos de los capítulos II y III tienen día y hora. Las 56 del
+  Capítulo I llegaron al repositorio sin metadatos, así que van en su orden original
+  y sin hora. Las polaroids `q` del Capítulo II son copias del I y no se repiten.
 - **Música:** [nuestra canción](https://youtu.be/oGQHECaU8qM) desde YouTube; el sol
   de la esquina la pone y la quita y gira mientras suena. Arranca al pulsar
   «Ver el atardecer». Se cambia en `CONFIG.VIDEO_ID` de `mes-4.html`.

@@ -139,6 +139,44 @@ section{ position:relative; padding:clamp(5rem,14vh,9rem) 16px; }
 .cue i{ width:1px; height:46px; background:linear-gradient(var(--light),transparent); animation:drip 2.4s ease-in-out infinite; transform-origin:top; }
 @keyframes drip{ 0%{ transform:scaleY(0); opacity:1; } 60%{ transform:scaleY(1); opacity:1; } 100%{ transform:scaleY(1); opacity:0; } }
 
+/* ---------- contador en vivo ---------- */
+.clock{ display:flex; gap:clamp(.9rem,4vw,2.2rem); margin-top:2rem; justify-content:center; }
+.clock__u{ text-align:center; min-width:3.2ch; }
+.clock__u b{ display:block; font-family:var(--serif); font-weight:400; font-size:clamp(2rem,7.5vw,3.2rem); line-height:1;
+  font-variant-numeric:tabular-nums; text-shadow:0 3px 24px rgba(80,20,40,.5); }
+.clock__u span{ font-size:.56rem; letter-spacing:.28em; text-transform:uppercase; color:var(--light-faint); }
+.clock__u + .clock__u{ position:relative; }
+.clock__u + .clock__u::before{ content:''; position:absolute; left:calc(-1 * clamp(.45rem,2vw,1.1rem)); top:.5em; width:3px; height:3px; border-radius:50%; background:var(--light-faint); }
+.clock__cap{ display:block; margin-top:.9rem; font-size:.62rem; letter-spacing:.24em; text-transform:uppercase; color:var(--light-dim); text-shadow:0 1px 12px rgba(60,10,30,.7); }
+
+/* ---------- capítulos dentro de la marea ---------- */
+.chap{ position:relative; margin-top:clamp(3.4rem,10vh,6rem); }
+.chap__h{ display:grid; grid-template-columns:auto 1fr; align-items:end; gap:clamp(.9rem,3vw,1.6rem); margin:0 4px clamp(1.6rem,4vh,2.4rem); }
+.chap__n{ font-family:var(--serif); font-style:italic; font-size:clamp(4.2rem,16vw,8rem); line-height:.8; color:transparent;
+  -webkit-text-stroke:1px rgba(255,226,194,.75); text-shadow:0 0 40px rgba(255,170,110,.25);
+  transform:translateX(-24px); opacity:0; transition:transform 1.4s var(--ease), opacity 1.4s ease; }
+.chap__h.in .chap__n{ transform:none; opacity:1; }
+.chap__h h3{ font-family:var(--serif); font-weight:400; font-size:clamp(1.9rem,6.4vw,3rem); line-height:1.02; text-shadow:0 3px 24px rgba(60,10,40,.45); }
+.chap__h p{ margin-top:.45rem; font-size:.62rem; letter-spacing:.24em; text-transform:uppercase; color:var(--light-dim); }
+.chap__h p a{ color:#FFE2C2; text-decoration:none; white-space:nowrap; }
+.chap__line{ height:1px; margin:0 4px 1.6rem; background:linear-gradient(90deg,rgba(255,220,190,.5),transparent); transform-origin:left;
+  transform:scaleX(0); transition:transform 1.6s var(--ease) .2s; }
+.chap__h.in + .chap__line{ transform:scaleX(1); }
+.soon{ text-align:center; padding:2.4rem 1rem 1rem; font-family:var(--serif); font-style:italic; font-size:1.25rem; color:var(--light-dim); }
+.soon i{ display:block; width:42px; height:42px; margin:0 auto 1rem; border-radius:50%; border:1px solid var(--line); border-top-color:var(--amber); animation:spin 2.2s linear infinite; }
+
+/* ---------- el reloj de la marea: fecha y hora de la foto que está pasando ---------- */
+.tide{ position:fixed; z-index:25; left:50%; top:max(14px,env(safe-area-inset-top)); transform:translate(-50%,-160%);
+  display:flex; align-items:center; gap:.6rem; padding:.55rem 1rem .55rem .7rem; border-radius:99px; white-space:nowrap;
+  background:rgba(30,14,34,.55); border:1px solid var(--line); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  font-size:.7rem; letter-spacing:.06em; transition:transform .6s var(--ease); pointer-events:none; }
+.tide.show{ transform:translate(-50%,0); }
+.tide i{ width:9px; height:9px; border-radius:50%; background:radial-gradient(circle at 40% 35%,#FFF1D6,#FFB46B 60%,#FF7A5A); box-shadow:0 0 10px rgba(255,170,100,.8); }
+.tide b{ font-weight:600; }
+.tide span{ color:var(--light-dim); font-variant-numeric:tabular-nums; }
+html.reading .tide{ opacity:0; }
+@media (max-width:520px){ .top .back{ transition:opacity .4s ease; } html.tiding .top .back{ opacity:0; pointer-events:none; } }
+
 /* ---------- stats ---------- */
 .stats{ display:flex; justify-content:center; gap:clamp(1.4rem,6vw,4rem); margin-top:2.4rem; }
 .stat{ text-align:center; }
@@ -390,6 +428,13 @@ section{ position:relative; padding:clamp(5rem,14vh,9rem) 16px; }
     <span class="hero__date r">21 septiembre — 21 octubre</span>
     <h2 class="hero__title" id="heroTitle" aria-label="Cuatro meses">Cuatro <em>meses</em></h2>
     <p class="hero__line r" style="--d:.9s">Dicen que los atardeceres más bonitos se ven a la orilla del mar. Yo los veo cada vez que me miras.</p>
+    <div class="clock r" style="--d:1.2s" role="timer" aria-label="Tiempo juntos">
+      <div class="clock__u"><b id="cD">0</b><span>días</span></div>
+      <div class="clock__u"><b id="cH">00</b><span>horas</span></div>
+      <div class="clock__u"><b id="cM">00</b><span>min</span></div>
+      <div class="clock__u"><b id="cS">00</b><span>seg</span></div>
+    </div>
+    <small class="clock__cap r" style="--d:1.4s">juntos desde el 21 de junio, y contando</small>
     <div class="cue"><span>desliza despacio · el sol baja contigo</span><i></i></div>
   </section>
 
@@ -436,7 +481,7 @@ section{ position:relative; padding:clamp(5rem,14vh,9rem) 16px; }
       <div class="head r">
         <span class="eyebrow">entre las 4:30 y las 8 de la tarde</span>
         <h2>Nuestra hora <em>dorada</em></h2>
-        <p>Las fotos que tomamos de verdad mientras el sol bajaba. Las encontró la propia hora de cada foto.</p>
+        <p id="goldSub">Las fotos que tomamos de verdad mientras el sol bajaba, a la hora exacta de cada una.</p>
       </div>
     </div>
     <div class="gold r" id="gold"></div>
@@ -446,18 +491,19 @@ section{ position:relative; padding:clamp(5rem,14vh,9rem) 16px; }
   <section id="marea">
     <div class="wrap">
       <div class="head r">
-        <span class="eyebrow">el mes, en el orden en que pasó</span>
+        <span class="eyebrow">cuatro meses, en el orden exacto en que pasaron</span>
         <h2>Lo que guardó <em>la marea</em></h2>
         <p id="mareaSub">Cada foto, en el día y a la hora exacta en que la vivimos.</p>
         <div class="stats" id="stats" hidden>
           <div class="stat"><b id="stN">0</b><span>fotos</span></div>
-          <div class="stat"><b id="stD">0</b><span>días</span></div>
-          <div class="stat"><b id="stG">0</b><span>atardeceres</span></div>
+          <div class="stat"><b id="stD">0</b><span>días con fotos</span></div>
+          <div class="stat"><b id="stG">0</b><span>tardes doradas</span></div>
         </div>
       </div>
       <div id="days"><div class="empty"><i></i>La marea está trayendo las fotos…</div></div>
     </div>
   </section>
+  <div class="tide" id="tide" aria-hidden="true"><i></i><b id="tideA"></b><span id="tideB"></span></div>
 
   <!-- ============ ARENA ============ -->
   <section id="arena">
@@ -571,6 +617,10 @@ const CONFIG = {
   /* las fotos las gestiona subir.html: no hace falta tocar nada aquí */
   manifest: "media/m4/manifest.json",
   dir: "media/m4/",
+
+  /* las fotos de los capítulos I–III con su fecha y hora reales (EXIF) */
+  memories: "media/recuerdos.json",
+  startDate: "2026-06-21T00:00:00",   // el día que se hicieron novios
 
   /* música: el id de YouTube (lo que va después de v= o de youtu.be/).
      Vacío = el capítulo funciona sin música y el sol de la esquina no aparece. */
@@ -903,20 +953,30 @@ function momentOf(h){
   if(h <= CONFIG.horaDorada[1] && h >= CONFIG.horaDorada[0]) return 'atardecer';
   return 'noche';
 }
+const ROMAN = ['','I','II','III','IV','V','VI'];
+function dayTitle(t){ return DIAS[new Date(t.y, t.mo-1, t.d).getDay()] + ' ' + t.d + ' de ' + MESES[t.mo-1]; }
 function whenText(p){
-  const t = parseTaken(p.taken); if(!t) return '';
-  return t.d + ' de ' + MESES[t.mo-1] + ' · ' + pad(t.h) + ':' + pad(t.mi);
+  const t = parseTaken(p.taken);
+  if(t) return dayTitle(t) + ' · ' + pad(t.h) + ':' + pad(t.mi);
+  return p.ch === 1 ? 'nuestro primer mes · 21 jun — 21 jul' : 'capítulo ' + ROMAN[p.ch] + ' · sin hora';
 }
 
+let CHAPTERS = [];
+/* los cuatro meses en orden: I (en su orden original), II, III y IV por fecha real */
 async function loadPhotos(){
-  try{
-    const r = await fetch(CONFIG.manifest, { cache:'no-cache' });
-    if(!r.ok) return [];
-    const j = await r.json();
-    return (j.photos || []).filter(p => p && p.file)
-      .map(p => ({ ...p, src: CONFIG.dir + p.file }))
-      .sort((a,b) => (a.taken || '').localeCompare(b.taken || ''));
-  }catch(_){ return []; }
+  const get = async url => { try{ const r = await fetch(url, { cache:'no-cache' }); return r.ok ? await r.json() : null; }catch(_){ return null; } };
+  const [mem, man] = await Promise.all([get(CONFIG.memories), get(CONFIG.manifest)]);
+  CHAPTERS = (mem && mem.chapters) || [{ n:4, title:'A la orilla de ti', range:'21 sep — 21 oct', page:'mes-4.html' }];
+  const byTaken = (a,b) => (a.taken ? 0 : 1) - (b.taken ? 0 : 1) || (a.taken || '').localeCompare(b.taken || '');
+  const old = (mem && mem.photos || []).filter(p => p && p.src);
+  const mine = (man && man.photos || []).filter(p => p && p.file).map(p => ({ ...p, src:CONFIG.dir + p.file, ch:4 }));
+  const out = [];
+  [1,2,3].forEach(n => {
+    const xs = old.filter(p => p.ch === n);
+    out.push(...(n === 1 ? xs : xs.sort(byTaken)));
+  });
+  out.push(...mine.sort(byTaken));
+  return out;
 }
 
 function imgOnLoad(img){
@@ -924,41 +984,60 @@ function imgOnLoad(img){
   if(img.complete && img.naturalWidth) done(); else img.addEventListener('load', done, { once:true });
 }
 
+function cellHTML(p, i, k){
+  const wide = p.w && p.h && p.w/p.h > 1.15;
+  const t = parseTaken(p.taken);
+  const st = '--c:'+(p.color||'#5A2F48')+';--d:'+(k%6*.07).toFixed(2)+'s' + (wide ? ';aspect-ratio:'+(p.w/p.h).toFixed(3) : '');
+  return '<button class="ph'+(wide?' wide':'')+'" data-i="'+i+'" style="'+st+'" aria-label="Abrir foto: '+whenText(p)+'">'
+    + '<span class="ph__w"><img src="'+p.src+'" alt="" loading="lazy" decoding="async">'
+    + (t ? '<span class="ph__t">'+pad(t.h)+':'+pad(t.mi)+'</span>' : '')
+    + '</span></button>';
+}
 function buildGallery(list){
   const host = $('days');
   if(!list.length){
-    host.innerHTML = '<div class="empty"><i></i>La marea todavía está trayendo las fotos de este mes…</div>';
+    host.innerHTML = '<div class="empty"><i></i>La marea todavía está trayendo las fotos…</div>';
     return;
   }
-  const groups = [];
-  list.forEach((p,i) => {
-    const t = parseTaken(p.taken);
-    const key = t ? t.y + '-' + pad(t.mo) + '-' + pad(t.d) : 'sin-fecha';
-    let g = groups[groups.length-1];
-    if(!g || g.key !== key){ g = { key, t, items:[] }; groups.push(g); }
-    g.items.push(i);
-  });
-  host.innerHTML = groups.map(g => {
-    let title = 'otros días', tag = '';
-    if(g.t){
-      const wd = new Date(g.t.y, g.t.mo-1, g.t.d).getDay();
-      title = DIAS[wd] + ' ' + g.t.d + ' de ' + MESES[g.t.mo-1];
-      const moments = [...new Set(g.items.map(i => momentOf(hourOf(list[i]))).filter(Boolean))];
-      tag = moments.join(' · ');
+  const html = CHAPTERS.map(c => {
+    const idx = list.map((p,i) => p.ch === c.n ? i : -1).filter(i => i >= 0);
+    const dated = idx.filter(i => list[i].taken);
+    const nDays = new Set(dated.map(i => list[i].taken.slice(0,10))).size;
+    let meta = c.range;
+    if(idx.length) meta += ' · ' + idx.length + ' foto' + (idx.length === 1 ? '' : 's') + (nDays ? ' · ' + nDays + ' día' + (nDays === 1 ? '' : 's') : '');
+    if(c.n !== 4) meta += ' · <a href="'+c.page+'">volver a vivirlo →</a>';
+    const head = '<div class="chap__h r"><span class="chap__n">'+ROMAN[c.n]+'</span><div><h3>'+c.title+'</h3><p>'+meta+'</p></div></div><div class="chap__line"></div>';
+    if(!idx.length){
+      return '<div class="chap" data-ch="'+c.n+'">'+head+'<div class="soon"><i></i>Las fotos de este mes las está trayendo la marea…</div></div>';
     }
-    const cells = g.items.map((i,k) => {
-      const p = list[i];
-      const wide = p.w && p.h && p.w/p.h > 1.15;
-      const t = parseTaken(p.taken);
-      const ar = wide ? ' style="--c:'+(p.color||'#5A2F48')+';--d:'+(k%6*.07).toFixed(2)+'s;aspect-ratio:'+(p.w/p.h).toFixed(3)+'"'
-                      : ' style="--c:'+(p.color||'#5A2F48')+';--d:'+(k%6*.07).toFixed(2)+'s"';
-      return '<button class="ph'+(wide?' wide':'')+'" data-i="'+i+'"'+ar+' aria-label="Abrir foto '+(i+1)+'">'
-        + '<span class="ph__w"><img src="'+p.src+'" alt="" loading="lazy" decoding="async">'
-        + (t ? '<span class="ph__t">'+pad(t.h)+':'+pad(t.mi)+'</span>' : '')
-        + '</span></button>';
+    /* grupos por día; las que no tienen fecha, en su propio grupo */
+    const groups = [];
+    idx.forEach(i => {
+      const t = parseTaken(list[i].taken);
+      const key = t ? list[i].taken.slice(0,10) : 'sin-fecha';
+      let g = groups.find(x => x.key === key);
+      if(!g){ g = { key, t, items:[] }; groups.push(g); }
+      g.items.push(i);
+    });
+    const days = groups.map(g => {
+      let title, tag;
+      if(g.t){
+        title = dayTitle(g.t);
+        const moments = [...new Set(g.items.map(i => momentOf(hourOf(list[i]))).filter(Boolean))];
+        tag = g.items.length + ' foto' + (g.items.length === 1 ? '' : 's') + ' · ' + moments.join(' · ');
+      } else if(c.n === 1){
+        title = 'del 21 de junio al 21 de julio';
+        tag = 'en el orden del capítulo I · estas fotos llegaron sin su hora';
+      } else {
+        title = 'sin fecha exacta';
+        tag = 'estas perdieron su fecha por el camino';
+      }
+      return '<div class="day"><div class="day__h r"><h3>'+title+'</h3><span>'+tag+'</span></div><div class="grid">'
+        + g.items.map((i,k) => cellHTML(list[i], i, k)).join('') + '</div></div>';
     }).join('');
-    return '<div class="day"><div class="day__h r"><h3>'+title+'</h3><span>'+tag+'</span></div><div class="grid">'+cells+'</div></div>';
+    return '<div class="chap" data-ch="'+c.n+'">'+head+days+'</div>';
   }).join('');
+  host.innerHTML = html;
   host.querySelectorAll('.ph img').forEach(imgOnLoad);
   host.querySelectorAll('.ph').forEach(el => {
     el.addEventListener('click', () => openLb(+el.dataset.i));
@@ -971,13 +1050,58 @@ function buildGallery(list){
       el.addEventListener('pointerleave', () => { el.style.transform = ''; });
     }
   });
-  /* stats */
+  /* cifras exactas, calculadas de las propias fotos */
+  const dated = list.filter(p => p.taken);
   $('stats').hidden = false;
   countUp($('stN'), list.length);
-  countUp($('stD'), groups.filter(g => g.t).length);
-  countUp($('stG'), new Set(list.filter(isGolden).map(p => (p.taken||'').slice(0,10))).size);
-  $('mareaSub').textContent = list.length + ' fotos, en el día y a la hora exacta en que las vivimos.';
+  countUp($('stD'), new Set(dated.map(p => p.taken.slice(0,10))).size);
+  countUp($('stG'), new Set(list.filter(isGolden).map(p => p.taken.slice(0,10))).size);
+  $('mareaSub').textContent = list.length + ' fotos de cuatro meses. ' + dated.length + ' con el día y la hora exactos, leídos de cada foto.';
+  tideClock();
 }
+
+/* el reloj de la marea: al bajar, arriba se ve el día y la hora de la foto que pasa por el centro */
+function tideClock(){
+  const tide = $('tide'), cells = [...document.querySelectorAll('#days .ph')], sec = $('days');
+  if(!cells.length) return;
+  let raf = 0, last = -1;
+  function upd(){
+    raf = 0;
+    const r = sec.getBoundingClientRect(), mid = innerHeight*.5;
+    const on = started && r.top < mid && r.bottom > mid;
+    tide.classList.toggle('show', on); document.documentElement.classList.toggle('tiding', on);
+    if(!on) return;
+    let best = null, bd = 1e9;
+    for(const c of cells){
+      const b = c.getBoundingClientRect();
+      if(b.bottom < 0 || b.top > innerHeight) continue;
+      const d = Math.abs((b.top + b.bottom)/2 - mid);
+      if(d < bd){ bd = d; best = c; }
+    }
+    if(!best) return;
+    const i = +best.dataset.i; if(i === last) return; last = i;
+    const p = PHOTOS[i], t = parseTaken(p.taken);
+    $('tideA').textContent = t ? dayTitle(t) : (p.ch === 1 ? 'nuestro primer mes' : 'capítulo ' + ROMAN[p.ch]);
+    $('tideB').textContent = t ? pad(t.h) + ':' + pad(t.mi) : (p.ch === 1 ? '21 jun — 21 jul' : 'sin hora');
+  }
+  addEventListener('scroll', () => { if(!raf) raf = requestAnimationFrame(upd); }, { passive:true });
+  addEventListener('resize', upd);
+  upd();
+}
+
+/* contador en vivo desde el día en que empezó todo */
+(function liveClock(){
+  const m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(CONFIG.startDate);
+  const t0 = new Date(+m[1], +m[2]-1, +m[3], +m[4], +m[5]).getTime();
+  function tick(){
+    const s = Math.max(0, Math.floor((Date.now() - t0)/1000));
+    $('cD').textContent = Math.floor(s/86400);
+    $('cH').textContent = pad(Math.floor(s/3600)%24);
+    $('cM').textContent = pad(Math.floor(s/60)%60);
+    $('cS').textContent = pad(s%60);
+  }
+  tick(); setInterval(tick, 1000);
+})();
 
 function countUp(el, to){
   if(RM){ el.textContent = to; return; }
@@ -994,12 +1118,13 @@ function buildGolden(list){
   const idx = list.map((p,i) => isGolden(p) ? i : -1).filter(i => i >= 0);
   if(idx.length < 2) return;
   $('hora').hidden = false;
+  $('goldSub').textContent = idx.length + ' fotos de los cuatro meses que tomamos mientras el sol bajaba, ' + new Set(idx.map(i => list[i].taken.slice(0,10))).size + ' tardes distintas, a la hora exacta de cada una.';
   const track = $('gold');
   track.innerHTML = idx.map(i => {
     const p = list[i], t = parseTaken(p.taken);
     return '<button class="gold__card" data-i="'+i+'" style="--c:'+(p.color||'#7A3E50')+'" aria-label="Abrir foto '+(i+1)+'">'
       + '<img src="'+p.src+'" alt="" loading="lazy" decoding="async">'
-      + '<span class="gold__time">'+pad(t.h)+':'+pad(t.mi)+'<small>'+t.d+' '+MESES[t.mo-1].slice(0,3)+'</small></span></button>';
+      + '<span class="gold__time">'+pad(t.h)+':'+pad(t.mi)+'<small>'+DIAS[new Date(t.y,t.mo-1,t.d).getDay()].slice(0,3)+' '+t.d+' '+MESES[t.mo-1].slice(0,3)+'</small></span></button>';
   }).join('');
   track.querySelectorAll('img').forEach(imgOnLoad);
   track.querySelectorAll('.gold__card').forEach(c => c.addEventListener('click', () => openLb(+c.dataset.i)));
