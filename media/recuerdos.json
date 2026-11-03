@@ -1,0 +1,1561 @@
+{
+ "version": 1,
+ "note": "Fechas y horas reales (EXIF, hora local del móvil) de las fotos ya publicadas en los capítulos I–III. Generado emparejando cada foto con su original de fotos-originales/ por huella perceptual. El Capítulo I llegó sin metadatos: va en su orden original y sin hora.",
+ "start": "2026-06-21T00:00:00",
+ "chapters": [
+  {
+   "n": 1,
+   "title": "Nuestro primer mes",
+   "range": "21 jun — 21 jul",
+   "page": "mes-1.html"
+  },
+  {
+   "n": 2,
+   "title": "Dos meses contigo",
+   "range": "21 jul — 21 ago",
+   "page": "mes-2.html"
+  },
+  {
+   "n": 3,
+   "title": "Nuestro propio universo",
+   "range": "21 ago — 21 sep",
+   "page": "mes-3.html"
+  },
+  {
+   "n": 4,
+   "title": "A la orilla de ti",
+   "range": "21 sep — 21 oct",
+   "page": "mes-4.html"
+  }
+ ],
+ "photos": [
+  {
+   "src": "media/f01.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1200,
+   "h": 1600,
+   "color": "#211712"
+  },
+  {
+   "src": "media/f02.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 828,
+   "h": 1792,
+   "color": "#453b36"
+  },
+  {
+   "src": "media/f03.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 900,
+   "h": 1600,
+   "color": "#56564d"
+  },
+  {
+   "src": "media/f04.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 900,
+   "h": 1600,
+   "color": "#6b645f"
+  },
+  {
+   "src": "media/f05.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 900,
+   "h": 1600,
+   "color": "#6a554c"
+  },
+  {
+   "src": "media/f06.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 900,
+   "h": 1600,
+   "color": "#403134"
+  },
+  {
+   "src": "media/f07.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1200,
+   "h": 1600,
+   "color": "#594e46"
+  },
+  {
+   "src": "media/f08.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 900,
+   "h": 1600,
+   "color": "#68584a"
+  },
+  {
+   "src": "media/f09.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1600,
+   "h": 900,
+   "color": "#5b653a"
+  },
+  {
+   "src": "media/f10.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 900,
+   "h": 1600,
+   "color": "#504644"
+  },
+  {
+   "src": "media/f11.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 900,
+   "h": 1600,
+   "color": "#716054"
+  },
+  {
+   "src": "media/f12.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 900,
+   "h": 1600,
+   "color": "#645d58"
+  },
+  {
+   "src": "media/f13.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 900,
+   "h": 1600,
+   "color": "#74706c"
+  },
+  {
+   "src": "media/f14.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1600,
+   "h": 900,
+   "color": "#722e33"
+  },
+  {
+   "src": "media/f15.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 900,
+   "h": 1600,
+   "color": "#544f4a"
+  },
+  {
+   "src": "media/f16.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1200,
+   "h": 1600,
+   "color": "#726f6b"
+  },
+  {
+   "src": "media/f17.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 828,
+   "h": 828,
+   "color": "#5f504c"
+  },
+  {
+   "src": "media/f18.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1600,
+   "h": 1200,
+   "color": "#695b51"
+  },
+  {
+   "src": "media/f19.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1600,
+   "h": 900,
+   "color": "#6e3e3b"
+  },
+  {
+   "src": "media/f20.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1200,
+   "h": 1600,
+   "color": "#585657"
+  },
+  {
+   "src": "media/f21.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1600,
+   "h": 1200,
+   "color": "#6d6258"
+  },
+  {
+   "src": "media/f22.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1600,
+   "h": 1200,
+   "color": "#7b6b5b"
+  },
+  {
+   "src": "media/f23.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1200,
+   "h": 1600,
+   "color": "#735b48"
+  },
+  {
+   "src": "media/f24.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1200,
+   "h": 1600,
+   "color": "#665f56"
+  },
+  {
+   "src": "media/f25.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1080,
+   "h": 1920,
+   "color": "#5b4b49"
+  },
+  {
+   "src": "media/f26.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1600,
+   "h": 900,
+   "color": "#645b52"
+  },
+  {
+   "src": "media/f27.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1600,
+   "h": 1200,
+   "color": "#665651"
+  },
+  {
+   "src": "media/f28.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1200,
+   "h": 1600,
+   "color": "#7b685d"
+  },
+  {
+   "src": "media/f29.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 828,
+   "h": 1472,
+   "color": "#5e5958"
+  },
+  {
+   "src": "media/f30.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1200,
+   "h": 1600,
+   "color": "#68605a"
+  },
+  {
+   "src": "media/f31.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1200,
+   "h": 1600,
+   "color": "#3d3119"
+  },
+  {
+   "src": "media/f32.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1600,
+   "h": 1200,
+   "color": "#746154"
+  },
+  {
+   "src": "media/f33.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1200,
+   "h": 1600,
+   "color": "#2f2618"
+  },
+  {
+   "src": "media/f34.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1200,
+   "h": 1600,
+   "color": "#40372c"
+  },
+  {
+   "src": "media/f35.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1600,
+   "h": 1200,
+   "color": "#352a20"
+  },
+  {
+   "src": "media/f36.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1200,
+   "h": 1600,
+   "color": "#382c21"
+  },
+  {
+   "src": "media/f37.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1200,
+   "h": 1600,
+   "color": "#4a3829"
+  },
+  {
+   "src": "media/f38.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1200,
+   "h": 1600,
+   "color": "#27201a"
+  },
+  {
+   "src": "media/f39.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1600,
+   "h": 1200,
+   "color": "#565541"
+  },
+  {
+   "src": "media/f40.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1200,
+   "h": 1600,
+   "color": "#4f5b4c"
+  },
+  {
+   "src": "media/f41.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1600,
+   "h": 900,
+   "color": "#5c5a51"
+  },
+  {
+   "src": "media/f42.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1600,
+   "h": 1200,
+   "color": "#45382c"
+  },
+  {
+   "src": "media/f43.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1200,
+   "h": 1600,
+   "color": "#4e4a4c"
+  },
+  {
+   "src": "media/f44.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1200,
+   "h": 1600,
+   "color": "#1c1207"
+  },
+  {
+   "src": "media/f45.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1200,
+   "h": 1600,
+   "color": "#5f4c3c"
+  },
+  {
+   "src": "media/f46.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1200,
+   "h": 1600,
+   "color": "#584d3e"
+  },
+  {
+   "src": "media/f47.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1600,
+   "h": 1200,
+   "color": "#504134"
+  },
+  {
+   "src": "media/f48.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1200,
+   "h": 1600,
+   "color": "#3e3222"
+  },
+  {
+   "src": "media/f49.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1200,
+   "h": 1600,
+   "color": "#231d15"
+  },
+  {
+   "src": "media/f50.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1600,
+   "h": 1200,
+   "color": "#3e3c3f"
+  },
+  {
+   "src": "media/f51.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1200,
+   "h": 1600,
+   "color": "#635b53"
+  },
+  {
+   "src": "media/f52.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1200,
+   "h": 1600,
+   "color": "#3c3025"
+  },
+  {
+   "src": "media/f53.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1200,
+   "h": 1600,
+   "color": "#6b6862"
+  },
+  {
+   "src": "media/f54.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1600,
+   "h": 1200,
+   "color": "#615244"
+  },
+  {
+   "src": "media/f55.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1600,
+   "h": 1200,
+   "color": "#79584a"
+  },
+  {
+   "src": "media/f56.jpg",
+   "ch": 1,
+   "taken": null,
+   "w": 1200,
+   "h": 1600,
+   "color": "#6c6159"
+  },
+  {
+   "src": "media/m2/p01.jpg",
+   "ch": 2,
+   "taken": "2026-07-25T17:58:37",
+   "w": 1050,
+   "h": 1400,
+   "color": "#744b39"
+  },
+  {
+   "src": "media/m2/p02.jpg",
+   "ch": 2,
+   "taken": "2026-08-02T14:16:23",
+   "w": 1400,
+   "h": 1050,
+   "color": "#6c6661"
+  },
+  {
+   "src": "media/m2/p03.jpg",
+   "ch": 2,
+   "taken": "2026-08-02T14:50:11",
+   "w": 1050,
+   "h": 1400,
+   "color": "#564c45"
+  },
+  {
+   "src": "media/m2/p04.jpg",
+   "ch": 2,
+   "taken": "2026-08-02T19:46:59",
+   "w": 1400,
+   "h": 982,
+   "color": "#514744"
+  },
+  {
+   "src": "media/m2/p05.jpg",
+   "ch": 2,
+   "taken": "2026-08-02T20:39:41",
+   "w": 1050,
+   "h": 1400,
+   "color": "#393128"
+  },
+  {
+   "src": "media/m2/p06.jpg",
+   "ch": 2,
+   "taken": "2026-08-02T20:39:54",
+   "w": 1050,
+   "h": 1400,
+   "color": "#463b34"
+  },
+  {
+   "src": "media/m2/p07.jpg",
+   "ch": 2,
+   "taken": "2026-08-02T23:55:59",
+   "w": 1050,
+   "h": 1400,
+   "color": "#34312c"
+  },
+  {
+   "src": "media/m2/p08.jpg",
+   "ch": 2,
+   "taken": "2026-08-02T23:57:28",
+   "w": 1400,
+   "h": 1050,
+   "color": "#322826"
+  },
+  {
+   "src": "media/m2/p09.jpg",
+   "ch": 2,
+   "taken": "2026-08-03T00:16:19",
+   "w": 1050,
+   "h": 1400,
+   "color": "#57410e"
+  },
+  {
+   "src": "media/m2/p10.jpg",
+   "ch": 2,
+   "taken": "2026-08-03T18:51:03",
+   "w": 1400,
+   "h": 1050,
+   "color": "#837070"
+  },
+  {
+   "src": "media/m2/p11.jpg",
+   "ch": 2,
+   "taken": "2026-08-03T18:51:37",
+   "w": 1050,
+   "h": 1400,
+   "color": "#4e5d68"
+  },
+  {
+   "src": "media/m2/p12.jpg",
+   "ch": 2,
+   "taken": "2026-08-04T21:34:53",
+   "w": 1400,
+   "h": 1050,
+   "color": "#545558"
+  },
+  {
+   "src": "media/m2/p13.jpg",
+   "ch": 2,
+   "taken": "2026-08-06T10:56:57",
+   "w": 1050,
+   "h": 1400,
+   "color": "#61646c"
+  },
+  {
+   "src": "media/m2/p14.jpg",
+   "ch": 2,
+   "taken": "2026-08-06T10:57:07",
+   "w": 1050,
+   "h": 1400,
+   "color": "#646469"
+  },
+  {
+   "src": "media/m2/p15.jpg",
+   "ch": 2,
+   "taken": "2026-08-07T13:41:04",
+   "w": 1400,
+   "h": 1050,
+   "color": "#603936"
+  },
+  {
+   "src": "media/m2/p16.jpg",
+   "ch": 2,
+   "taken": "2026-08-07T20:55:24",
+   "w": 1400,
+   "h": 788,
+   "color": "#605e5b"
+  },
+  {
+   "src": "media/m2/p17.jpg",
+   "ch": 2,
+   "taken": "2026-08-07T20:55:59",
+   "w": 1400,
+   "h": 788,
+   "color": "#6d6b69"
+  },
+  {
+   "src": "media/m2/p18.jpg",
+   "ch": 2,
+   "taken": "2026-08-07T20:59:01",
+   "w": 1400,
+   "h": 788,
+   "color": "#4d4746"
+  },
+  {
+   "src": "media/m2/p19.jpg",
+   "ch": 2,
+   "taken": "2026-08-07T21:00:12",
+   "w": 1400,
+   "h": 788,
+   "color": "#535451"
+  },
+  {
+   "src": "media/m2/p20.jpg",
+   "ch": 2,
+   "taken": "2026-08-10T16:03:24",
+   "w": 1400,
+   "h": 1050,
+   "color": "#605854"
+  },
+  {
+   "src": "media/m2/p21.jpg",
+   "ch": 2,
+   "taken": "2026-08-10T20:25:02",
+   "w": 1400,
+   "h": 611,
+   "color": "#514743"
+  },
+  {
+   "src": "media/m2/p22.jpg",
+   "ch": 2,
+   "taken": "2026-08-11T20:27:20",
+   "w": 1400,
+   "h": 579,
+   "color": "#767676"
+  },
+  {
+   "src": "media/m2/p23.jpg",
+   "ch": 2,
+   "taken": "2026-08-11T20:45:43",
+   "w": 788,
+   "h": 1400,
+   "color": "#7b746d"
+  },
+  {
+   "src": "media/m2/p24.jpg",
+   "ch": 2,
+   "taken": "2026-08-11T20:45:58",
+   "w": 1400,
+   "h": 589,
+   "color": "#747474"
+  },
+  {
+   "src": "media/m2/p25.jpg",
+   "ch": 2,
+   "taken": "2026-08-11T20:48:23",
+   "w": 1400,
+   "h": 697,
+   "color": "#767676"
+  },
+  {
+   "src": "media/m2/p26.jpg",
+   "ch": 2,
+   "taken": "2026-08-11T21:30:04",
+   "w": 788,
+   "h": 1400,
+   "color": "#4d4239"
+  },
+  {
+   "src": "media/m2/p27.jpg",
+   "ch": 2,
+   "taken": "2026-08-12T12:47:46",
+   "w": 1400,
+   "h": 1053,
+   "color": "#604a41"
+  },
+  {
+   "src": "media/m2/p28.jpg",
+   "ch": 2,
+   "taken": "2026-08-13T11:52:55",
+   "w": 726,
+   "h": 1400,
+   "color": "#656565"
+  },
+  {
+   "src": "media/m2/p29.jpg",
+   "ch": 2,
+   "taken": "2026-08-17T17:26:45",
+   "w": 1050,
+   "h": 1400,
+   "color": "#5b4f46"
+  },
+  {
+   "src": "media/m2/p30.jpg",
+   "ch": 2,
+   "taken": "2026-08-17T22:27:36",
+   "w": 788,
+   "h": 1400,
+   "color": "#583301"
+  },
+  {
+   "src": "media/m2/p31.jpg",
+   "ch": 2,
+   "taken": "2026-08-17T22:27:54",
+   "w": 1400,
+   "h": 1050,
+   "color": "#634604"
+  },
+  {
+   "src": "media/m2/p32.jpg",
+   "ch": 2,
+   "taken": "2026-08-17T22:28:10",
+   "w": 1400,
+   "h": 1050,
+   "color": "#382209"
+  },
+  {
+   "src": "media/m2/p33.jpg",
+   "ch": 2,
+   "taken": "2026-08-17T22:29:29",
+   "w": 1103,
+   "h": 1400,
+   "color": "#4c3102"
+  },
+  {
+   "src": "media/m2/p34.jpg",
+   "ch": 2,
+   "taken": "2026-08-17T22:37:04",
+   "w": 788,
+   "h": 1400,
+   "color": "#4a3725"
+  },
+  {
+   "src": "media/m2/p35.jpg",
+   "ch": 2,
+   "taken": "2026-08-20T14:47:32",
+   "w": 1400,
+   "h": 1050,
+   "color": "#625851"
+  },
+  {
+   "src": "media/m2/p36.jpg",
+   "ch": 2,
+   "taken": "2026-08-21T13:36:34",
+   "w": 1400,
+   "h": 1050,
+   "color": "#64574d"
+  },
+  {
+   "src": "media/m2/p37.jpg",
+   "ch": 2,
+   "taken": "2026-08-21T13:36:42",
+   "w": 1050,
+   "h": 1400,
+   "color": "#405648"
+  },
+  {
+   "src": "media/m2/p38.jpg",
+   "ch": 2,
+   "taken": "2026-08-21T14:31:03",
+   "w": 788,
+   "h": 1400,
+   "color": "#655143"
+  },
+  {
+   "src": "media/m2/p39.jpg",
+   "ch": 2,
+   "taken": "2026-08-21T16:48:14",
+   "w": 1400,
+   "h": 1050,
+   "color": "#514944"
+  },
+  {
+   "src": "media/m2/p40.jpg",
+   "ch": 2,
+   "taken": "2026-08-21T16:48:15",
+   "w": 1400,
+   "h": 1050,
+   "color": "#594a3e"
+  },
+  {
+   "src": "media/m2/p41.jpg",
+   "ch": 2,
+   "taken": null,
+   "w": 1050,
+   "h": 1400,
+   "color": "#622729"
+  },
+  {
+   "src": "media/m2/p42.jpg",
+   "ch": 2,
+   "taken": null,
+   "w": 788,
+   "h": 1400,
+   "color": "#73665e"
+  },
+  {
+   "src": "media/m3/p01.jpg",
+   "ch": 3,
+   "taken": "2026-08-23T17:25:54",
+   "w": 1400,
+   "h": 1050,
+   "color": "#6d6662"
+  },
+  {
+   "src": "media/m3/p02.jpg",
+   "ch": 3,
+   "taken": "2026-08-23T17:25:57",
+   "w": 1400,
+   "h": 1050,
+   "color": "#585352"
+  },
+  {
+   "src": "media/m3/p03.jpg",
+   "ch": 3,
+   "taken": "2026-08-23T17:26:17",
+   "w": 1400,
+   "h": 1050,
+   "color": "#604941"
+  },
+  {
+   "src": "media/m3/p04.jpg",
+   "ch": 3,
+   "taken": "2026-08-24T12:33:15",
+   "w": 1400,
+   "h": 788,
+   "color": "#62584d"
+  },
+  {
+   "src": "media/m3/p05.jpg",
+   "ch": 3,
+   "taken": "2026-08-24T13:43:08",
+   "w": 1050,
+   "h": 1400,
+   "color": "#674e49"
+  },
+  {
+   "src": "media/m3/p06.jpg",
+   "ch": 3,
+   "taken": "2026-08-24T13:43:33",
+   "w": 1400,
+   "h": 1050,
+   "color": "#5f5651"
+  },
+  {
+   "src": "media/m3/p07.jpg",
+   "ch": 3,
+   "taken": "2026-08-25T12:22:21",
+   "w": 788,
+   "h": 1400,
+   "color": "#524637"
+  },
+  {
+   "src": "media/m3/p08.jpg",
+   "ch": 3,
+   "taken": "2026-08-25T13:09:31",
+   "w": 788,
+   "h": 1400,
+   "color": "#6f5848"
+  },
+  {
+   "src": "media/m3/p09.jpg",
+   "ch": 3,
+   "taken": "2026-08-25T13:09:34",
+   "w": 788,
+   "h": 1400,
+   "color": "#644f3e"
+  },
+  {
+   "src": "media/m3/p10.jpg",
+   "ch": 3,
+   "taken": "2026-08-25T20:36:50",
+   "w": 788,
+   "h": 1400,
+   "color": "#313333"
+  },
+  {
+   "src": "media/m3/p11.jpg",
+   "ch": 3,
+   "taken": "2026-08-26T19:30:01",
+   "w": 788,
+   "h": 1400,
+   "color": "#49403c"
+  },
+  {
+   "src": "media/m3/p12.jpg",
+   "ch": 3,
+   "taken": "2026-08-27T22:32:37",
+   "w": 1400,
+   "h": 788,
+   "color": "#574b3f"
+  },
+  {
+   "src": "media/m3/p13.jpg",
+   "ch": 3,
+   "taken": "2026-08-27T23:27:48",
+   "w": 788,
+   "h": 1400,
+   "color": "#43322e"
+  },
+  {
+   "src": "media/m3/p14.jpg",
+   "ch": 3,
+   "taken": "2026-08-29T14:52:07",
+   "w": 788,
+   "h": 1400,
+   "color": "#314658"
+  },
+  {
+   "src": "media/m3/p15.jpg",
+   "ch": 3,
+   "taken": "2026-08-29T14:52:27",
+   "w": 1400,
+   "h": 1050,
+   "color": "#484d4a"
+  },
+  {
+   "src": "media/m3/p16.jpg",
+   "ch": 3,
+   "taken": "2026-08-29T18:46:32",
+   "w": 1400,
+   "h": 1050,
+   "color": "#434d55"
+  },
+  {
+   "src": "media/m3/p17.jpg",
+   "ch": 3,
+   "taken": "2026-08-30T15:56:05",
+   "w": 1400,
+   "h": 788,
+   "color": "#58483e"
+  },
+  {
+   "src": "media/m3/p18.jpg",
+   "ch": 3,
+   "taken": "2026-08-30T15:58:04",
+   "w": 1400,
+   "h": 788,
+   "color": "#5f4f43"
+  },
+  {
+   "src": "media/m3/p19.jpg",
+   "ch": 3,
+   "taken": "2026-08-30T15:58:29",
+   "w": 1400,
+   "h": 788,
+   "color": "#4f443e"
+  },
+  {
+   "src": "media/m3/p20.jpg",
+   "ch": 3,
+   "taken": "2026-08-31T20:49:56",
+   "w": 1400,
+   "h": 788,
+   "color": "#453f3e"
+  },
+  {
+   "src": "media/m3/p21.jpg",
+   "ch": 3,
+   "taken": "2026-08-31T20:51:47",
+   "w": 1400,
+   "h": 788,
+   "color": "#4c3c38"
+  },
+  {
+   "src": "media/m3/p22.jpg",
+   "ch": 3,
+   "taken": "2026-08-31T22:17:48",
+   "w": 1400,
+   "h": 1050,
+   "color": "#6a512c"
+  },
+  {
+   "src": "media/m3/p23.jpg",
+   "ch": 3,
+   "taken": "2026-08-31T22:19:55",
+   "w": 1400,
+   "h": 1050,
+   "color": "#523a1a"
+  },
+  {
+   "src": "media/m3/p24.jpg",
+   "ch": 3,
+   "taken": "2026-08-31T22:20:21",
+   "w": 1400,
+   "h": 1050,
+   "color": "#4f3510"
+  },
+  {
+   "src": "media/m3/p25.jpg",
+   "ch": 3,
+   "taken": "2026-08-31T22:20:22",
+   "w": 1400,
+   "h": 1050,
+   "color": "#402b11"
+  },
+  {
+   "src": "media/m3/p26.jpg",
+   "ch": 3,
+   "taken": "2026-08-31T22:20:24",
+   "w": 1400,
+   "h": 1050,
+   "color": "#442e12"
+  },
+  {
+   "src": "media/m3/p27.jpg",
+   "ch": 3,
+   "taken": "2026-09-01T15:46:15",
+   "w": 1050,
+   "h": 1400,
+   "color": "#443a35"
+  },
+  {
+   "src": "media/m3/p28.jpg",
+   "ch": 3,
+   "taken": "2026-09-01T15:47:00",
+   "w": 1400,
+   "h": 1050,
+   "color": "#5e4845"
+  },
+  {
+   "src": "media/m3/p29.jpg",
+   "ch": 3,
+   "taken": "2026-09-02T20:37:24",
+   "w": 1050,
+   "h": 1400,
+   "color": "#665853"
+  },
+  {
+   "src": "media/m3/p30.jpg",
+   "ch": 3,
+   "taken": "2026-09-02T20:37:52",
+   "w": 1050,
+   "h": 1400,
+   "color": "#564942"
+  },
+  {
+   "src": "media/m3/p31.jpg",
+   "ch": 3,
+   "taken": "2026-09-02T21:01:39",
+   "w": 1400,
+   "h": 788,
+   "color": "#4b3f34"
+  },
+  {
+   "src": "media/m3/p32.jpg",
+   "ch": 3,
+   "taken": "2026-09-02T22:19:56",
+   "w": 788,
+   "h": 1400,
+   "color": "#392e0c"
+  },
+  {
+   "src": "media/m3/p33.jpg",
+   "ch": 3,
+   "taken": "2026-09-02T22:33:06",
+   "w": 1400,
+   "h": 788,
+   "color": "#362e21"
+  },
+  {
+   "src": "media/m3/p34.jpg",
+   "ch": 3,
+   "taken": "2026-09-03T17:20:20",
+   "w": 788,
+   "h": 1400,
+   "color": "#69696a"
+  },
+  {
+   "src": "media/m3/p35.jpg",
+   "ch": 3,
+   "taken": "2026-09-04T16:15:37",
+   "w": 1400,
+   "h": 1050,
+   "color": "#5d463d"
+  },
+  {
+   "src": "media/m3/p36.jpg",
+   "ch": 3,
+   "taken": "2026-09-04T16:16:02",
+   "w": 1050,
+   "h": 1400,
+   "color": "#5a4840"
+  },
+  {
+   "src": "media/m3/p37.jpg",
+   "ch": 3,
+   "taken": "2026-09-04T18:10:55",
+   "w": 1050,
+   "h": 1400,
+   "color": "#6b5f59"
+  },
+  {
+   "src": "media/m3/p38.jpg",
+   "ch": 3,
+   "taken": "2026-09-04T19:06:24",
+   "w": 1050,
+   "h": 1400,
+   "color": "#585150"
+  },
+  {
+   "src": "media/m3/p39.jpg",
+   "ch": 3,
+   "taken": "2026-09-04T21:27:55",
+   "w": 1400,
+   "h": 1050,
+   "color": "#574a3f"
+  },
+  {
+   "src": "media/m3/p40.jpg",
+   "ch": 3,
+   "taken": "2026-09-05T14:49:52",
+   "w": 1400,
+   "h": 1050,
+   "color": "#68564f"
+  },
+  {
+   "src": "media/m3/p41.jpg",
+   "ch": 3,
+   "taken": "2026-09-05T18:01:52",
+   "w": 1050,
+   "h": 1400,
+   "color": "#5e544f"
+  },
+  {
+   "src": "media/m3/p42.jpg",
+   "ch": 3,
+   "taken": "2026-09-05T19:27:18",
+   "w": 1050,
+   "h": 1400,
+   "color": "#4a4a4d"
+  },
+  {
+   "src": "media/m3/p43.jpg",
+   "ch": 3,
+   "taken": "2026-09-05T20:10:52",
+   "w": 1050,
+   "h": 1400,
+   "color": "#505551"
+  },
+  {
+   "src": "media/m3/p44.jpg",
+   "ch": 3,
+   "taken": "2026-09-05T20:11:11",
+   "w": 1050,
+   "h": 1400,
+   "color": "#5d5f61"
+  },
+  {
+   "src": "media/m3/p45.jpg",
+   "ch": 3,
+   "taken": "2026-09-05T20:11:16",
+   "w": 1050,
+   "h": 1400,
+   "color": "#626361"
+  },
+  {
+   "src": "media/m3/p46.jpg",
+   "ch": 3,
+   "taken": "2026-09-05T20:21:17",
+   "w": 788,
+   "h": 1400,
+   "color": "#4a3a23"
+  },
+  {
+   "src": "media/m3/p47.jpg",
+   "ch": 3,
+   "taken": "2026-09-05T20:29:50",
+   "w": 1400,
+   "h": 788,
+   "color": "#4a4e52"
+  },
+  {
+   "src": "media/m3/p48.jpg",
+   "ch": 3,
+   "taken": "2026-09-05T20:35:34",
+   "w": 1400,
+   "h": 788,
+   "color": "#4d494a"
+  },
+  {
+   "src": "media/m3/p49.jpg",
+   "ch": 3,
+   "taken": "2026-09-05T20:35:38",
+   "w": 1400,
+   "h": 788,
+   "color": "#413f3f"
+  },
+  {
+   "src": "media/m3/p50.jpg",
+   "ch": 3,
+   "taken": "2026-09-05T20:42:02",
+   "w": 1400,
+   "h": 788,
+   "color": "#4e4640"
+  },
+  {
+   "src": "media/m3/p51.jpg",
+   "ch": 3,
+   "taken": "2026-09-06T22:07:33",
+   "w": 1400,
+   "h": 788,
+   "color": "#595854"
+  },
+  {
+   "src": "media/m3/p52.jpg",
+   "ch": 3,
+   "taken": "2026-09-07T11:12:20",
+   "w": 788,
+   "h": 1400,
+   "color": "#584d3f"
+  },
+  {
+   "src": "media/m3/p53.jpg",
+   "ch": 3,
+   "taken": "2026-09-07T11:12:28",
+   "w": 788,
+   "h": 1400,
+   "color": "#5d5146"
+  },
+  {
+   "src": "media/m3/p54.jpg",
+   "ch": 3,
+   "taken": "2026-09-07T16:55:40",
+   "w": 788,
+   "h": 1400,
+   "color": "#77726a"
+  },
+  {
+   "src": "media/m3/p55.jpg",
+   "ch": 3,
+   "taken": "2026-09-07T16:55:49",
+   "w": 788,
+   "h": 1400,
+   "color": "#756f68"
+  },
+  {
+   "src": "media/m3/p56.jpg",
+   "ch": 3,
+   "taken": "2026-09-07T16:56:22",
+   "w": 1400,
+   "h": 788,
+   "color": "#6d6256"
+  },
+  {
+   "src": "media/m3/p57.jpg",
+   "ch": 3,
+   "taken": "2026-09-07T17:28:07",
+   "w": 788,
+   "h": 1400,
+   "color": "#5a5047"
+  },
+  {
+   "src": "media/m3/p58.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T19:53:34",
+   "w": 788,
+   "h": 1400,
+   "color": "#565858"
+  },
+  {
+   "src": "media/m3/p59.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T19:53:48",
+   "w": 788,
+   "h": 1400,
+   "color": "#464a4f"
+  },
+  {
+   "src": "media/m3/p60.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T19:54:22",
+   "w": 788,
+   "h": 1400,
+   "color": "#464a4c"
+  },
+  {
+   "src": "media/m3/p61.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:06:39",
+   "w": 1050,
+   "h": 1400,
+   "color": "#67543c"
+  },
+  {
+   "src": "media/m3/p62.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:07:42",
+   "w": 1400,
+   "h": 788,
+   "color": "#6b4017"
+  },
+  {
+   "src": "media/m3/p63.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:07:44",
+   "w": 1400,
+   "h": 788,
+   "color": "#6d4216"
+  },
+  {
+   "src": "media/m3/p64.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:09:54",
+   "w": 1400,
+   "h": 1050,
+   "color": "#443316"
+  },
+  {
+   "src": "media/m3/p65.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:10:09",
+   "w": 1400,
+   "h": 1050,
+   "color": "#423218"
+  },
+  {
+   "src": "media/m3/p66.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:10:39",
+   "w": 1400,
+   "h": 1050,
+   "color": "#453413"
+  },
+  {
+   "src": "media/m3/p67.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:10:43",
+   "w": 1400,
+   "h": 1050,
+   "color": "#4e3c1a"
+  },
+  {
+   "src": "media/m3/p68.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:10:44",
+   "w": 1400,
+   "h": 1050,
+   "color": "#513f20"
+  },
+  {
+   "src": "media/m3/p69.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:11:28",
+   "w": 1400,
+   "h": 1050,
+   "color": "#462e11"
+  },
+  {
+   "src": "media/m3/p70.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:11:44",
+   "w": 1400,
+   "h": 1050,
+   "color": "#543e1f"
+  },
+  {
+   "src": "media/m3/p71.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:11:51",
+   "w": 1400,
+   "h": 1050,
+   "color": "#5f431e"
+  },
+  {
+   "src": "media/m3/p72.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:12:02",
+   "w": 1400,
+   "h": 1050,
+   "color": "#5b4123"
+  },
+  {
+   "src": "media/m3/p73.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:12:03",
+   "w": 1400,
+   "h": 1050,
+   "color": "#5d4628"
+  },
+  {
+   "src": "media/m3/p74.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:12:07",
+   "w": 1400,
+   "h": 1050,
+   "color": "#5e3c26"
+  },
+  {
+   "src": "media/m3/p75.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:12:23",
+   "w": 1400,
+   "h": 1050,
+   "color": "#483517"
+  },
+  {
+   "src": "media/m3/p76.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:21:52",
+   "w": 788,
+   "h": 1400,
+   "color": "#603b07"
+  },
+  {
+   "src": "media/m3/p77.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:22:20",
+   "w": 1400,
+   "h": 788,
+   "color": "#5f400e"
+  },
+  {
+   "src": "media/m3/p78.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:22:34",
+   "w": 788,
+   "h": 1400,
+   "color": "#764709"
+  },
+  {
+   "src": "media/m3/p79.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:25:03",
+   "w": 1050,
+   "h": 1400,
+   "color": "#503810"
+  },
+  {
+   "src": "media/m3/p80.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:30:49",
+   "w": 1400,
+   "h": 1050,
+   "color": "#593c18"
+  },
+  {
+   "src": "media/m3/p81.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:31:49",
+   "w": 1400,
+   "h": 788,
+   "color": "#2c231c"
+  },
+  {
+   "src": "media/m3/p82.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:34:19",
+   "w": 1400,
+   "h": 788,
+   "color": "#603b0b"
+  },
+  {
+   "src": "media/m3/p83.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:34:21",
+   "w": 1400,
+   "h": 788,
+   "color": "#5e3c0d"
+  },
+  {
+   "src": "media/m3/p84.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:34:23",
+   "w": 1400,
+   "h": 788,
+   "color": "#66420e"
+  },
+  {
+   "src": "media/m3/p85.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:34:26",
+   "w": 1400,
+   "h": 788,
+   "color": "#6a461d"
+  },
+  {
+   "src": "media/m3/p86.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:37:11",
+   "w": 1400,
+   "h": 788,
+   "color": "#614a12"
+  },
+  {
+   "src": "media/m3/p87.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:37:25",
+   "w": 1400,
+   "h": 788,
+   "color": "#5f4e24"
+  },
+  {
+   "src": "media/m3/p88.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:37:30",
+   "w": 1400,
+   "h": 788,
+   "color": "#594614"
+  },
+  {
+   "src": "media/m3/p89.jpg",
+   "ch": 3,
+   "taken": "2026-09-09T22:46:24",
+   "w": 788,
+   "h": 1400,
+   "color": "#3b2f14"
+  },
+  {
+   "src": "media/m3/p90.jpg",
+   "ch": 3,
+   "taken": "2026-09-14T13:51:56",
+   "w": 788,
+   "h": 1400,
+   "color": "#66625b"
+  },
+  {
+   "src": "media/m3/p91.jpg",
+   "ch": 3,
+   "taken": "2026-09-14T20:06:42",
+   "w": 788,
+   "h": 1400,
+   "color": "#5b463d"
+  },
+  {
+   "src": "media/m3/p92.jpg",
+   "ch": 3,
+   "taken": "2026-09-14T20:06:44",
+   "w": 788,
+   "h": 1400,
+   "color": "#5b4e47"
+  },
+  {
+   "src": "media/m3/p93.jpg",
+   "ch": 3,
+   "taken": "2026-09-14T20:06:54",
+   "w": 788,
+   "h": 1400,
+   "color": "#696460"
+  }
+ ]
+}
