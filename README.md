@@ -71,8 +71,9 @@ el dedo (izquierda/derecha para cambiar de foto, hacia abajo para cerrar).
 
 - La resolución del shader se ajusta sola si el móvil va lento. Si el navegador
   no tiene WebGL, se muestra un atardecer en CSS.
-- **Música:** `CONFIG.VIDEO_ID` en `mes-4.html`. Mientras esté vacío, el
-  capítulo funciona sin música y el sol de la esquina no aparece.
+- **Música:** [nuestra canción](https://youtu.be/oGQHECaU8qM) desde YouTube; el sol
+  de la esquina la pone y la quita y gira mientras suena. Arranca al pulsar
+  «Ver el atardecer». Se cambia en `CONFIG.VIDEO_ID` de `mes-4.html`.
 - **La carta** de `LETTER` es un borrador: cámbiala por la tuya.
 
 ## Subir fotos desde el móvil — `subir.html`
