@@ -74,7 +74,9 @@ el dedo (izquierda/derecha para cambiar de foto, hacia abajo para cerrar).
 - **Música:** [nuestra canción](https://youtu.be/oGQHECaU8qM) desde YouTube; el sol
   de la esquina la pone y la quita y gira mientras suena. Arranca al pulsar
   «Ver el atardecer». Se cambia en `CONFIG.VIDEO_ID` de `mes-4.html`.
-- **La carta** de `LETTER` es un borrador: cámbiala por la tuya.
+- **La carta** vive en `LETTER` (ES/EN). Al abrir la botella se desenrolla como un
+  pergamino, el sol se detiene en el horizonte mientras se lee y los párrafos
+  aparecen al ritmo de la lectura. `*así*` resalta una frase.
 
 ## Subir fotos desde el móvil — `subir.html`
 

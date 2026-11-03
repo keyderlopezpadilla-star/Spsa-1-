@@ -109,6 +109,8 @@ button{ font:inherit; color:inherit; background:none; border:none; cursor:pointe
 /* ---------- estructura ---------- */
 main{ position:relative; z-index:10; transition:opacity 1.2s ease .3s; }
 html.locked main{ opacity:0; }
+html.reading main, html.reading .top, html.reading .gulls{ opacity:0; pointer-events:none; transition:opacity .8s ease; }
+.top{ transition:opacity .8s ease; }
 section{ position:relative; padding:clamp(5rem,14vh,9rem) 16px; }
 .wrap{ width:min(1120px,100%); margin:0 auto; }
 .head{ text-align:center; margin-bottom:clamp(2.2rem,6vh,3.6rem); }
@@ -246,27 +248,61 @@ section{ position:relative; padding:clamp(5rem,14vh,9rem) 16px; }
   animation:shadow 5.5s ease-in-out infinite; }
 @keyframes shadow{ 0%,100%{ transform:scaleX(1); opacity:.9; } 50%{ transform:scaleX(.8); opacity:.5; } }
 
-/* ---------- la carta ---------- */
-.read{ position:fixed; inset:0; z-index:70; display:flex; align-items:center; justify-content:center; padding:16px;
-  background:rgba(18,6,22,.6); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
-  opacity:0; pointer-events:none; transition:opacity .7s ease; }
+/* ---------- la carta: un pergamino que se desenrolla ---------- */
+.read{ position:fixed; inset:0; z-index:70; display:flex; align-items:center; justify-content:center;
+  padding:max(62px,calc(env(safe-area-inset-top) + 56px)) 12px max(16px,env(safe-area-inset-bottom));
+  background:radial-gradient(ellipse at 50% 55%, rgba(40,12,30,.30), rgba(12,4,16,.80) 85%);
+  opacity:0; pointer-events:none; transition:opacity 1s ease; }
 .read.open{ opacity:1; pointer-events:auto; }
-.read__sheet{ position:relative; width:min(680px,100%); max-height:calc(100svh - 32px); display:flex; flex-direction:column;
-  border-radius:24px; overflow:hidden; color:#3A2128;
-  background:linear-gradient(180deg,#FFF8EF 0%,#FDEEDF 60%,#F9DDCB 100%);
-  box-shadow:0 50px 120px rgba(0,0,0,.5); transform:translateY(40px) scale(.97); transition:transform .9s var(--ease); }
-.read.open .read__sheet{ transform:none; }
-.read__bar{ display:flex; justify-content:space-between; align-items:center; padding:14px 16px; border-bottom:1px solid rgba(120,60,60,.12); }
-.lang{ display:inline-flex; border:1px solid rgba(120,60,60,.25); border-radius:99px; padding:3px; }
-.lang button{ padding:.42rem .9rem; border-radius:99px; font-size:.62rem; letter-spacing:.2em; color:#7A4A50; }
-.lang button.on{ background:#3A2128; color:#FFF6EC; }
-.read__x{ width:38px; height:38px; border-radius:50%; font-size:1.1rem; color:#7A4A50; border:1px solid rgba(120,60,60,.2); }
-.read__body{ overflow-y:auto; padding:clamp(1.6rem,5vw,3rem) clamp(1.3rem,6vw,3.4rem) 2rem; overscroll-behavior:contain; }
-.read__to{ font-family:var(--serif); font-style:italic; font-size:clamp(1.6rem,5vw,2.1rem); line-height:1.2; color:#9A3F50; margin-bottom:1.6rem; }
-.read__text{ font-family:var(--serif); font-size:clamp(1.12rem,3.2vw,1.24rem); line-height:1.75; color:#3A2128; }
-.read__text p + p{ margin-top:1.05em; }
-.read__sign{ font-family:var(--script); font-size:clamp(2.6rem,9vw,3.4rem); color:#9A3F50; margin-top:1.6rem; text-align:right; line-height:1; }
-.read__act{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; padding:1.6rem 0 .4rem; }
+.read__bar{ position:absolute; top:max(12px,env(safe-area-inset-top)); left:12px; right:12px; display:flex; justify-content:space-between; align-items:center;
+  opacity:0; transform:translateY(-8px); transition:opacity .8s ease 1.4s, transform .8s var(--ease) 1.4s; }
+.read.open .read__bar{ opacity:1; transform:none; }
+.lang{ display:inline-flex; border:1px solid var(--line); border-radius:99px; padding:3px; background:rgba(30,12,30,.4); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
+.lang button{ padding:.45rem .95rem; border-radius:99px; font-size:.62rem; letter-spacing:.2em; color:var(--light-dim); transition:background .3s ease, color .3s ease; }
+.lang button.on{ background:var(--light); color:#3A2128; }
+.read__x{ width:40px; height:40px; border-radius:50%; font-size:1rem; color:var(--light); border:1px solid var(--line); background:rgba(30,12,30,.4); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
+
+.letter{ position:relative; width:min(660px,100%); height:100%; max-height:900px; }
+.letter__paper{ position:absolute; inset:12px 4px; border-radius:3px; overflow:hidden; color:#3A2128;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' opacity='.07'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 50% 0%, rgba(255,190,140,.22), transparent 60%),
+    linear-gradient(180deg,#FFF9F1 0%,#FCF0E3 55%,#F6DECB 100%);
+  box-shadow:0 40px 100px rgba(0,0,0,.55), inset 0 0 70px rgba(170,95,60,.16);
+  clip-path:inset(50% 0 50% 0); transition:clip-path 1.6s cubic-bezier(.65,0,.25,1) .25s; }
+.read.open .letter__paper{ clip-path:inset(0 0 0 0); }
+/* los dos rodillos del pergamino */
+.letter__rod{ position:absolute; z-index:3; left:-6px; right:-6px; height:24px; border-radius:12px; top:calc(50% - 12px);
+  background:linear-gradient(180deg,#B98A62 0%,#F3DCC0 30%,#FFF4E4 48%,#D8B48E 75%,#9E7150 100%);
+  box-shadow:0 8px 18px rgba(40,10,10,.4); transition:top 1.6s cubic-bezier(.65,0,.25,1) .25s; }
+.letter__rod::before, .letter__rod::after{ content:''; position:absolute; top:2px; width:20px; height:20px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#E8798C,#B3384E 60%,#7A1E32); box-shadow:0 2px 6px rgba(0,0,0,.35); }
+.letter__rod::before{ left:-10px; } .letter__rod::after{ right:-10px; }
+.read.open .letter__rod--t{ top:0; }
+.read.open .letter__rod--b{ top:calc(100% - 24px); }
+.letter__prog{ position:absolute; z-index:2; top:12px; left:4px; right:4px; height:2px; pointer-events:none;
+  background:linear-gradient(90deg,#FFB46B,#EE7A94); transform-origin:left; transform:scaleX(var(--p,0)); opacity:.8; }
+.letter__scroll{ position:absolute; inset:0; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch;
+  padding:clamp(3rem,8vw,4.4rem) clamp(1.5rem,7.5vw,3.8rem) 3.4rem; scrollbar-width:thin; scrollbar-color:rgba(154,63,80,.35) transparent; }
+
+.l-date{ display:block; text-align:right; font-size:.6rem; letter-spacing:.32em; text-transform:uppercase; color:#B0707A; }
+.l-to{ font-family:var(--script); font-weight:400; font-size:clamp(3rem,11vw,4.2rem); line-height:1.05; color:#9A3F50; margin:1.4rem 0 1.6rem;
+  clip-path:inset(-20% 100% -40% 0); transition:clip-path 2.2s cubic-bezier(.5,0,.3,1); }
+.l-text p{ font-family:var(--serif); font-size:clamp(1.14rem,3.3vw,1.27rem); line-height:1.82; color:#3A2128; }
+.l-text p + p{ margin-top:1.15em; }
+.l-text p:first-child::first-letter{ float:left; font-size:3.7em; line-height:.82; padding:.06em .1em 0 0; color:#C0485C; font-style:italic; }
+.l-text em{ font-style:italic; color:#9A3F50; background:linear-gradient(transparent 62%, rgba(255,180,107,.32) 62%); padding:0 .08em; }
+.l-close{ margin-top:2.6rem; text-align:center; }
+.l-close svg{ display:block; width:76px; margin:0 auto 1.1rem; overflow:visible; }
+.l-close p{ font-family:var(--serif); font-style:italic; font-size:clamp(1.45rem,5vw,1.9rem); line-height:1.35; color:#7A2D3E; }
+.l-close p b{ display:block; font-weight:400; margin-top:.5rem; font-size:1.25em; color:#C0485C; }
+.l-sign{ font-family:var(--script); font-size:clamp(3rem,10vw,3.8rem); color:#9A3F50; text-align:right; line-height:1; margin-top:1.8rem;
+  clip-path:inset(-30% 100% -40% 0); transition:clip-path 1.8s cubic-bezier(.5,0,.3,1); }
+/* revelado: cada bloque aparece a su ritmo de lectura */
+.lr{ opacity:0; transform:translateY(14px); filter:blur(3px); transition:opacity 1.2s ease, transform 1.2s var(--ease), filter 1.2s ease; transition-delay:var(--d,0s); }
+.lr.in{ opacity:1; transform:none; filter:none; }
+.l-to.in, .l-sign.in{ clip-path:inset(-20% -5% -40% 0); }
+.read__act{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; padding:2.6rem 0 .4rem; }
 .read__act button{ padding:.75rem 1.2rem; border-radius:99px; border:1px solid rgba(120,60,60,.28); font-size:.62rem;
   letter-spacing:.2em; text-transform:uppercase; color:#7A4A50; transition:background .3s ease, color .3s ease; }
 .read__act button:hover{ background:#3A2128; color:#FFF6EC; }
@@ -278,7 +314,8 @@ section{ position:relative; padding:clamp(5rem,14vh,9rem) 16px; }
 .end p{ font-family:var(--serif); font-style:italic; font-size:clamp(1.1rem,3.4vw,1.4rem); color:var(--light-dim); margin-top:1.2rem; }
 .end__next{ margin-top:3rem; font-size:.64rem; letter-spacing:.42em; text-transform:uppercase; color:var(--light-faint); }
 .end__sig{ font-family:var(--script); font-size:clamp(3rem,11vw,4.6rem); color:#FFE2C2; margin-top:1.4rem; line-height:1; }
-.end a{ display:inline-block; margin-top:2.2rem; }
+.end__links{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:2.2rem; }
+.end a{ text-decoration:none; }
 
 .toast{ position:fixed; z-index:80; left:50%; bottom:90px; transform:translate(-50%,20px); opacity:0; pointer-events:none;
   padding:.8rem 1.2rem; border-radius:99px; background:rgba(20,8,24,.8); font-size:.72rem; letter-spacing:.06em;
@@ -303,12 +340,15 @@ section{ position:relative; padding:clamp(5rem,14vh,9rem) 16px; }
   @page{ margin:20mm 18mm; }
   html,body{ background:#fff !important; height:auto !important; overflow:visible !important; }
   body > *{ display:none !important; }
-  body > .read{ display:block !important; position:static !important; background:none !important; padding:0 !important; opacity:1 !important; backdrop-filter:none !important; }
-  .read__bar,.read__act{ display:none !important; }
-  .read__sheet{ width:100% !important; max-height:none !important; box-shadow:none !important; border-radius:0 !important; background:none !important; transform:none !important; }
-  .read__body{ overflow:visible !important; padding:0 !important; }
-  .read__to,.read__sign{ color:#8A3040 !important; }
-  .read__text{ color:#1A1014 !important; font-size:12.5pt !important; line-height:1.8 !important; orphans:3; widows:3; }
+  body > .read{ display:block !important; position:static !important; background:none !important; padding:0 !important; opacity:1 !important; }
+  .read__bar,.read__act,.letter__rod,.letter__prog,.l-close svg{ display:none !important; }
+  .letter{ height:auto !important; max-height:none !important; }
+  .letter__paper{ position:static !important; clip-path:none !important; box-shadow:none !important; background:none !important; overflow:visible !important; }
+  .letter__scroll{ position:static !important; overflow:visible !important; padding:0 !important; }
+  .lr{ opacity:1 !important; transform:none !important; filter:none !important; }
+  .l-to,.l-sign{ clip-path:none !important; color:#8A3040 !important; }
+  .l-text p{ color:#1A1014 !important; font-size:12.5pt !important; line-height:1.8 !important; orphans:3; widows:3; }
+  .l-text em{ background:none !important; }
 }
 </style>
 </head>
@@ -443,7 +483,7 @@ section{ position:relative; padding:clamp(5rem,14vh,9rem) 16px; }
       <div class="head r">
         <span class="eyebrow">llegó con la marea</span>
         <h2>Un mensaje en <em>una botella</em></h2>
-        <p>Alguien la dejó en la orilla. Tiene tu nombre.</p>
+        <p>La dejé en la orilla para ti. Tiene tu nombre.</p>
       </div>
       <button class="bottle r" id="bottle" aria-label="Abrir la botella y leer la carta">
         <div class="bottle__float">
@@ -480,7 +520,10 @@ section{ position:relative; padding:clamp(5rem,14vh,9rem) 16px; }
     <p class="r" style="--d:.2s">Y mañana, otro atardecer contigo.</p>
     <div class="end__sig r" style="--d:.4s">K &amp; S</div>
     <div class="end__next r" style="--d:.6s">continuará · capítulo V</div>
-    <a class="chip r" style="--d:.7s" href="index.html">Volver a los capítulos</a>
+    <div class="end__links r" style="--d:.7s">
+      <button class="chip" id="reread">Volver a leer la carta</button>
+      <a class="chip" href="index.html">Volver a los capítulos</a>
+    </div>
   </section>
 </main>
 
@@ -496,20 +539,27 @@ section{ position:relative; padding:clamp(5rem,14vh,9rem) 16px; }
 
 <!-- ============ LA CARTA ============ -->
 <div class="read" id="read" role="dialog" aria-modal="true" aria-label="La carta">
-  <div class="read__sheet">
-    <div class="read__bar">
-      <div class="lang"><button class="on" data-lang="es">ES</button><button data-lang="en">EN</button></div>
-      <button class="read__x" id="readX" aria-label="Cerrar la carta">✕</button>
-    </div>
-    <div class="read__body" id="readBody">
-      <div class="read__to" id="readTo"></div>
-      <div class="read__text" id="readText"></div>
-      <div class="read__sign" id="readSign"></div>
-      <div class="read__act">
-        <button id="savePdf">Guardar en PDF</button>
-        <button id="saveTxt">Descargar el texto</button>
+  <div class="read__bar">
+    <div class="lang"><button class="on" data-lang="es">ES</button><button data-lang="en">EN</button></div>
+    <button class="read__x" id="readX" aria-label="Cerrar la carta">✕</button>
+  </div>
+  <div class="letter">
+    <div class="letter__paper">
+      <div class="letter__prog" id="readProg"></div>
+      <div class="letter__scroll" id="readBody">
+        <span class="l-date lr" id="readDate"></span>
+        <h3 class="l-to" id="readTo"></h3>
+        <div class="l-text" id="readText"></div>
+        <div class="l-close lr" id="readClose"></div>
+        <div class="l-sign" id="readSign"></div>
+        <div class="read__act lr">
+          <button id="savePdf">Guardar en PDF</button>
+          <button id="saveTxt">Descargar el texto</button>
+        </div>
       </div>
     </div>
+    <span class="letter__rod letter__rod--t"></span>
+    <span class="letter__rod letter__rod--b"></span>
   </div>
 </div>
 
@@ -531,55 +581,37 @@ const CONFIG = {
   horaDorada: [16.5, 20]
 };
 
-/* ✎ La carta. Es un borrador: cámbiala por la tuya. Párrafos separados por una línea en blanco. */
+/* ✎ La carta. Párrafos separados por una línea en blanco; *así* se resalta una frase. */
 const LETTER = {
   es: {
-    to: "Para Samanta,<br>mi amor…",
-    sign: "Keyder",
+    date: "21 de octubre de 2026",
+    to: "Mi querida Samanta,",
     body:
-`Hoy se cumplen cuatro meses.
+`Hoy cumplimos 4 meses de novios y, al mirar hacia atrás, me llena de una alegría inmensa y de una dulce nostalgia recordar cómo empezó todo. Desde que decidimos dar este paso y vivir juntos, cada rincón de mi vida se ha llenado de tu luz. Despertar a tu lado todos los días y compartir nuestra cotidianidad es el mejor regalo que me ha dado la vida en este tiempo.
 
-Hay una hora del día que siempre me ha parecido especial: ese momento en que el sol empieza a bajar, la luz se vuelve dorada y todo parece moverse un poco más despacio. Últimamente, cada vez que la veo, pienso en ti.
+Mi amor, hoy también quiero abrirte mi corazón y pedirte perdón por mis fallos. Sé que últimamente he estado trabajando demasiado y entiendo perfectamente que a veces sientas que no te presto la atención que mereces. Me duele pensar que mis acciones te han hecho sentir así, porque la realidad es que eres lo más importante que tengo.
 
-Pienso en ti porque contigo me pasa lo mismo. El mundo sigue corriendo, pero cuando estás cerca todo se calma. Se vuelve más cálido. Más bonito. Como si alguien le bajara el volumen a todo lo demás y solo quedáramos nosotros dos, mirando el mismo horizonte.
+Quiero que sepas que, aunque a veces mi mente parezca atrapada en las obligaciones, tú nunca sales de mis pensamientos. *No puedo estar sin ti, Samanta.* Incluso cuando estoy cansado o absorto en el trabajo, tú eres mi refugio, mi paz y mi mayor motivación. Todo el esfuerzo que hago es pensando en nosotros y en el futuro hermoso que estamos construyendo bajo este mismo techo.
 
-En estos meses te he escrito sobre lo improbable que era encontrarnos, sobre lo loco que estoy por ti y sobre ese universo que construimos sin darnos cuenta. Hoy quiero escribirte sobre la orilla.
-
-Porque eso eres para mí: el lugar al que siempre quiero volver. Puedo irme lejos con mis pensamientos, con mis planes, con mis días difíciles, pero al final siempre regreso a ti, como las olas regresan a la arena. No porque tenga que hacerlo, sino porque ahí es donde quiero estar.
-
-Me gusta pensar que lo nuestro se parece al mar. Hay días tranquilos y días con más oleaje, pero nunca deja de moverse, nunca deja de estar vivo. Y cada ola nueva trae algo: una risa, una conversación hasta tarde, una foto que no sabía que iba a querer tanto, una forma nueva de quererte.
-
-No sé todo lo que viene. Nadie lo sabe. Pero sí sé que quiero verlo contigo. Quiero más atardeceres a tu lado, más silencios cómodos, más planes que se nos ocurren de la nada y más días comunes que se vuelven especiales solo porque estás tú.
-
-Gracias por estos cuatro meses. Por tu paciencia, por tu cariño, por tu forma de mirarme y por dejarme entrar en tu vida.
-
-El sol se esconde todos los días, mi amor. Pero yo, contigo, me quedo.
-
-Te amo.`
+Gracias por tu paciencia infinita, por tu amor incondicional y por hacer de estos 4 meses los más felices de mi vida. Te prometo esforzarme cada día para equilibrar mejor mi tiempo, porque mereces toda mi atención, mis risas y mi presencia plena.`,
+    close: "Te amo con toda mi alma, mi preciosa Samanta.",
+    closeLast: "Felices 4 meses.",
+    sign: "Keyder"
   },
   en: {
-    to: "To Samanta,<br>my love…",
-    sign: "Keyder",
+    date: "October 21, 2026",
+    to: "My dear Samanta,",
     body:
-`Today marks four months.
+`Today we celebrate 4 months together, and looking back fills me with immense joy and a sweet nostalgia as I remember how it all began. Since we decided to take this step and live together, every corner of my life has been filled with your light. Waking up next to you every day and sharing our everyday life is the best gift life has given me in this time.
 
-There is one hour of the day that has always felt special to me: the moment the sun starts to go down, the light turns golden and everything seems to move a little slower. Lately, every time I see it, I think of you.
+My love, today I also want to open my heart to you and ask your forgiveness for my mistakes. I know that lately I have been working too much, and I completely understand that sometimes you feel I don't give you the attention you deserve. It hurts me to think that my actions have made you feel that way, because the truth is that you are the most important thing I have.
 
-I think of you because that is exactly what you do to me. The world keeps rushing, but when you are close everything calms down. It gets warmer. More beautiful. As if someone turned down the volume on everything else and it was only the two of us, looking at the same horizon.
+I want you to know that, even when my mind seems trapped in obligations, you never leave my thoughts. *I can't be without you, Samanta.* Even when I'm tired or absorbed in work, you are my refuge, my peace and my greatest motivation. Every effort I make is for us and for the beautiful future we are building under this same roof.
 
-Over these months I have written to you about how unlikely it was for us to meet, about how crazy I am about you, and about the universe we built without even noticing. Today I want to write to you about the shore.
-
-Because that is what you are to me: the place I always want to come back to. My thoughts, my plans and my hard days can take me far away, but in the end I always return to you, the way waves return to the sand. Not because I have to, but because that is where I want to be.
-
-I like to think that what we have is like the sea. There are calm days and days with bigger waves, but it never stops moving, it never stops being alive. And every new wave brings something: a laugh, a late-night conversation, a photo I didn't know I would love so much, a new way of loving you.
-
-I don't know everything that is coming. Nobody does. But I do know I want to see it with you. I want more sunsets by your side, more comfortable silences, more plans that come out of nowhere, and more ordinary days that become special just because you are in them.
-
-Thank you for these four months. For your patience, for your tenderness, for the way you look at me, and for letting me into your life.
-
-The sun goes down every single day, my love. But me, with you, I stay.
-
-I love you.`
+Thank you for your infinite patience, for your unconditional love, and for making these 4 months the happiest of my life. I promise to work every day to balance my time better, because you deserve all my attention, my laughter and my full presence.`,
+    close: "I love you with all my soul, my beautiful Samanta.",
+    closeLast: "Happy 4 months.",
+    sign: "Keyder"
   }
 };
 /* ======================================================================= */
@@ -604,7 +636,7 @@ const HORIZON = -0.12;               // altura del horizonte en coordenadas del 
 const Sea = (function(){
   const canvas = $('sea');
   const gl = canvas.getContext('webgl', { antialias:false, alpha:false, depth:false, stencil:false, powerPreference:'high-performance', preserveDrawingBuffer:false });
-  if(!gl){ document.documentElement.classList.add('nogl'); canvas.remove(); return { ripple(){}, ok:false }; }
+  if(!gl){ document.documentElement.classList.add('nogl'); canvas.remove(); return { ripple(){}, hold(){}, ok:false }; }
 
   const VS = `attribute vec2 a; void main(){ gl_Position = vec4(a,0.,1.); }`;
   const FS = `
@@ -775,7 +807,7 @@ void main(){
     if(!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(prog));
   }catch(err){
     console.warn('[atardecer] shader:', err);
-    document.documentElement.classList.add('nogl'); canvas.remove(); return { ripple(){}, ok:false };
+    document.documentElement.classList.add('nogl'); canvas.remove(); return { ripple(){}, hold(){}, ok:false };
   }
   gl.useProgram(prog);
   const buf = gl.createBuffer();
@@ -800,7 +832,7 @@ void main(){
   const rip = new Float32Array(24); let ripI = 0;
   const t0 = performance.now();
   const now = () => ((performance.now()-t0)/1000) % 1000;
-  const state = { prog:0, target:0, px:0, py:0, tx:0, ty:0 };
+  const state = { prog:0, target:0, px:0, py:0, tx:0, ty:0, hold:null };
 
   function ripple(clientX, clientY, strength){
     const vh = canvas.clientHeight || innerHeight, vw = canvas.clientWidth || innerWidth;
@@ -829,8 +861,8 @@ void main(){
     if(document.hidden) return;
     const dt = ts - last; last = ts;
     const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
-    state.target = started ? Math.min(1, Math.max(0, scrollY/max)) : 0;
-    const k = RM ? 1 : .055;
+    state.target = state.hold !== null ? state.hold : started ? Math.min(1, Math.max(0, scrollY/max)) : 0;
+    const k = RM ? 1 : state.hold !== null ? .025 : .055;
     state.prog += (state.target - state.prog)*k;
     state.px += (state.tx - state.px)*.04; state.py += (state.ty - state.py)*.04;
     draw();
@@ -843,7 +875,7 @@ void main(){
     }
   }
   requestAnimationFrame(loop);
-  return { ripple, ok:true, state };
+  return { ripple, ok:true, state, hold(v){ state.hold = v; } };
 })();
 
 /* tocar el agua (fuera de cualquier control) crea ondas */
@@ -1158,19 +1190,65 @@ const Sand = (function(){
 
 /* =======================================================================
    LA BOTELLA Y LA CARTA
+   Al abrirla, el pergamino se desenrolla, el sol se detiene en el horizonte
+   y la carta aparece párrafo a párrafo, al ritmo de la lectura.
    ======================================================================= */
-const read = $('read'); let lang = 'es';
+const read = $('read'), readBody = $('readBody'); let lang = 'es', readSeen = false, readLive = false;
+const escH = t => t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const CLOSE_ART = '<svg viewBox="0 0 76 26" aria-hidden="true"><path d="M2 22 H74" stroke="#C9A06A" stroke-width="1" stroke-linecap="round"/>'
+  + '<path d="M22 22 A16 16 0 0 1 54 22" fill="none" stroke="#E08A5A" stroke-width="1.4"/>'
+  + '<path d="M38 2 V7 M24 7 L27 11 M52 7 L49 11 M14 15 L18 17 M62 15 L58 17" stroke="#E0A06A" stroke-width="1.2" stroke-linecap="round"/></svg>';
+
 function renderLetter(){
   const L = LETTER[lang];
-  $('readTo').innerHTML = L.to;
-  $('readText').innerHTML = L.body.trim().split(/\n\s*\n/).map(p => '<p>'+p.replace(/\n/g,'<br>')+'</p>').join('');
+  $('readDate').textContent = L.date;
+  $('readTo').textContent = L.to;
+  $('readText').innerHTML = L.body.trim().split(/\n\s*\n/).map(p =>
+    '<p class="lr">' + escH(p).replace(/\*(.+?)\*/g,'<em>$1</em>').replace(/\n/g,'<br>') + '</p>').join('');
+  $('readClose').innerHTML = CLOSE_ART + '<p>' + escH(L.close) + '<b>' + escH(L.closeLast) + '</b></p>';
   $('readSign').textContent = L.sign;
   $('savePdf').textContent = lang === 'es' ? 'Guardar en PDF' : 'Save as PDF';
   $('saveTxt').textContent = lang === 'es' ? 'Descargar el texto' : 'Download the text';
   document.querySelectorAll('.lang button').forEach(b => b.classList.toggle('on', b.dataset.lang === lang));
+  document.documentElement.lang = lang;
+  if(readSeen) read.querySelectorAll('.lr,.l-to,.l-sign').forEach(el => el.classList.add('in'));
 }
-function openRead(){ renderLetter(); read.classList.add('open'); document.documentElement.style.overflow = 'hidden'; $('readBody').scrollTop = 0; }
-function closeRead(){ read.classList.remove('open'); document.documentElement.style.overflow = ''; }
+/* cada bloque se revela cuando asoma en la hoja (y todo lo que quedó por encima,
+   por si ella desliza rápido); los primeros entran escalonados */
+function revealLetter(){
+  if(!readLive) return;
+  const limit = readBody.scrollTop + readBody.clientHeight*.92;
+  let k = 0;
+  read.querySelectorAll('.lr:not(.in),.l-to:not(.in),.l-sign:not(.in)').forEach(el => {
+    if(el.offsetTop < limit){ el.style.setProperty('--d', (RM ? 0 : Math.min(k++, 4)*.35) + 's'); el.classList.add('in'); }
+  });
+}
+function updateProg(){
+  const max = readBody.scrollHeight - readBody.clientHeight;
+  $('readProg').style.setProperty('--p', max > 0 ? (readBody.scrollTop / max).toFixed(3) : 1);
+  revealLetter();
+}
+readBody.addEventListener('scroll', updateProg, { passive:true });
+
+function openRead(){
+  renderLetter();
+  readBody.scrollTop = 0; updateProg();
+  read.classList.remove('open');
+  if(!readSeen){ readLive = false; read.querySelectorAll('.lr,.l-to,.l-sign').forEach(el => el.classList.remove('in')); }
+  document.documentElement.style.overflow = 'hidden';
+  document.documentElement.classList.add('reading');
+  Sea.hold(.55);                                   // el sol se queda besando el horizonte mientras lee
+  requestAnimationFrame(() => requestAnimationFrame(() => read.classList.add('open')));
+  if(!readSeen) setTimeout(() => { readLive = true; revealLetter(); }, RM ? 0 : 1500);   /* tras desenrollarse */
+  setTimeout(() => { readSeen = true; }, 6000);
+  setTimeout(() => $('readX').focus({ preventScroll:true }), 1600);
+}
+function closeRead(){
+  read.classList.remove('open');
+  document.documentElement.style.overflow = '';
+  document.documentElement.classList.remove('reading');
+  Sea.hold(null);
+}
 $('bottle').addEventListener('click', () => {
   const b = $('bottle');
   if(b.classList.contains('open')){ openRead(); return; }
@@ -1180,12 +1258,13 @@ $('bottle').addEventListener('click', () => {
   setTimeout(openRead, RM ? 0 : 1300);
 });
 $('readX').onclick = closeRead;
+$('reread').onclick = openRead;
 read.addEventListener('click', e => { if(e.target === read) closeRead(); });
-document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => { lang = b.dataset.lang; renderLetter(); }));
+document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => { lang = b.dataset.lang; readSeen = readLive = true; renderLetter(); updateProg(); }));
 $('savePdf').onclick = () => window.print();
 $('saveTxt').onclick = () => {
   const L = LETTER[lang];
-  const txt = L.to.replace(/<br\s*\/?>/g,'\n') + '\n\n' + L.body.trim() + '\n\n— ' + L.sign + '\n';
+  const txt = L.date + '\n\n' + L.to + '\n\n' + L.body.trim().replace(/\*(.+?)\*/g,'$1') + '\n\n' + L.close + '\n' + L.closeLast + '\n\n— ' + L.sign + '\n';
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([txt], { type:'text/plain;charset=utf-8' }));
   a.download = lang === 'es' ? 'carta-cuatro-meses.txt' : 'four-months-letter.txt';
