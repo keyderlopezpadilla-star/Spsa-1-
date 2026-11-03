@@ -162,6 +162,7 @@ h1 em{ font-style:italic; background:var(--grad); -webkit-background-clip:text; 
       <li>En <b>Repository access</b> elige <b>Only select repositories</b> y marca solo este repositorio.</li>
       <li>En <b>Permissions → Contents</b> elige <b>Read and write</b>. Nada más.</li>
       <li>Crea el token, cópialo y pégalo abajo.</li>
+      <li>¿Ya tenías uno que no escribe? No hace falta crear otro: <a href="https://github.com/settings/personal-access-tokens" target="_blank" rel="noopener">abre tus tokens</a>, entra en él, pulsa <b>Edit</b>, corrige el acceso y los permisos y guarda con <b>Update</b>.</li>
     </ol>
     <label class="field"><span>Token</span><input id="token" type="password" placeholder="github_pat_…" autocomplete="off" autocapitalize="off" spellcheck="false"></label>
     <div class="row">
@@ -586,8 +587,7 @@ async function publish(){
   }catch(e){
     ov.classList.add('done');
     const why = e.status === 401 ? 'El token no es válido o caducó.'
-              : e.status === 403 ? 'El token no tiene permiso de escritura (Contents: Read and write).'
-              : e.status === 404 ? 'No encuentro el repositorio o la rama. Revisa la configuración.'
+              : (e.status === 403 || e.status === 404) ? 'El token no puede escribir en el repositorio: edítalo en GitHub y pon Contents → Read and write para ' + cfg().repo + '.' + (e.detail ? ' (GitHub: «' + e.detail + '»)' : '')
               : (e.detail || e.message);
     progress(0, 'No se pudo publicar', why + ' Nada se ha perdido: las fotos siguen aquí.');
     $('ovSee').href = '#'; $('ovAct').hidden = false; $('ovSee').hidden = true;
@@ -617,16 +617,25 @@ $('saveCfg').addEventListener('click', async () => {
   store.set('repo', $('repo').value.trim() || DEFAULTS.repo); store.set('branch', $('branch').value.trim() || DEFAULTS.branch);
   try{
     const r = await gh('');
-    if(r.permissions && !r.permissions.push) throw Object.assign(new Error(''), { status:403 });
     await gh('/git/ref/heads/' + encodeURIComponent(cfg().branch));
-    msg.className = 'msg ok'; msg.textContent = 'Conectado con ' + r.full_name + '.';
-    setTimeout(() => { showSetup(false); start(); }, 700);
+    /* prueba real de escritura: un blob suelto, sin commit, no cambia nada en el repositorio.
+       En un repositorio público cualquier token puede leer, así que leer no demuestra nada. */
+    try{ await gh('/git/blobs', { method:'POST', body:JSON.stringify({ content:'ks-check', encoding:'utf-8' }) }); }
+    catch(w){ w.stage = 'escritura'; throw w; }
+    msg.className = 'msg ok'; msg.textContent = 'Conectado con ' + r.full_name + '. Escritura comprobada.';
+    setTimeout(() => { showSetup(false); start(); }, 900);
   }catch(e){
     msg.className = 'msg bad';
-    msg.textContent = e.status === 401 ? 'Ese token no funciona. Cópialo de nuevo.'
-                    : e.status === 403 ? 'El token no tiene permiso de escritura en el repositorio.'
-                    : e.status === 404 ? 'No encuentro el repositorio o la rama.'
-                    : 'No se pudo conectar: ' + (e.detail || e.message);
+    const why = e.detail ? ' (GitHub: «' + e.detail + '»)' : '';
+    msg.innerHTML = e.status === 401 ? 'Ese token no funciona: puede que esté mal copiado o caducado. Cópialo de nuevo.'
+      : (e.stage === 'escritura' && (e.status === 403 || e.status === 404))
+        ? 'El token puede <b>leer</b> pero no <b>escribir</b>' + esc(why) + '. En GitHub, edita el token: '
+          + '<b>Repository access → Only select repositories → ' + esc(cfg().repo) + '</b> y '
+          + '<b>Repository permissions → Contents → Read and write</b>. Guarda con <b>Update</b> y vuelve a pulsar Conectar. '
+          + '<a href="https://github.com/settings/personal-access-tokens" target="_blank" rel="noopener">Abrir mis tokens</a>'
+      : e.status === 404 ? 'No encuentro el repositorio o la rama «' + esc(cfg().branch) + '». Revisa usuario, repositorio y rama.'
+      : e.status === 403 ? 'GitHub ha rechazado el token' + esc(why) + '.'
+      : 'No se pudo conectar: ' + esc(e.detail || e.message);
   }
 });
 
