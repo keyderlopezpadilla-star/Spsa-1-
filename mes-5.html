@@ -10,7 +10,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8D%81%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&family=Hanken+Grotesk:wght@300;400;500;600&family=Nothing+You+Could+Do&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&family=Hanken+Grotesk:wght@300;400;500;600&family=Nothing+You+Could+Do&family=Anton&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
 *{ margin:0; padding:0; box-sizing:border-box; }
 :root{
@@ -105,22 +105,48 @@ a{ color:inherit; }
 .when b{ font-weight:600; } .when span{ color:var(--ink-dim); font-variant-numeric:tabular-nums; }
 @media (max-width:520px){ html.whening .top .back{ opacity:0; pointer-events:none; } }
 
-/* ---------- entrada ---------- */
-.gate{ position:fixed; inset:0; z-index:40; display:flex; flex-direction:column; align-items:center; justify-content:center;
-  text-align:center; padding:24px 16px; transition:opacity 1.4s var(--ease), transform 1.6s var(--ease), filter 1.4s ease; }
-.gate.gone{ opacity:0; transform:scale(1.06); filter:blur(6px); pointer-events:none; }
-.eyebrow{ font-size:.64rem; letter-spacing:.42em; text-transform:uppercase; color:var(--ink-dim); }
-.gate h1{ font-family:var(--display); font-weight:400; font-size:clamp(3.4rem,15vw,8rem); line-height:.92; margin:1rem 0 1.1rem;
-  letter-spacing:-.02em; text-shadow:0 6px 40px rgba(0,0,0,.45); }
-.gate h1 em{ font-style:italic; color:var(--amber); }
-.gate p{ font-family:var(--serif); font-style:italic; font-size:clamp(1.1rem,3.8vw,1.4rem); color:var(--ink-dim); max-width:28ch; }
-.gate__btn{ margin-top:2.3rem; display:inline-flex; align-items:center; gap:.8rem; padding:.95rem 1.6rem .95rem 1.1rem; border-radius:99px;
-  border:1px solid rgba(240,184,90,.45); background:rgba(240,184,90,.1); font-size:.72rem; letter-spacing:.26em; text-transform:uppercase;
-  transition:background .4s ease, transform .4s var(--ease); }
-.gate__btn:hover{ background:rgba(240,184,90,.2); transform:translateY(-2px); }
-.gate__btn svg{ width:22px; height:22px; animation:sway 3s ease-in-out infinite; }
+/* ---------- entrada: la portada «YOU & ME» ---------- */
+.gate{ position:fixed; inset:0; z-index:40; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:clamp(.8rem,2.4svh,1.4rem);
+  text-align:center; padding:max(18px,env(safe-area-inset-top)) 16px max(18px,env(safe-area-inset-bottom));
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' opacity='.06'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 50% 40%, #FBF7F0, #F1E9DC 80%);
+  color:#2A1E18; transition:opacity 1.4s var(--ease), transform 1.6s var(--ease), filter 1.4s ease; }
+.gate.gone{ opacity:0; transform:scale(1.04); filter:blur(6px); pointer-events:none; }
+html.locked #autumn{ z-index:41; }                      /* las hojas caen por delante de la portada */
+.gate__eye{ font-size:.6rem; letter-spacing:.42em; text-transform:uppercase; color:rgba(42,30,24,.55); }
+.poster{ width:min(92vw, calc((100svh - 170px) * .6)); container-type:inline-size; user-select:none; }
+.poster__row{ display:flex; justify-content:space-between; align-items:flex-end; line-height:.8; }
+.poster__row + .poster__row{ margin-top:3.2cqw; }
+/* cada letra es una ventana a una foto, en blanco y negro */
+.pl{ font-family:'Anton',Impact,sans-serif; font-size:66cqw; line-height:.8; letter-spacing:0; display:inline-block;
+  padding-top:.04em; color:transparent; -webkit-text-fill-color:transparent;
+  background:var(--img) var(--pos,50% 40%) / var(--size,cover) no-repeat; -webkit-background-clip:text; background-clip:text;
+  filter:grayscale(1) contrast(1.12) brightness(1.03);
+  opacity:0; transform:translateY(14%); animation:plIn 1.4s var(--ease) forwards; animation-delay:var(--dl,0s); }
+.poster__row--2 .pl{ font-size:56.5cqw; }
+@keyframes plIn{ to{ opacity:1; transform:none; } }
+.poster__amp{ position:relative; font-family:'Great Vibes',cursive; font-size:50cqw; line-height:.62; color:#9B1C1C; margin-right:0;
+  clip-path:inset(0 100% 0 0); animation:ampIn 1.6s cubic-bezier(.5,0,.3,1) 1.1s forwards; transform:translateY(-4cqw); }
+.poster__amp i{ font-style:normal; font-family:var(--sans); font-weight:700; font-size:.2em; vertical-align:baseline; margin-left:-.1em; }
+@keyframes ampIn{ to{ clip-path:inset(-20% -10% -20% 0); } }
+.poster__cap{ font-family:'Great Vibes',cursive; font-size:9.6cqw; line-height:1; margin-top:6cqw; color:#1E1612;
+  opacity:0; animation:plIn 1.2s ease 1.9s forwards; }
+.poster__date{ font-family:var(--display); font-style:italic; font-size:5.6cqw; letter-spacing:.12em; color:rgba(42,30,24,.55); margin-top:3.6cqw;
+  opacity:0; animation:plIn 1.2s ease 2.2s forwards; }
+.gate__btn{ display:inline-flex; align-items:center; gap:.7rem; padding:.85rem 1.4rem .85rem 1rem; border-radius:99px;
+  border:1px solid rgba(155,28,28,.45); background:rgba(155,28,28,.06); color:#5A1A14; font-size:.68rem; letter-spacing:.26em; text-transform:uppercase;
+  opacity:0; animation:plIn 1s ease 2.6s forwards; transition:background .4s ease, transform .4s var(--ease); }
+.gate__btn:hover{ background:rgba(155,28,28,.14); transform:translateY(-2px); }
+.gate__btn svg{ width:20px; height:20px; animation:sway 3s ease-in-out infinite; }
 @keyframes sway{ 0%,100%{ transform:rotate(-12deg); } 50%{ transform:rotate(12deg); } }
-.gate small{ display:block; margin-top:1.1rem; font-size:.7rem; letter-spacing:.12em; color:var(--ink-faint); }
+.eyebrow{ font-size:.64rem; letter-spacing:.42em; text-transform:uppercase; color:var(--ink-dim); }
+/* la portada sola, para exportarla como imagen */
+html.export body > *:not(.gate){ display:none !important; }
+html.export .gate{ position:static; min-height:100vh; }
+html.export .gate__btn, html.export .gate__eye{ display:none; }
+html.export .pl, html.export .poster__cap, html.export .poster__date, html.export .gate__btn{ animation:none; opacity:1; transform:none; }
+html.export .poster__amp{ animation:none; clip-path:none; }
 
 /* ---------- estructura ---------- */
 main{ position:relative; z-index:10; transition:opacity 1.2s ease .3s; }
@@ -360,14 +386,25 @@ section{ position:relative; padding:clamp(5rem,14vh,9rem) 16px; }
 
 <!-- ============ ENTRADA ============ -->
 <div class="gate" id="gate">
-  <span class="eyebrow">Capítulo Quinto</span>
-  <h1>Nuestro<br><em>otoño</em></h1>
-  <p>Cinco meses. Todo cambia de color, menos lo nuestro.</p>
+  <span class="gate__eye">Capítulo Quinto · Nuestro otoño</span>
+  <div class="poster" id="poster" role="img" aria-label="You and me. My anniversary with you. 21 de noviembre de 2026.">
+    <div class="poster__row">
+      <span class="pl" style="--img:url(media/m5/20261031-213125-ac342d.jpg);--pos:30% 22%;--dl:.1s">Y</span>
+      <span class="pl" style="--img:url(media/m5/20261031-213158-8eca94.jpg);--pos:34% 30%;--size:auto 115%;--dl:.25s">O</span>
+      <span class="pl" style="--img:url(media/m4/20261013-192148-99ce98.jpg);--pos:88% 42%;--size:190% auto;--dl:.4s">U</span>
+    </div>
+    <div class="poster__row poster__row--2">
+      <span class="poster__amp" aria-hidden="true">&amp;<i>.</i></span>
+      <span class="pl" style="--img:url(media/m5/20261031-220734-476f3c.jpg);--pos:58% 52%;--size:185% auto;--dl:.55s">M</span>
+      <span class="pl" style="--img:url(media/m5/20261021-131118-e2a3d8.jpg);--pos:62% 35%;--size:auto 120%;--dl:.7s">E</span>
+    </div>
+    <p class="poster__cap">My Anniversary with You</p>
+    <p class="poster__date">2026.11.21</p>
+  </div>
   <button class="gate__btn" id="gateBtn">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#E3A53B" d="M12 2l1.6 4.2 3.4-2-1 4.4 4.4-.6-2.6 3.4 3.2 2.2-4.3 1 .7 4.4-3.9-2.3L12 22l-1.5-5.3-3.9 2.3.7-4.4-4.3-1 3.2-2.2L3.6 8l4.4.6-1-4.4 3.4 2z"/></svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#9B1C1C" d="M12 2l1.6 4.2 3.4-2-1 4.4 4.4-.6-2.6 3.4 3.2 2.2-4.3 1 .7 4.4-3.9-2.3L12 22l-1.5-5.3-3.9 2.3.7-4.4-4.3-1 3.2-2.2L3.6 8l4.4.6-1-4.4 3.4 2z"/></svg>
     Entrar al otoño
   </button>
-  <small>toca el suelo para levantar las hojas</small>
 </div>
 
 <main id="main">
@@ -459,6 +496,7 @@ section{ position:relative; padding:clamp(5rem,14vh,9rem) 16px; }
     <div class="end__next r" style="--d:.6s">continuará · capítulo VI</div>
     <div class="end__links r" style="--d:.7s">
       <button class="chip" id="reread">Volver a leer la carta</button>
+      <a class="chip" href="media/m5/portada.jpg" download="you-and-me-cinco-meses.jpg">Guardar nuestra portada</a>
       <a class="chip" href="index.html">Volver a los capítulos</a>
     </div>
   </section>
@@ -511,7 +549,7 @@ const CONFIG = {
   manifest: "media/m5/manifest.json",       // lo escribe subir.html
   dir: "media/m5/",
   startDate: "2026-06-21T00:00:00",         // el día en que empezó todo
-  VIDEO_ID: "",                             // id de YouTube de la canción; vacío = sin música
+  VIDEO_ID: "iggmiF7DNoM",                  // we fell in love in october — girl in red
   VOLUMEN: 72
 };
 
@@ -829,7 +867,7 @@ const Autumn = (function(){
         }
       }
       /* hojas que llegan desde arriba, aunque nadie toque nada */
-      spawnAcc += dt*(started ? .55 + state.prog*.9 : .3);
+      spawnAcc += dt*(started ? .55 + state.prog*.9 : .9);
       while(spawnAcc >= 1){ spawnAcc--; makeFalling(Math.random()*W*1.1 - W*.05, -30); }
       if(started){ nextGold -= dt; if(nextGold <= 0 && !golden && Gold.count < NOTES.length){ spawnGold(); nextGold = 999; } }
 
@@ -853,8 +891,8 @@ const Autumn = (function(){
 
     ctx.setTransform(1,0,0,1,0,0); ctx.globalAlpha = 1;
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    if(tree) ctx.drawImage(tree, 0, 0);
-    for(const a of attached){
+    if(tree && started) ctx.drawImage(tree, 0, 0);
+    for(const a of (started ? attached : [])){
       if(a.a < 1) a.a = Math.min(1, a.a + dt*.8);
       a.flip = 0; const r0 = a.rot;
       a.rot = r0 + Math.sin(T*1.6 + a.ph)*(.12 + Math.abs(state.wind)*.004);

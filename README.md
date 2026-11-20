@@ -122,7 +122,7 @@ el cielo se enfría. Todo se dibuja en tiempo real en un canvas.
 
 | Sección | Qué es |
 |---|---|
-| Entrada | «Nuestro otoño». Al entrar, el árbol se sacude y suelta una lluvia de hojas |
+| Portada | **YOU & ME**: letras gigantes rellenas con nuestras fotos en blanco y negro, «&» en rojo, «My Anniversary with You · 2026.11.21»; las hojas caen por delante. Al entrar, el árbol se sacude. Exportada en `media/m5/portada.jpg` (1080×1920), descargable desde el final |
 | Hero | «Cinco meses»: cada letra cae como una hoja; contador en vivo desde el 21 de junio |
 | Cinco hojas | Una hoja prensada por capítulo; al tocarla se da la vuelta con su frase y el enlace |
 | Hojas doradas | Un juego: de vez en cuando cae una hoja dorada; al atraparla aparece una nota (hay 7) |
@@ -134,7 +134,8 @@ Interacciones: las hojas caen con física (gravedad, aleteo, viento); **el dedo 
 ratón son viento** y las empujan; **tocar el suelo las levanta**; al volver hacia
 arriba, el árbol rebrota.
 
-- **Carta:** `LETTER` en `mes-5.html`. **Música:** `CONFIG.VIDEO_ID` (vacío = sin música).
+- **Carta:** `LETTER` en `mes-5.html`. **Música:** «we fell in love in october» de girl in red (`CONFIG.VIDEO_ID`).
+- **Fotos de la portada:** cada letra lleva su foto en el atributo `style` (`--img`, y `--pos`/`--size` para encuadrarla).
 - Las 53 fotos del 21 oct al 1 nov estaban en `media/m4/` y se movieron a `media/m5/`.
 
 ## subir.html reparte las fotos solo
