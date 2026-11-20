@@ -98,7 +98,9 @@ h1 em{ font-style:italic; background:var(--grad); -webkit-background-clip:text; 
 .item__body{ min-width:0; display:flex; flex-direction:column; gap:6px; }
 .item__top{ display:flex; justify-content:space-between; align-items:center; gap:6px; }
 .tag{ font-size:.62rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:.25rem .5rem; border-radius:99px; background:var(--card-2); color:var(--dim); white-space:nowrap; }
-.tag.ok{ color:#163A26; background:var(--ok); } .tag.warn{ color:#3A2A08; background:var(--warn); } .tag.bad{ color:#3A0A10; background:var(--bad); }
+.tag.ok{ color:#163A26; background:var(--ok); }
+.tag.dest{ color:#2A1020; background:var(--amber); }
+.item__top > span{ display:flex; gap:4px; flex-wrap:wrap; } .tag.warn{ color:#3A2A08; background:var(--warn); } .tag.bad{ color:#3A0A10; background:var(--bad); }
 .x{ width:30px; height:30px; border-radius:50%; color:var(--faint); border:1px solid var(--line); font-size:.8rem; flex:none; }
 .item input[type=text], .item input[type=datetime-local]{ width:100%; padding:.55rem .65rem; border-radius:10px; background:var(--bg); border:1px solid var(--line);
   font-size:.82rem; outline:none; min-width:0; }
@@ -147,7 +149,7 @@ h1 em{ font-style:italic; background:var(--grad); -webkit-background-clip:text; 
     </button>
   </div>
   <h1>Subir <em>fotos</em></h1>
-  <p class="lead">Elige las fotos desde el móvil. Se ordenan solas por la fecha en que las tomaste, se comprimen aquí mismo y quedan publicadas en el capítulo con un solo toque.</p>
+  <p class="lead">Elige las fotos desde el móvil. Cada una va sola al capítulo de su fecha, se ordena por el momento en que la tomaste, se comprime aquí mismo y queda publicada con un solo toque.</p>
   <div class="select"><select id="chapter" aria-label="Capítulo"></select></div>
 </header>
 
@@ -223,8 +225,11 @@ h1 em{ font-style:italic; background:var(--grad); -webkit-background-clip:text; 
 /* =======================================================================
    CAPÍTULOS — para el V, añade una línea más aquí
    ======================================================================= */
+/* Cada foto va sola al capítulo que le toca por su fecha (desde el día 21 hasta el 21 siguiente).
+   Para un capítulo nuevo, añade una línea con su rango de fechas. */
 const CHAPTERS = [
-  { id:'m4', name:'Capítulo IV · A la orilla de ti', dir:'media/m4/', page:'mes-4.html' }
+  { id:'m4', n:'IV', name:'Capítulo IV · A la orilla de ti', dir:'media/m4/', page:'mes-4.html', from:'2026-09-21', to:'2026-10-21' },
+  { id:'m5', n:'V',  name:'Capítulo V · Nuestro otoño',      dir:'media/m5/', page:'mes-5.html', from:'2026-10-21', to:'2026-11-21' }
 ];
 const DEFAULTS = { owner:'keyderlopezpadilla-star', repo:'Spsa-1-', branch:'main' };
 const MAX_SIDE = 1400, QUALITY = .82, DUP_DIST = 6;
@@ -241,7 +246,11 @@ const store = {
   del(k){ try{ localStorage.removeItem('ks_up_'+k); }catch(_){} }
 };
 const cfg = () => ({ token:store.get('token',''), owner:store.get('owner',DEFAULTS.owner), repo:store.get('repo',DEFAULTS.repo), branch:store.get('branch',DEFAULTS.branch) });
-let chapter = CHAPTERS.find(c => c.id === store.get('chapter')) || CHAPTERS[0];
+/* el capítulo al que pertenece una fecha "2026-10-31T19:02:00"; null si no cae en ninguno */
+const chapterFor = taken => CHAPTERS.find(c => taken && taken.slice(0,10) >= c.from && taken.slice(0,10) < c.to) || null;
+const nowTaken = () => { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); };
+let chapter = CHAPTERS.find(c => c.id === store.get('chapter')) || chapterFor(nowTaken()) || CHAPTERS[CHAPTERS.length-1];
+const known = new Map();       // id del capítulo → fotos publicadas (para detectar repetidas en todos)
 
 /* estado */
 let manifest = { version:1, photos:[] };   // tal como está publicado
@@ -268,9 +277,10 @@ async function gh(path, opts = {}){
 }
 const b64ToText = b => new TextDecoder().decode(Uint8Array.from(atob(b.replace(/\s/g,'')), c => c.charCodeAt(0)));
 
-async function fetchManifest(ref){
+const fetchManifest = ref => fetchManifestOf(chapter, ref);
+async function fetchManifestOf(ch, ref){
   try{
-    const j = await gh('/contents/' + chapter.dir + 'manifest.json?ref=' + encodeURIComponent(ref));
+    const j = await gh('/contents/' + ch.dir + 'manifest.json?ref=' + encodeURIComponent(ref));
     const m = JSON.parse(b64ToText(j.content));
     m.photos = Array.isArray(m.photos) ? m.photos : [];
     return m;
@@ -361,7 +371,11 @@ async function processFile(file){
 
 const hamming = (a, b) => { let x = BigInt('0x'+a) ^ BigInt('0x'+b), n = 0; while(x){ n += Number(x & 1n); x >>= 1n; } return n; };
 function findDup(hash, selfId){
-  for(const p of manifest.photos){ if(!removed.has(p.file) && p.hash && hamming(hash, p.hash) <= DUP_DIST) return 'ya publicada';
+  for(const [id, photos] of known){
+    for(const p of photos){
+      if(id === chapter.id && removed.has(p.file)) continue;
+      if(p.hash && hamming(hash, p.hash) <= DUP_DIST) return 'ya publicada' + (id === chapter.id ? '' : ' en el ' + CHAPTERS.find(c => c.id === id).name.split('·')[0].trim());
+    }
   }
   for(const q of queue){ if(q.id !== selfId && q.hash && q.state !== 'skip' && hamming(hash, q.hash) <= DUP_DIST) return 'repetida en esta tanda'; }
   return null;
@@ -403,6 +417,10 @@ function renderQueue(){
     let tag = '<span class="tag">en espera</span>', note = '';
     if(q.state === 'work') tag = '<span class="tag">preparando</span>';
     if(q.state === 'ready') tag = '<span class="tag ok">lista</span>';
+    if((q.state === 'ready' || q.state === 'dup') && q.taken){
+      const dest = chapterFor(q.taken);
+      tag += dest ? ' <span class="tag dest">→ Cap. ' + dest.n + '</span>' : ' <span class="tag warn">→ Cap. ' + chapter.n + ' (fuera de fechas)</span>';
+    }
     if(q.state === 'dup') tag = q.include ? '<span class="tag warn">se subirá igual</span>' : '<span class="tag warn">repetida</span>';
     if(q.state === 'error') tag = '<span class="tag bad">error</span>';
     if(q.state === 'dup') note = '<span class="item__note"><b>Parece ' + q.dupWhy + '.</b></span><button class="link" data-act="force">' + (q.include ? 'no subirla' : 'subirla igualmente') + '</button>';
@@ -414,7 +432,7 @@ function renderQueue(){
       : '';
     return '<div class="item' + (q.include || q.state === 'wait' || q.state === 'work' ? '' : ' skip') + '" data-id="' + q.id + '">'
       + '<div class="item__img">' + (q.thumb ? '<img src="' + q.thumb + '" alt="">' : '<span class="spin"></span>') + '</div>'
-      + '<div class="item__body"><div class="item__top">' + tag + '<button class="x" data-act="drop" aria-label="Quitar">✕</button></div>'
+      + '<div class="item__body"><div class="item__top"><span>' + tag + '</span><button class="x" data-act="drop" aria-label="Quitar">✕</button></div>'
       + fields + note + '</div></div>';
   }).join('');
   updateDock();
@@ -442,7 +460,11 @@ async function loadPublished(){
   $('pubInfo').textContent = 'cargando…';
   try{
     manifest = await fetchManifest(cfg().branch);
+    known.set(chapter.id, manifest.photos);
     renderPublished();
+    /* los demás capítulos, solo para avisar de repetidas */
+    CHAPTERS.filter(c => c !== chapter && !known.has(c.id)).forEach(c =>
+      fetchManifestOf(c, cfg().branch).then(m => known.set(c.id, m.photos), () => {}));
   }catch(e){
     $('pubInfo').textContent = '';
     $('published').innerHTML = '<p class="none">No se pudo leer el capítulo (' + (e.detail || e.message) + '). Revisa la configuración.</p>';
@@ -536,42 +558,58 @@ async function publish(){
 
     /* 2. commit atómico; si alguien publicó entre medias, se reintenta sobre lo nuevo */
     progress(.88, null, 'Guardando en el capítulo…');
-    let ok = false, lastErr = null, newCommit = null;
+    let ok = false, lastErr = null, newCommit = null, lastGroups = null;
     for(let attempt = 0; attempt < 4 && !ok; attempt++){
       const ref = await gh('/git/ref/heads/' + encodeURIComponent(c.branch));
       const head = ref.object.sha;
       const commit = await gh('/git/commits/' + head);
-      const fresh = await fetchManifest(head);
-      const present = new Set(fresh.photos.map(x => x.file));
       const tree = [];
-      /* borrar */
-      const dels = p.del.filter(f => present.has(f));
-      fresh.photos = fresh.photos.filter(x => !p.del.includes(x.file));
-      dels.forEach(f => tree.push({ path:chapter.dir + f, mode:'100644', type:'blob', sha:null }));
-      /* textos */
-      fresh.photos.forEach(x => { const ed = edits.get(x.file); if(ed && ed.caption !== undefined) x.caption = ed.caption; });
-      /* nuevas */
-      p.add.forEach(q => {
-        const file = fileName(q);
-        tree.push({ path:chapter.dir + file, mode:'100644', type:'blob', sha:q.blobSha });
-        const entry = { file, taken:q.taken, w:q.w, h:q.h, hash:q.hash, color:q.color, caption:q.caption || '' };
-        const i = fresh.photos.findIndex(x => x.file === file);
-        i >= 0 ? (fresh.photos[i] = entry) : fresh.photos.push(entry);
-      });
-      fresh.photos.sort((a,b) => (a.taken||'').localeCompare(b.taken||''));
-      fresh.version = 1; fresh.updated = new Date().toISOString();
-      tree.push({ path:chapter.dir + 'manifest.json', mode:'100644', type:'blob', content:JSON.stringify(fresh, null, 2) + '\n' });
+      /* cada foto nueva va al capítulo de su fecha; borrar y textos son del capítulo abierto */
+      const groups = new Map();
+      const groupOf = ch => { if(!groups.has(ch.id)) groups.set(ch.id, { ch, add:[] }); return groups.get(ch.id); };
+      p.add.forEach(q => groupOf(chapterFor(q.taken) || chapter).add.push(q));
+      if(p.del.length || p.edit.length) groupOf(chapter);
+      let dels = [];
+      const freshByCh = new Map();
+      for(const g of groups.values()){
+        const fresh = await fetchManifestOf(g.ch, head);
+        if(g.ch === chapter){
+          const present = new Set(fresh.photos.map(x => x.file));
+          dels = p.del.filter(f => present.has(f));
+          fresh.photos = fresh.photos.filter(x => !p.del.includes(x.file));
+          dels.forEach(f => tree.push({ path:chapter.dir + f, mode:'100644', type:'blob', sha:null }));
+          fresh.photos.forEach(x => { const ed = edits.get(x.file); if(ed && ed.caption !== undefined) x.caption = ed.caption; });
+        }
+        g.add.forEach(q => {
+          const file = fileName(q);
+          tree.push({ path:g.ch.dir + file, mode:'100644', type:'blob', sha:q.blobSha });
+          const entry = { file, taken:q.taken, w:q.w, h:q.h, hash:q.hash, color:q.color, caption:q.caption || '' };
+          const i = fresh.photos.findIndex(x => x.file === file);
+          i >= 0 ? (fresh.photos[i] = entry) : fresh.photos.push(entry);
+        });
+        fresh.photos.sort((x,y) => (x.taken||'').localeCompare(y.taken||''));
+        fresh.version = 1; fresh.updated = new Date().toISOString();
+        tree.push({ path:g.ch.dir + 'manifest.json', mode:'100644', type:'blob', content:JSON.stringify(fresh, null, 2) + '\n' });
+        freshByCh.set(g.ch.id, fresh);
+      }
 
       const t = await gh('/git/trees', { method:'POST', body:JSON.stringify({ base_tree:commit.tree.sha, tree }) });
       const bits = [];
       if(p.add.length) bits.push(p.add.length + ' foto' + (p.add.length === 1 ? '' : 's') + ' nueva' + (p.add.length === 1 ? '' : 's'));
       if(dels.length) bits.push(dels.length + ' borrada' + (dels.length === 1 ? '' : 's'));
       if(p.edit.length) bits.push(p.edit.length + ' texto' + (p.edit.length === 1 ? '' : 's'));
-      const msg = chapter.name.split('·')[0].trim() + ': ' + bits.join(', ') + '\n\nPublicado desde subir.html';
+      const order = [...groups.values()].sort((x,y) => CHAPTERS.indexOf(x.ch) - CHAPTERS.indexOf(y.ch));
+      const names = order.map(g => g.ch.n);
+      const msg = (names.length > 1 ? 'Capítulos ' + names.slice(0,-1).join(', ') + ' y ' + names.at(-1) : 'Capítulo ' + names[0]) + ': ' + bits.join(', ')
+        + order.filter(g => g.add.length && names.length > 1).map(g => '\n- ' + g.ch.n + ': ' + g.add.length + ' foto' + (g.add.length === 1 ? '' : 's')).join('')
+        + '\n\nPublicado desde subir.html';
       newCommit = await gh('/git/commits', { method:'POST', body:JSON.stringify({ message:msg, tree:t.sha, parents:[head] }) });
       try{
         await gh('/git/refs/heads/' + encodeURIComponent(c.branch), { method:'PATCH', body:JSON.stringify({ sha:newCommit.sha, force:false }) });
-        ok = true; manifest = fresh;
+        ok = true;
+        freshByCh.forEach((m, id) => known.set(id, m.photos));
+        if(freshByCh.has(chapter.id)) manifest = freshByCh.get(chapter.id);
+        lastGroups = groups;
       }catch(e){ lastErr = e; if(e.status !== 422 && e.status !== 409) throw e; }
     }
     if(!ok) throw lastErr || new Error('No se pudo guardar');
@@ -582,8 +620,11 @@ async function publish(){
     removed.clear(); edits.clear();
     renderQueue(); renderPublished();
     ov.classList.add('done');
-    progress(1, '¡Publicado!', 'En un minuto aparece en el capítulo, mientras la web se actualiza.');
-    $('ovSee').href = chapter.page; $('ovAct').hidden = false;
+    const dest = [...lastGroups.values()].filter(g => g.add.length).sort((x,y) => y.add.length - x.add.length);
+    const where = dest.length > 1 ? ' Se repartieron solas: ' + dest.map(g => g.add.length + ' al ' + g.ch.n).join(', ') + '.'
+               : dest.length ? ' Van al ' + dest[0].ch.name.split('·')[0].trim() + '.' : '';
+    progress(1, '¡Publicado!', 'En un minuto aparecen, mientras la web se actualiza.' + where);
+    $('ovSee').href = (dest[0] ? dest[0].ch : chapter).page; $('ovAct').hidden = false;
   }catch(e){
     ov.classList.add('done');
     const why = e.status === 401 ? 'El token no es válido o caducó.'

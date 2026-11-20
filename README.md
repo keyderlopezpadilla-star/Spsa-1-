@@ -10,11 +10,13 @@ mes-1.html          → Capítulo I   · Nuestro primer mes (21 jun — 21 jul)
 mes-2.html          → Capítulo II  · Dos meses contigo (21 jul — 21 ago)
 mes-3.html          → Capítulo III · Nuestro propio universo (21 ago — 21 sep)
 mes-4.html          → Capítulo IV  · A la orilla de ti (21 sep — 21 oct)
+mes-5.html          → Capítulo V   · Nuestro otoño (21 oct — 21 nov)
 subir.html          → panel para subir fotos desde el móvil (no enlazado, noindex)
 media/              → fotos y videos del Capítulo I  (f01…f56.jpg, v1…v5.mp4)
 media/m2/           → fotos del Capítulo II (p01…p42.jpg, q01…q20.jpg)
 media/m3/           → fotos del Capítulo III (p01…p93.jpg)
 media/m4/           → fotos del Capítulo IV + manifest.json (los escribe subir.html)
+media/m5/           → fotos del Capítulo V + manifest.json (los escribe subir.html)
 fotos-originales/   → los originales del móvil, sin publicar (respaldo)
 ```
 
@@ -109,6 +111,39 @@ puede quitar con «Olvidar en este móvil».
 
 Por defecto publica en la rama `main`, que es la que despliega Vercel. Para un
 capítulo nuevo, añade una línea a `CHAPTERS` dentro de `subir.html`.
+
+
+## Capítulo V — Nuestro otoño
+
+El otoño avanza con el scroll: arriba es un octubre dorado, con rayos de luz y un
+árbol lleno de hojas verdes y amarillas; al bajar, las hojas se vuelven naranjas,
+rojas y marrones, el árbol se va quedando desnudo, cae la niebla de noviembre y
+el cielo se enfría. Todo se dibuja en tiempo real en un canvas.
+
+| Sección | Qué es |
+|---|---|
+| Entrada | «Nuestro otoño». Al entrar, el árbol se sacude y suelta una lluvia de hojas |
+| Hero | «Cinco meses»: cada letra cae como una hoja; contador en vivo desde el 21 de junio |
+| Cinco hojas | Una hoja prensada por capítulo; al tocarla se da la vuelta con su frase y el enlace |
+| Hojas doradas | Un juego: de vez en cuando cae una hoja dorada; al atraparla aparece una nota (hay 7) |
+| El mes, hoja a hoja | Las fotos caen como hojas y se amontonan por día, cada una con su hora; arriba, la fecha de la que pasa |
+| El libro | Un libro con hojas prensadas: se abre y dentro está la carta (ES/EN, PDF y .txt) |
+| Final | Árbol desnudo, niebla: «En otoño todo cae. Menos lo que siento por ti.» |
+
+Interacciones: las hojas caen con física (gravedad, aleteo, viento); **el dedo o el
+ratón son viento** y las empujan; **tocar el suelo las levanta**; al volver hacia
+arriba, el árbol rebrota.
+
+- **Carta:** `LETTER` en `mes-5.html`. **Música:** `CONFIG.VIDEO_ID` (vacío = sin música).
+- Las 53 fotos del 21 oct al 1 nov estaban en `media/m4/` y se movieron a `media/m5/`.
+
+## subir.html reparte las fotos solo
+
+Cada foto va al capítulo que le toca **por su fecha** (del día 21 al 21 siguiente),
+aunque esté abierto otro capítulo: en una misma tanda pueden ir unas al IV y otras
+al V, en un solo commit. Cada foto muestra su destino («→ Cap. V») antes de publicar.
+Las repetidas se detectan contra todos los capítulos. Para el VI, añade una línea a
+`CHAPTERS` en `subir.html` con su rango de fechas.
 
 ---
 
