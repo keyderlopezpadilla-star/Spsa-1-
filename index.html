@@ -107,14 +107,14 @@ body{
   color:rgba(201,169,106,.5); line-height:1.9; }
 
 /* ---------- selector de capítulos ---------- */
-.pick{ width:100%; max-width:1120px; }
+.pick{ width:100%; max-width:1240px; }
 .pick__head{ margin-bottom:clamp(2.4rem,6vh,4rem); }
 .pick__head .rule{ margin-bottom:1.3rem; }
 .pick__head h1{ font-family:'Cinzel',serif; font-weight:500; font-size:clamp(1.5rem,5.5vw,2.4rem);
   letter-spacing:.2em; margin-bottom:.8rem; }
 .pick__head p{ color:rgba(244,235,220,.5); font-style:italic; font-size:clamp(1rem,3vw,1.16rem); }
 
-.cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr));
+.cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(210px,100%),1fr));
   gap:clamp(1.4rem,4vw,2.6rem); justify-content:center; }
 
 .card{ position:relative; display:block; text-align:center; cursor:pointer;
@@ -165,6 +165,16 @@ body{
     repeating-linear-gradient(180deg,rgba(255,205,150,.75) 0 2px,transparent 2px 7px) 50% 0/26% 62% no-repeat,
     linear-gradient(180deg,#3A2140 0%,#4A2A48 60%,#C08A6A 100%); }
 .card:hover .card__sunset::before{ top:70%; }
+/* ventana del capítulo V: hojas de otoño cayendo */
+.card__autumn{ position:absolute; inset:0; overflow:hidden;
+  background:radial-gradient(ellipse 90% 70% at 20% 100%, rgba(240,160,60,.55), transparent 60%), linear-gradient(180deg,#2A1B10,#4B2C15); }
+.card__autumn i{ position:absolute; width:22%; aspect-ratio:1; background:var(--c);
+  clip-path:polygon(50% 0,60% 22%,80% 10%,74% 36%,100% 34%,82% 52%,96% 66%,66% 64%,58% 88%,50% 74%,42% 88%,34% 64%,4% 66%,18% 52%,0 34%,26% 36%,20% 10%,40% 22%);
+  animation:cardLeaf 6s linear infinite; animation-delay:var(--dl); left:var(--x); top:-25%; }
+@keyframes cardLeaf{ 0%{ transform:translateY(0) rotate(0); } 100%{ transform:translateY(560%) rotate(320deg); } }
+.card:not(:hover) .card__autumn i{ animation-play-state:paused; }
+.card__autumn::after{ content:''; position:absolute; left:0; right:0; bottom:0; height:18%;
+  background:linear-gradient(180deg,transparent,#5E3420 60%); }
 .card--soon{ cursor:default; filter:grayscale(.32); }
 .card--soon:hover{ transform:rotate(var(--rot,0deg)); box-shadow:0 20px 44px rgba(0,0,0,.5); }
 .card--soon .card__ttl{ color:var(--ink-soft); }
@@ -269,9 +279,23 @@ body{
         <p class="card__sub">cuatro meses, y un atardecer que no se acaba</p>
         <span class="card__date">21 septiembre — 21 octubre</span>
       </a>
+
+      <!-- MES V -->
+      <a class="card" href="mes-5.html" style="--rot:-1.4deg">
+        <span class="card__wax">V</span>
+        <div class="card__win">
+          <img src="media/m5/portada.jpg" alt="You &amp; Me" loading="lazy" style="object-position:50% 46%"
+               onerror="this.style.display='none';this.parentNode.querySelector('.card__ph').style.display='flex'">
+          <span class="card__ph" style="display:none">V</span>
+        </div>
+        <span class="card__num">Capítulo Quinto</span>
+        <h2 class="card__ttl">Nuestro otoño</h2>
+        <p class="card__sub">cinco meses, y todo cambia de color menos lo nuestro</p>
+        <span class="card__date">21 octubre — 21 noviembre</span>
+      </a>
     </div>
 
-    <p class="pick__foot">y el sol sigue bajando, despacio, sobre nosotros…</p>
+    <p class="pick__foot">y las hojas siguen cayendo, despacio, sobre nosotros…</p>
     <button class="pick__out" id="lockAgain">cerrar con cera de nuevo</button>
   </div>
 </div>

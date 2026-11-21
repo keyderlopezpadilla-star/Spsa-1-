@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<script>try{if(localStorage.getItem('ks_key')!=='1'){location.replace('index.html');}}catch(e){}</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1A120D">
+<title>Capítulo V — Nuestro otoño</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8D%81%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&family=Hanken+Grotesk:wght@300;400;500;600&family=Nothing+You+Could+Do&family=Anton&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; }
+:root{
+  --p:0;                       /* avance del otoño: 0 = octubre dorado, 1 = noviembre de niebla */
+  --ink:#F6EBDD;
+  --ink-dim:rgba(246,235,221,.74);
+  --ink-faint:rgba(246,235,221,.46);
+  --gold:#E3A53B;
+  --amber:#F0B85A;
+  --rust:#C8582E;
+  --wine:#8E2A22;
+  --bark:#1A120D;
+  --line:rgba(240,200,150,.2);
+  --display:'Bodoni Moda',Didot,serif;
+  --serif:'Newsreader',Georgia,serif;
+  --sans:'Hanken Grotesk',system-ui,sans-serif;
+  --hand:'Nothing You Could Do',cursive;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+html{ -webkit-text-size-adjust:100%; }
+html.locked, html.locked body{ overflow:hidden; height:100%; }
+body{ font-family:var(--sans); color:var(--ink); background:#17110C; overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+::selection{ background:var(--rust); color:#fff; }
+button{ font:inherit; color:inherit; background:none; border:none; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+a{ color:inherit; }
+:focus-visible{ outline:2px solid var(--amber); outline-offset:3px; border-radius:6px; }
+
+/* ---------- el cielo: octubre dorado → noviembre de niebla ---------- */
+.sky{ position:fixed; inset:0; z-index:0; pointer-events:none; }
+.sky--warm{ background:
+    radial-gradient(ellipse 90% 70% at 18% 92%, rgba(240,160,60,.42), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 85% 10%, rgba(200,88,46,.22), transparent 60%),
+    linear-gradient(180deg,#24170F 0%,#3A2414 55%,#4B2C15 100%);
+  opacity:calc(1 - var(--p)); }
+.sky--cold{ background:
+    radial-gradient(ellipse 100% 60% at 50% 100%, rgba(175,188,200,.22), transparent 65%),
+    linear-gradient(180deg,#12161B 0%,#1E2328 60%,#2B2E31 100%);
+  opacity:var(--p); }
+.rays{ position:fixed; inset:-20% -10%; z-index:1; pointer-events:none; mix-blend-mode:screen;
+  background:repeating-linear-gradient(112deg, rgba(255,200,120,0) 0 70px, rgba(255,200,120,.07) 70px 120px, rgba(255,200,120,0) 120px 230px);
+  -webkit-mask:linear-gradient(200deg,#000 10%,transparent 70%); mask:linear-gradient(200deg,#000 10%,transparent 70%);
+  opacity:calc((1 - var(--p)) * .9); animation:rays 26s ease-in-out infinite alternate; }
+@keyframes rays{ from{ transform:translateX(-3%); } to{ transform:translateX(3%); } }
+.fog{ position:fixed; left:-20%; right:-20%; bottom:-5%; height:55vh; z-index:3; pointer-events:none;
+  background:
+    radial-gradient(ellipse 40% 60% at 25% 80%, rgba(210,215,220,.35), transparent 70%),
+    radial-gradient(ellipse 45% 55% at 70% 85%, rgba(210,215,220,.3), transparent 70%),
+    linear-gradient(180deg, transparent, rgba(200,205,210,.18));
+  opacity:calc(.12 + var(--p) * .7); animation:fog 40s ease-in-out infinite alternate; }
+@keyframes fog{ from{ transform:translateX(-4%); } to{ transform:translateX(4%); } }
+#autumn{ position:fixed; left:0; top:0; width:100vw; height:100lvh; z-index:2; display:block; pointer-events:none; }
+.veil{ position:fixed; inset:0; z-index:4; pointer-events:none;
+  background:radial-gradient(ellipse 70% 60% at 50% 45%, rgba(20,12,8,.42), transparent 75%); }
+
+/* ---------- interfaz fija ---------- */
+.top{ position:fixed; z-index:30; top:0; left:0; right:0; display:flex; justify-content:space-between; align-items:center;
+  padding:max(14px,env(safe-area-inset-top)) 16px 0; pointer-events:none; opacity:0; transition:opacity .8s ease; }
+.top.show{ opacity:1; }
+.top > *{ pointer-events:auto; }
+.back{ font-size:.66rem; letter-spacing:.24em; text-transform:uppercase; text-decoration:none; color:var(--ink-dim);
+  padding:.55rem .9rem; border-radius:99px; background:rgba(26,18,13,.35); border:1px solid var(--line);
+  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); transition:color .3s ease; }
+.back:hover{ color:#fff; }
+.music{ position:fixed; z-index:30; right:16px; bottom:max(16px,env(safe-area-inset-bottom)); width:56px; height:56px;
+  border-radius:50%; display:none; align-items:center; justify-content:center; background:rgba(26,18,13,.45);
+  border:1px solid var(--line); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  opacity:0; transform:scale(.7); transition:opacity .8s ease, transform .8s var(--ease); }
+.music.show{ display:flex; } .music.on{ opacity:1; transform:none; }
+.music svg{ width:26px; height:26px; transition:transform .6s ease; }
+.music.playing svg{ animation:twirl 6s linear infinite; }
+.music.mute{ filter:grayscale(1) brightness(.7); }
+@keyframes twirl{ to{ transform:rotate(360deg); } }
+.ytbox{ position:fixed; width:1px; height:1px; left:-9999px; top:0; overflow:hidden; opacity:0; pointer-events:none; }
+
+/* nota de una hoja dorada */
+.note{ position:fixed; z-index:55; left:50%; top:50%; width:min(360px,calc(100% - 32px)); transform:translate(-50%,-40%) scale(.92);
+  text-align:center; padding:1.6rem 1.4rem 1.3rem; border-radius:22px; opacity:0; pointer-events:none;
+  background:linear-gradient(160deg,rgba(60,38,18,.92),rgba(36,22,12,.94)); border:1px solid rgba(240,184,90,.45);
+  box-shadow:0 30px 80px rgba(0,0,0,.5), 0 0 60px rgba(240,184,90,.2); transition:opacity .5s ease, transform .6s var(--ease); }
+.note.show{ opacity:1; transform:translate(-50%,-50%) scale(1); pointer-events:auto; }
+.note svg{ width:46px; height:46px; margin:0 auto .7rem; display:block; filter:drop-shadow(0 0 12px rgba(240,184,90,.8)); }
+.note p{ font-family:var(--display); font-style:italic; font-size:1.45rem; line-height:1.3; }
+.note small{ display:block; margin-top:.8rem; font-size:.6rem; letter-spacing:.26em; text-transform:uppercase; color:var(--ink-faint); }
+
+/* fecha de la foto que pasa */
+.when{ position:fixed; z-index:25; left:50%; top:max(14px,env(safe-area-inset-top)); transform:translate(-50%,-170%);
+  display:flex; align-items:center; gap:.6rem; padding:.55rem 1rem .55rem .75rem; border-radius:99px; white-space:nowrap;
+  background:rgba(26,18,13,.6); border:1px solid var(--line); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  font-size:.7rem; transition:transform .6s var(--ease); pointer-events:none; }
+.when.show{ transform:translate(-50%,0); }
+.when i{ width:10px; height:12px; background:var(--rust); clip-path:polygon(50% 0,100% 40%,80% 100%,20% 100%,0 40%); }
+.when b{ font-weight:600; } .when span{ color:var(--ink-dim); font-variant-numeric:tabular-nums; }
+@media (max-width:520px){ html.whening .top .back{ opacity:0; pointer-events:none; } }
+
+/* ---------- entrada: la portada «YOU & ME» ---------- */
+.gate{ position:fixed; inset:0; z-index:40; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:clamp(.8rem,2.4svh,1.4rem);
+  text-align:center; padding:max(18px,env(safe-area-inset-top)) 16px max(18px,env(safe-area-inset-bottom));
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' opacity='.06'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 50% 40%, #FBF7F0, #F1E9DC 80%);
+  color:#2A1E18; transition:opacity 1.4s var(--ease), transform 1.6s var(--ease), filter 1.4s ease; }
+.gate.gone{ opacity:0; transform:scale(1.04); filter:blur(6px); pointer-events:none; }
+html.locked #autumn{ z-index:41; }                      /* las hojas caen por delante de la portada */
+.gate__eye{ font-size:.6rem; letter-spacing:.42em; text-transform:uppercase; color:rgba(42,30,24,.55); }
+.poster{ width:min(92vw, calc((100svh - 170px) * .6)); container-type:inline-size; user-select:none; }
+.poster__row{ display:flex; justify-content:space-between; align-items:flex-end; line-height:.8; }
+.poster__row + .poster__row{ margin-top:3.2cqw; }
+/* cada letra es una ventana a una foto, en blanco y negro */
+.pl{ font-family:'Anton',Impact,sans-serif; font-size:66cqw; line-height:.8; letter-spacing:0; display:inline-block;
+  padding-top:.04em; color:transparent; -webkit-text-fill-color:transparent;
+  background:var(--img) var(--pos,50% 40%) / var(--size,cover) no-repeat; -webkit-background-clip:text; background-clip:text;
+  filter:grayscale(1) contrast(1.12) brightness(1.03);
+  opacity:0; transform:translateY(14%); animation:plIn 1.4s var(--ease) forwards; animation-delay:var(--dl,0s); }
+.poster__row--2 .pl{ font-size:56.5cqw; }
+@keyframes plIn{ to{ opacity:1; transform:none; } }
+.poster__amp{ position:relative; font-family:'Great Vibes',cursive; font-size:50cqw; line-height:.62; color:#9B1C1C; margin-right:0;
+  clip-path:inset(0 100% 0 0); animation:ampIn 1.6s cubic-bezier(.5,0,.3,1) 1.1s forwards; transform:translateY(-4cqw); }
+.poster__amp i{ font-style:normal; font-family:var(--sans); font-weight:700; font-size:.2em; vertical-align:baseline; margin-left:-.1em; }
+@keyframes ampIn{ to{ clip-path:inset(-20% -10% -20% 0); } }
+.poster__cap{ font-family:'Great Vibes',cursive; font-size:9.6cqw; line-height:1; margin-top:6cqw; color:#1E1612;
+  opacity:0; animation:plIn 1.2s ease 1.9s forwards; }
+.poster__date{ font-family:var(--display); font-style:italic; font-size:5.6cqw; letter-spacing:.12em; color:rgba(42,30,24,.55); margin-top:3.6cqw;
+  opacity:0; animation:plIn 1.2s ease 2.2s forwards; }
+.gate__btn{ display:inline-flex; align-items:center; gap:.7rem; padding:.85rem 1.4rem .85rem 1rem; border-radius:99px;
+  border:1px solid rgba(155,28,28,.45); background:rgba(155,28,28,.06); color:#5A1A14; font-size:.68rem; letter-spacing:.26em; text-transform:uppercase;
+  opacity:0; animation:plIn 1s ease 2.6s forwards; transition:background .4s ease, transform .4s var(--ease); }
+.gate__btn:hover{ background:rgba(155,28,28,.14); transform:translateY(-2px); }
+.gate__btn svg{ width:20px; height:20px; animation:sway 3s ease-in-out infinite; }
+@keyframes sway{ 0%,100%{ transform:rotate(-12deg); } 50%{ transform:rotate(12deg); } }
+.eyebrow{ font-size:.64rem; letter-spacing:.42em; text-transform:uppercase; color:var(--ink-dim); }
+/* la portada sola, para exportarla como imagen */
+html.export body > *:not(.gate){ display:none !important; }
+html.export .gate{ position:static; min-height:100vh; }
+html.export .gate__btn, html.export .gate__eye{ display:none; }
+html.export .pl, html.export .poster__cap, html.export .poster__date, html.export .gate__btn{ animation:none; opacity:1; transform:none; }
+html.export .poster__amp{ animation:none; clip-path:none; }
+
+/* ---------- estructura ---------- */
+main{ position:relative; z-index:10; transition:opacity 1.2s ease .3s; }
+html.locked main{ opacity:0; }
+html.reading main, html.reading .top, html.reading .when{ opacity:0; pointer-events:none; transition:opacity .8s ease; }
+section{ position:relative; padding:clamp(5rem,14vh,9rem) 16px; }
+.wrap{ width:min(1120px,100%); margin:0 auto; }
+.head{ text-align:center; margin-bottom:clamp(2.2rem,6vh,3.6rem); }
+.head h2{ font-family:var(--display); font-weight:400; font-size:clamp(2.4rem,8.5vw,4.6rem); line-height:1; margin:.7rem 0 .8rem;
+  letter-spacing:-.015em; text-shadow:0 4px 30px rgba(0,0,0,.4); }
+.head h2 em{ font-style:italic; color:var(--amber); }
+.head p{ font-family:var(--serif); font-style:italic; font-size:clamp(1.08rem,3.3vw,1.3rem); color:var(--ink-dim); max-width:36ch; margin:0 auto; }
+.r{ opacity:0; transform:translateY(30px); transition:opacity 1.1s var(--ease), transform 1.1s var(--ease); transition-delay:var(--d,0s); }
+.r.in{ opacity:1; transform:none; }
+
+/* ---------- hero ---------- */
+.hero{ min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding-top:12vh; padding-bottom:20vh; }
+.hero__date{ font-size:.66rem; letter-spacing:.4em; text-transform:uppercase; color:var(--ink-dim); }
+.hero__title{ font-family:var(--display); font-weight:400; font-size:clamp(3.2rem,15vw,10rem); white-space:nowrap; line-height:.9; margin:1rem 0 1.2rem;
+  letter-spacing:-.03em; text-shadow:0 8px 50px rgba(0,0,0,.45); }
+.hero__title em{ font-style:italic; color:var(--amber); }
+/* cada letra cae como una hoja */
+.hero__title .ch{ display:inline-block; opacity:0; transform:translate(var(--x,0), -1.4em) rotate(var(--rr,30deg)); }
+.hero__title.in .ch{ animation:leafIn 1.6s var(--ease) forwards; animation-delay:calc(var(--i) * 90ms + .1s); }
+@keyframes leafIn{
+  0%{ opacity:0; transform:translate(var(--x,0), -1.4em) rotate(var(--rr,30deg)); }
+  45%{ opacity:1; transform:translate(calc(var(--x,0) * -.6), -.45em) rotate(calc(var(--rr,30deg) * -.5)); }
+  100%{ opacity:1; transform:none; }
+}
+.hero__line{ font-family:var(--serif); font-style:italic; font-size:clamp(1.15rem,3.8vw,1.55rem); color:var(--ink-dim); max-width:30ch; line-height:1.45; }
+.clock{ display:flex; gap:clamp(.9rem,4vw,2.2rem); margin-top:2rem; justify-content:center; }
+.clock__u{ text-align:center; min-width:3.2ch; position:relative; }
+.clock__u b{ display:block; font-family:var(--display); font-weight:400; font-size:clamp(2rem,7.5vw,3.2rem); line-height:1; font-variant-numeric:tabular-nums; }
+.clock__u span{ font-size:.56rem; letter-spacing:.28em; text-transform:uppercase; color:var(--ink-faint); }
+.clock__u + .clock__u::before{ content:''; position:absolute; left:calc(-1 * clamp(.45rem,2vw,1.1rem)); top:.55em; width:4px; height:5px;
+  background:var(--rust); clip-path:polygon(50% 0,100% 40%,80% 100%,20% 100%,0 40%); }
+.clock__cap{ display:block; margin-top:.9rem; font-size:.62rem; letter-spacing:.24em; text-transform:uppercase; color:var(--ink-dim); }
+.cue{ position:absolute; bottom:max(7vh,56px); left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:.7rem;
+  font-size:.6rem; letter-spacing:.3em; text-transform:uppercase; color:var(--ink-faint); white-space:nowrap; }
+.cue i{ width:1px; height:44px; background:linear-gradient(var(--ink),transparent); animation:drip 2.4s ease-in-out infinite; transform-origin:top; }
+@keyframes drip{ 0%{ transform:scaleY(0); opacity:1; } 60%{ transform:scaleY(1); opacity:1; } 100%{ transform:scaleY(1); opacity:0; } }
+
+/* ---------- cinco hojas ---------- */
+.leaves{ display:grid; grid-template-columns:repeat(5,1fr); gap:14px; }
+.leafcard{ position:relative; aspect-ratio:3/4.2; perspective:1000px; }
+.leafcard__in{ position:absolute; inset:0; transform-style:preserve-3d; transition:transform 1s var(--ease); }
+.leafcard.open .leafcard__in{ transform:rotateY(180deg); }
+.leafcard__f, .leafcard__b{ position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:18px;
+  display:flex; flex-direction:column; align-items:center; justify-content:space-between; padding:1.1rem .9rem 1rem; text-align:center;
+  background:linear-gradient(170deg,#F4E9D6,#EADBC1); color:#3A2617; box-shadow:0 22px 50px rgba(0,0,0,.4); overflow:hidden; }
+.leafcard__f::after, .leafcard__b::after{ content:''; position:absolute; inset:0; pointer-events:none; opacity:.35; mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' opacity='.35'/%3E%3C/svg%3E"); }
+.leafcard__b{ transform:rotateY(180deg); justify-content:center; gap:.8rem; }
+.leafcard__n{ font-family:var(--display); font-size:1.4rem; color:#7A4A28; }
+.leafcard svg{ width:72%; height:auto; filter:drop-shadow(0 4px 6px rgba(70,40,20,.25)); transition:transform .8s var(--ease); }
+.leafcard:hover svg{ transform:rotate(-6deg) scale(1.04); }
+.leafcard__t{ font-family:var(--hand); font-size:.92rem; line-height:1.35; color:#4A3020; }
+.leafcard__p{ font-family:var(--serif); font-style:italic; font-size:1.02rem; line-height:1.4; color:#3A2617; }
+.leafcard__go{ font-size:.58rem; letter-spacing:.2em; text-transform:uppercase; color:#9A4A28; text-decoration:none; }
+.leafcard--now .leafcard__f{ background:linear-gradient(170deg,#F7E2C2,#EFC99A); }
+.leafcard__here{ position:absolute; top:.7rem; right:.8rem; font-size:.52rem; letter-spacing:.2em; text-transform:uppercase; color:#9A4A28; }
+
+/* ---------- hojas doradas ---------- */
+.golden{ text-align:center; }
+.golden__dots{ display:flex; gap:10px; justify-content:center; margin-top:1.6rem; }
+.golden__dots i{ width:16px; height:20px; background:rgba(246,235,221,.16); clip-path:polygon(50% 0,100% 38%,82% 100%,18% 100%,0 38%); transition:background .6s ease, transform .6s var(--ease); }
+.golden__dots i.got{ background:linear-gradient(160deg,#FFE29A,#E3A53B); transform:scale(1.15); filter:drop-shadow(0 0 6px rgba(240,184,90,.9)); }
+.golden__hint{ margin-top:.9rem; font-size:.62rem; letter-spacing:.24em; text-transform:uppercase; color:var(--ink-faint); }
+
+/* ---------- el mes, hoja a hoja ---------- */
+.stats{ display:flex; justify-content:center; gap:clamp(1.4rem,6vw,4rem); margin-top:2.2rem; }
+.stat{ text-align:center; }
+.stat b{ display:block; font-family:var(--display); font-weight:400; font-size:clamp(2.2rem,8vw,3.6rem); line-height:1; }
+.stat span{ font-size:.58rem; letter-spacing:.28em; text-transform:uppercase; color:var(--ink-faint); }
+.day{ margin-bottom:clamp(3rem,8vh,5rem); }
+.day__h{ margin:0 4px 1.3rem; display:flex; align-items:baseline; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+  padding-bottom:.7rem; border-bottom:1px solid; border-image:linear-gradient(90deg,var(--line),transparent) 1; }
+.day__h h3{ font-family:var(--display); font-weight:400; font-size:clamp(1.7rem,6vw,2.5rem); line-height:1.05; }
+.day__h h3 em{ font-style:italic; color:var(--amber); }
+.day__h span{ font-size:.6rem; letter-spacing:.24em; text-transform:uppercase; color:var(--ink-dim); }
+.pile{ display:grid; grid-template-columns:repeat(auto-fill,minmax(min(40vw,190px),1fr)); grid-auto-flow:dense; gap:16px 12px; }
+.pic{ position:relative; display:block; width:100%; aspect-ratio:3/4; border-radius:8px; overflow:hidden; padding:0;
+  background:var(--c,#4A2C18); border:4px solid #F3E6D2; box-shadow:0 18px 34px rgba(0,0,0,.42);
+  transform:rotate(var(--r,0deg)); transition:transform .6s var(--ease), box-shadow .6s ease; }
+.pic.wide{ grid-column:span 2; aspect-ratio:auto; }
+.pic.wait{ opacity:0; }
+.pic:hover{ transform:rotate(0deg) translateY(-6px) scale(1.03); box-shadow:0 28px 50px rgba(0,0,0,.5); z-index:2; }
+.pic img{ width:100%; height:100%; object-fit:cover; display:block; opacity:0; transition:opacity .8s ease; }
+.pic img.ok{ opacity:1; }
+.pic__t{ position:absolute; right:6px; bottom:5px; font-family:var(--hand); font-size:.82rem; color:#3A2617; background:#F3E6D2;
+  padding:.05rem .5rem .1rem; border-radius:3px; transform:rotate(-4deg); box-shadow:0 2px 6px rgba(0,0,0,.25); }
+.empty{ text-align:center; font-family:var(--serif); font-style:italic; font-size:1.25rem; color:var(--ink-dim); padding:2rem 1rem; }
+
+/* ---------- lightbox ---------- */
+.lb{ position:fixed; inset:0; z-index:60; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  background:rgba(14,9,6,.88); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); opacity:0; pointer-events:none; transition:opacity .5s ease; touch-action:pan-y; }
+.lb.open{ opacity:1; pointer-events:auto; }
+.lb__fig{ max-width:min(92vw,1100px); max-height:76svh; transition:transform .5s var(--ease), opacity .35s ease; }
+.lb__fig img{ display:block; max-width:min(92vw,1100px); max-height:76svh; border-radius:6px; border:5px solid #F3E6D2; box-shadow:0 40px 90px rgba(0,0,0,.6); }
+.lb__cap{ margin-top:1.2rem; text-align:center; padding:0 16px; min-height:3.2rem; }
+.lb__cap p{ font-family:var(--serif); font-style:italic; font-size:1.2rem; }
+.lb__cap small{ font-size:.62rem; letter-spacing:.24em; text-transform:uppercase; color:var(--ink-faint); }
+.lb__x, .lb__nav{ position:absolute; width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  background:rgba(246,235,221,.08); border:1px solid var(--line); font-size:1.2rem; }
+.lb__x{ top:max(14px,env(safe-area-inset-top)); right:16px; }
+.lb__nav{ top:50%; transform:translateY(-50%); } .lb__prev{ left:16px; } .lb__next{ right:16px; }
+.lb__count{ position:absolute; top:max(26px,env(safe-area-inset-top)); left:20px; font-size:.62rem; letter-spacing:.26em; color:var(--ink-faint); }
+
+/* ---------- el libro (cerrado) ---------- */
+.tome{ display:block; margin:0 auto; width:min(270px,64vw); aspect-ratio:3/4; perspective:1400px; }
+.tome__in{ position:relative; width:100%; height:100%; transform-style:preserve-3d; transform:rotateY(-18deg) rotateX(6deg);
+  transition:transform 1s var(--ease); animation:breathe 6s ease-in-out infinite; }
+.tome:hover .tome__in{ transform:rotateY(-8deg) rotateX(2deg) translateY(-6px); }
+@keyframes breathe{ 0%,100%{ translate:0 0; } 50%{ translate:0 -6px; } }
+.tome__cover{ position:absolute; inset:0; border-radius:4px 12px 12px 4px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1rem;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(255,255,255,.08), transparent 55%),
+    linear-gradient(135deg,#3E4A2A,#2C3520 55%,#1F2617);
+  box-shadow:inset 6px 0 10px rgba(0,0,0,.35), inset -2px 0 0 rgba(255,255,255,.05), 18px 26px 50px rgba(0,0,0,.55); color:#E8D2A6; }
+.tome__cover::before{ content:''; position:absolute; inset:14px; border:1px solid rgba(232,210,166,.35); border-radius:3px 8px 8px 3px; }
+.tome__cover b{ font-family:var(--display); font-weight:400; font-style:italic; font-size:1.6rem; }
+.tome__cover span{ font-size:.56rem; letter-spacing:.32em; text-transform:uppercase; opacity:.75; }
+.tome__cover svg{ width:44%; filter:drop-shadow(0 3px 4px rgba(0,0,0,.35)); }
+.tome__pages{ position:absolute; top:6px; bottom:6px; right:-10px; width:12px; border-radius:0 3px 3px 0;
+  background:repeating-linear-gradient(90deg,#F2E6CF 0 1px,#D9C8A6 1px 2px); transform:translateZ(-1px); }
+.tome__hint{ display:block; text-align:center; margin-top:1.6rem; font-size:.62rem; letter-spacing:.3em; text-transform:uppercase; color:var(--ink-faint); }
+
+/* ---------- el libro (abierto) con la carta ---------- */
+.read{ position:fixed; inset:0; z-index:70; display:flex; align-items:center; justify-content:center;
+  padding:max(62px,calc(env(safe-area-inset-top) + 56px)) 12px max(16px,env(safe-area-inset-bottom));
+  background:radial-gradient(ellipse at 50% 55%, rgba(30,20,10,.35), rgba(10,7,4,.82) 85%); opacity:0; pointer-events:none; transition:opacity .9s ease; }
+.read.open{ opacity:1; pointer-events:auto; }
+.read__bar{ position:absolute; top:max(12px,env(safe-area-inset-top)); left:12px; right:12px; display:flex; justify-content:space-between; align-items:center;
+  opacity:0; transition:opacity .8s ease 1.3s; }
+.read.open .read__bar{ opacity:1; }
+.lang{ display:inline-flex; border:1px solid var(--line); border-radius:99px; padding:3px; background:rgba(26,18,13,.5); }
+.lang button{ padding:.45rem .95rem; border-radius:99px; font-size:.62rem; letter-spacing:.2em; color:var(--ink-dim); }
+.lang button.on{ background:var(--ink); color:#2A1A10; }
+.read__x{ width:40px; height:40px; border-radius:50%; border:1px solid var(--line); background:rgba(26,18,13,.5); }
+.book{ position:relative; width:min(1000px,100%); height:100%; max-height:860px; display:grid; grid-template-columns:1fr 1fr; perspective:2000px; }
+.book__page{ position:relative; overflow:hidden; color:#3A2617;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' opacity='.08'/%3E%3C/svg%3E"),
+    linear-gradient(180deg,#FBF4E6,#F3E6CC); box-shadow:0 40px 100px rgba(0,0,0,.55); }
+.book__page--l{ border-radius:10px 0 0 10px; box-shadow:inset -30px 0 40px -20px rgba(90,60,30,.35), 0 40px 100px rgba(0,0,0,.55);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.4rem; padding:2.4rem; text-align:center; }
+.book__page--r{ border-radius:0 10px 10px 0; box-shadow:inset 30px 0 40px -20px rgba(90,60,30,.3), 0 40px 100px rgba(0,0,0,.55); }
+.book__pressed{ width:min(80%,320px); }
+.book__pressed svg{ width:100%; height:auto; display:block; }
+.book__ded{ font-family:var(--hand); font-size:1.15rem; color:#7A4A28; line-height:1.5; }
+.book__date{ font-size:.58rem; letter-spacing:.32em; text-transform:uppercase; color:#9A6A44; }
+.book__cover{ position:absolute; top:0; bottom:0; left:50%; width:50%; transform-origin:left center; transform-style:preserve-3d; z-index:3;
+  transition:transform 1.5s cubic-bezier(.6,.05,.25,1) .2s; }
+.book__cover::before, .book__cover::after{ content:''; position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:0 10px 10px 0; }
+.book__cover::before{ background:linear-gradient(135deg,#3E4A2A,#2C3520 55%,#1F2617); box-shadow:inset 6px 0 10px rgba(0,0,0,.35); }
+.book__cover::after{ transform:rotateY(180deg); background:linear-gradient(180deg,#EADBC0,#E0CCA9); border-radius:10px 0 0 10px; }
+.read.open .book__cover{ transform:rotateY(-180deg); }
+.read.open .book__cover.done{ visibility:hidden; }
+.book__scroll{ position:absolute; inset:0; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch;
+  padding:clamp(2.4rem,6vw,3.6rem) clamp(1.4rem,5vw,3rem) 3rem; scrollbar-width:thin; scrollbar-color:rgba(122,74,40,.35) transparent; }
+.l-date{ display:block; text-align:right; font-size:.58rem; letter-spacing:.3em; text-transform:uppercase; color:#9A6A44; }
+.l-to{ font-family:var(--display); font-style:italic; font-weight:400; font-size:clamp(1.9rem,6vw,2.5rem); color:#7A3A1E; margin:1rem 0 1.4rem; }
+.l-text p{ font-family:var(--serif); font-size:clamp(1.1rem,3.2vw,1.2rem); line-height:1.8; color:#3A2617; }
+.l-text p + p{ margin-top:1.05em; }
+.l-text p:first-child{ display:flow-root; min-height:3.4em; }
+.l-text p:first-child::first-letter{ float:left; font-family:var(--display); font-size:3.6em; line-height:.85; padding:.05em .1em 0 0; color:var(--rust); font-style:italic; }
+.l-text em{ font-style:italic; color:#7A3A1E; }
+.l-close{ margin-top:2.2rem; text-align:center; font-family:var(--display); font-style:italic; font-size:clamp(1.35rem,4.6vw,1.75rem); line-height:1.35; color:#7A3A1E; }
+.l-close b{ display:block; font-weight:400; margin-top:.4rem; font-size:1.2em; color:var(--rust); }
+.l-sign{ font-family:var(--hand); font-size:clamp(1.8rem,6vw,2.3rem); color:#7A3A1E; text-align:right; margin-top:1.6rem; }
+.lr{ opacity:0; transform:translateY(12px); transition:opacity 1.1s ease, transform 1.1s var(--ease); transition-delay:var(--d,0s); }
+.lr.in{ opacity:1; transform:none; }
+.read__act{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; padding:2.4rem 0 .4rem; }
+.read__act button{ padding:.72rem 1.15rem; border-radius:99px; border:1px solid rgba(122,74,40,.3); font-size:.6rem; letter-spacing:.2em; text-transform:uppercase; color:#7A4A28; }
+.read__act button:hover{ background:#3A2617; color:#FBF4E6; }
+
+/* ---------- final ---------- */
+.end{ min-height:150svh; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; text-align:center; padding-bottom:28vh; }
+.end h2{ font-family:var(--display); font-weight:400; font-size:clamp(2.6rem,10vw,6rem); line-height:1.02; text-shadow:0 4px 40px rgba(0,0,0,.5); }
+.end h2 em{ font-style:italic; color:var(--amber); }
+.end p{ font-family:var(--serif); font-style:italic; font-size:clamp(1.1rem,3.4vw,1.4rem); color:var(--ink-dim); margin-top:1.2rem; }
+.end__sig{ font-family:var(--hand); font-size:clamp(2rem,7vw,2.8rem); color:var(--amber); margin-top:1.4rem; }
+.end__next{ margin-top:2.6rem; font-size:.62rem; letter-spacing:.42em; text-transform:uppercase; color:var(--ink-faint); }
+.end__links{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:2rem; }
+.chip{ padding:.7rem 1.2rem; border-radius:99px; border:1px solid var(--line); background:rgba(246,235,221,.07); font-size:.64rem; letter-spacing:.2em;
+  text-transform:uppercase; text-decoration:none; backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); transition:background .3s ease; }
+.chip:hover{ background:rgba(246,235,221,.16); }
+
+@media (max-width:860px){
+  .leaves{ grid-template-columns:repeat(2,1fr); }
+  .leaves .leafcard:last-child{ grid-column:1 / -1; width:calc(50% - 7px); justify-self:center; }
+}
+@media (max-width:760px){
+  .book{ grid-template-columns:1fr; }
+  .book__page--l{ display:none; }
+  .book__page--r{ border-radius:10px; }
+  .book__cover{ left:0; width:100%; }
+  .book__cover::before, .book__cover::after{ border-radius:10px; }
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; transition-delay:0s !important; }
+}
+@media print{
+  @page{ margin:20mm 18mm; }
+  html,body{ background:#fff !important; height:auto !important; overflow:visible !important; }
+  body > *{ display:none !important; }
+  body > .read{ display:block !important; position:static !important; background:none !important; padding:0 !important; opacity:1 !important; }
+  .read__bar,.read__act,.book__page--l,.book__cover{ display:none !important; }
+  .book{ display:block !important; height:auto !important; max-height:none !important; }
+  .book__page--r{ box-shadow:none !important; background:none !important; overflow:visible !important; }
+  .book__scroll{ position:static !important; overflow:visible !important; padding:0 !important; }
+  .lr{ opacity:1 !important; transform:none !important; }
+  .l-text p{ color:#1A100A !important; font-size:12.5pt !important; }
+}
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('locked');</script>
+
+<div class="sky sky--warm"></div>
+<div class="sky sky--cold"></div>
+<div class="rays"></div>
+<canvas id="autumn" aria-hidden="true"></canvas>
+<div class="fog"></div>
+<div class="veil"></div>
+
+<div class="top" id="top"><a class="back" href="index.html">‹ Capítulos</a></div>
+<button class="music" id="music" aria-label="Poner o quitar la música">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#E3A53B" d="M12 2l1.6 4.2 3.4-2-1 4.4 4.4-.6-2.6 3.4 3.2 2.2-4.3 1 .7 4.4-3.9-2.3L12 22l-1.5-5.3-3.9 2.3.7-4.4-4.3-1 3.2-2.2L3.6 8l4.4.6-1-4.4 3.4 2z"/></svg>
+</button>
+<div class="ytbox"><div id="ytplayer"></div></div>
+<div class="when" id="when" aria-hidden="true"><i></i><b id="whenA"></b><span id="whenB"></span></div>
+<div class="note" id="note" role="status">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="gl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE7A8"/><stop offset="1" stop-color="#E3A53B"/></linearGradient></defs><path fill="url(#gl)" d="M12 2l1.6 4.2 3.4-2-1 4.4 4.4-.6-2.6 3.4 3.2 2.2-4.3 1 .7 4.4-3.9-2.3L12 22l-1.5-5.3-3.9 2.3.7-4.4-4.3-1 3.2-2.2L3.6 8l4.4.6-1-4.4 3.4 2z"/></svg>
+  <p id="noteText"></p><small id="noteCount"></small>
+</div>
+
+<!-- ============ ENTRADA ============ -->
+<div class="gate" id="gate">
+  <span class="gate__eye">Capítulo Quinto · Nuestro otoño</span>
+  <div class="poster" id="poster" role="img" aria-label="You and me. My anniversary with you. 21 de noviembre de 2026.">
+    <div class="poster__row">
+      <span class="pl" style="--img:url(media/m5/20261031-213125-ac342d.jpg);--pos:30% 22%;--dl:.1s">Y</span>
+      <span class="pl" style="--img:url(media/m5/20261031-213158-8eca94.jpg);--pos:34% 30%;--size:auto 115%;--dl:.25s">O</span>
+      <span class="pl" style="--img:url(media/m4/20261013-192148-99ce98.jpg);--pos:88% 42%;--size:190% auto;--dl:.4s">U</span>
+    </div>
+    <div class="poster__row poster__row--2">
+      <span class="poster__amp" aria-hidden="true">&amp;<i>.</i></span>
+      <span class="pl" style="--img:url(media/m5/20261031-220734-476f3c.jpg);--pos:58% 52%;--size:185% auto;--dl:.55s">M</span>
+      <span class="pl" style="--img:url(media/m5/20261021-131118-e2a3d8.jpg);--pos:62% 35%;--size:auto 120%;--dl:.7s">E</span>
+    </div>
+    <p class="poster__cap">My Anniversary with You</p>
+    <p class="poster__date">2026.11.21</p>
+  </div>
+  <button class="gate__btn" id="gateBtn">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#9B1C1C" d="M12 2l1.6 4.2 3.4-2-1 4.4 4.4-.6-2.6 3.4 3.2 2.2-4.3 1 .7 4.4-3.9-2.3L12 22l-1.5-5.3-3.9 2.3.7-4.4-4.3-1 3.2-2.2L3.6 8l4.4.6-1-4.4 3.4 2z"/></svg>
+    Entrar al otoño
+  </button>
+</div>
+
+<main id="main">
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <span class="hero__date r">21 octubre — 21 noviembre</span>
+    <h2 class="hero__title" id="heroTitle" aria-label="Cinco meses">Cinco <em>meses</em></h2>
+    <p class="hero__line r" style="--d:1.2s">Dicen que en otoño los árboles enseñan lo bonito que es soltar. Yo, contigo, solo aprendo a quedarme.</p>
+    <div class="clock r" style="--d:1.5s" role="timer" aria-label="Tiempo juntos">
+      <div class="clock__u"><b id="cD">0</b><span>días</span></div>
+      <div class="clock__u"><b id="cH">00</b><span>horas</span></div>
+      <div class="clock__u"><b id="cM">00</b><span>min</span></div>
+      <div class="clock__u"><b id="cS">00</b><span>seg</span></div>
+    </div>
+    <small class="clock__cap r" style="--d:1.7s">juntos desde el 21 de junio, y contando</small>
+    <div class="cue"><span>desliza despacio · el otoño avanza contigo</span><i></i></div>
+  </section>
+
+  <!-- ============ CINCO HOJAS ============ -->
+  <section id="hojas">
+    <div class="wrap">
+      <div class="head r">
+        <span class="eyebrow">I · II · III · IV · V</span>
+        <h2>Cinco <em>hojas</em></h2>
+        <p>Guardé una hoja de cada mes. Tócalas para darles la vuelta.</p>
+      </div>
+      <div class="leaves" id="leaves"></div>
+    </div>
+  </section>
+
+  <!-- ============ HOJAS DORADAS ============ -->
+  <section class="golden" id="doradas">
+    <div class="wrap">
+      <div class="head r" style="margin-bottom:0">
+        <span class="eyebrow">un juego para ti</span>
+        <h2>Las hojas <em>doradas</em></h2>
+        <p>De vez en cuando, entre todas las que caen, cae una dorada. Atrápala: cada una trae algo que quería decirte.</p>
+        <div class="golden__dots" id="goldDots"></div>
+        <div class="golden__hint" id="goldHint">0 de 7</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EL MES, HOJA A HOJA ============ -->
+  <section id="mes">
+    <div class="wrap">
+      <div class="head r">
+        <span class="eyebrow">del 21 de octubre al 21 de noviembre</span>
+        <h2>El mes, <em>hoja a hoja</em></h2>
+        <p id="mesSub">Cada foto cae en su día, a la hora exacta en que la vivimos.</p>
+        <div class="stats" id="stats" hidden>
+          <div class="stat"><b id="stN">0</b><span>fotos</span></div>
+          <div class="stat"><b id="stD">0</b><span>días con fotos</span></div>
+          <div class="stat"><b id="stL">0</b><span>de noche</span></div>
+        </div>
+      </div>
+      <div id="days"><div class="empty">Las hojas de este mes están cayendo…</div></div>
+    </div>
+  </section>
+
+  <!-- ============ EL LIBRO ============ -->
+  <section id="libro">
+    <div class="wrap">
+      <div class="head r">
+        <span class="eyebrow">entre las páginas</span>
+        <h2>Un libro con <em>hojas prensadas</em></h2>
+        <p>Guardé las hojas de estos meses donde se guardan las cosas que importan. Y la carta con ellas.</p>
+      </div>
+      <button class="tome r" id="tome" aria-label="Abrir el libro y leer la carta">
+        <div class="tome__in">
+          <div class="tome__pages"></div>
+          <div class="tome__cover">
+            <span>K &amp; S</span>
+            <svg viewBox="-60 -70 120 140" aria-hidden="true"><path fill="#C8823A" opacity=".85" d="M0-62 9-36 26-50 22-22 48-30 34-6 54 6 28 12 34 36 10 26 4 50 0 40-4 50-10 26-34 36-28 12-54 6-34-6-48-30-22-22-26-50-9-36Z"/><path d="M0-50V62" stroke="#E8D2A6" stroke-width="2" opacity=".6"/></svg>
+            <b>Nuestro otoño</b>
+            <span>cinco meses</span>
+          </div>
+        </div>
+      </button>
+      <span class="tome__hint r">ábrelo</span>
+    </div>
+  </section>
+
+  <!-- ============ FINAL ============ -->
+  <section class="end" id="fin">
+    <h2 class="r">En otoño todo cae.<br><em>Menos lo que siento por ti.</em></h2>
+    <p class="r" style="--d:.2s">Felices cinco meses, mi amor.</p>
+    <div class="end__sig r" style="--d:.4s">K &amp; S</div>
+    <div class="end__next r" style="--d:.6s">continuará · capítulo VI</div>
+    <div class="end__links r" style="--d:.7s">
+      <button class="chip" id="reread">Volver a leer la carta</button>
+      <a class="chip" href="media/m5/portada.jpg" download="you-and-me-cinco-meses.jpg">Guardar nuestra portada</a>
+      <a class="chip" href="index.html">Volver a los capítulos</a>
+    </div>
+  </section>
+</main>
+
+<!-- ============ LIGHTBOX ============ -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Foto">
+  <span class="lb__count" id="lbCount"></span>
+  <button class="lb__x" id="lbX" aria-label="Cerrar">✕</button>
+  <button class="lb__nav lb__prev" id="lbPrev" aria-label="Anterior">‹</button>
+  <button class="lb__nav lb__next" id="lbNext" aria-label="Siguiente">›</button>
+  <div class="lb__fig" id="lbFig"><img id="lbImg" alt=""></div>
+  <div class="lb__cap"><p id="lbCap"></p><small id="lbWhen"></small></div>
+</div>
+
+<!-- ============ EL LIBRO ABIERTO ============ -->
+<div class="read" id="read" role="dialog" aria-modal="true" aria-label="La carta">
+  <div class="read__bar">
+    <div class="lang"><button class="on" data-lang="es">ES</button><button data-lang="en">EN</button></div>
+    <button class="read__x" id="readX" aria-label="Cerrar el libro">✕</button>
+  </div>
+  <div class="book">
+    <div class="book__page book__page--l">
+      <div class="book__pressed" id="pressed"></div>
+      <div class="book__ded" id="readDed"></div>
+      <div class="book__date" id="readDate2"></div>
+    </div>
+    <div class="book__page book__page--r">
+      <div class="book__scroll" id="readBody">
+        <span class="l-date lr" id="readDate"></span>
+        <h3 class="l-to lr" id="readTo"></h3>
+        <div class="l-text" id="readText"></div>
+        <div class="l-close lr" id="readClose"></div>
+        <div class="l-sign lr" id="readSign"></div>
+        <div class="read__act lr">
+          <button id="savePdf">Guardar en PDF</button>
+          <button id="saveTxt">Descargar el texto</button>
+        </div>
+      </div>
+    </div>
+    <div class="book__cover" id="bookCover"></div>
+  </div>
+</div>
+
+<script>
+/* =======================================================================
+   ✎  AQUÍ SE PERSONALIZA TODO
+   ======================================================================= */
+const CONFIG = {
+  manifest: "media/m5/manifest.json",       // lo escribe subir.html
+  dir: "media/m5/",
+  startDate: "2026-06-21T00:00:00",         // el día en que empezó todo
+  VIDEO_ID: "iggmiF7DNoM",                  // we fell in love in october — girl in red
+  VOLUMEN: 72
+};
+
+/* ✎ La carta del quinto mes. Párrafos separados por una línea en blanco; *así* se resalta una frase. */
+const LETTER = {
+  es: {
+    date: "21 de noviembre de 2026",
+    to: "Mi querida Samanta,",
+    body:
+`Hoy cumplimos cinco meses, y esta vez quiero empezar de una forma distinta.
+
+Si pudiera volver a la noche en que te escribí aquel primer “hello, how are you”, me sentaría al lado de ese chico nervioso y le diría que no tuviera miedo.
+
+Le diría que su “my English is so bad” no iba a importar, porque contigo iba a aprender un idioma que no viene en ningún libro. Que iba a entenderte por cómo miras, por cómo te ríes, por cómo te quedas callada cuando algo te emociona.
+
+Le diría que estaba muy lejos de casa, pero que estaba a punto de encontrar otra.
+
+Le contaría que un día te escribiría una carta cada mes. Que en la primera hablaría de lo imposible que era que nuestros caminos se cruzaran; en la segunda confesaría lo loco que estaba por ti; en la tercera descubriría que ya no quería solo enamorarse, sino elegirte; y en la cuarta aprendería a pedir perdón y a prometerte estar más presente.
+
+Le advertiría también que el tiempo pasa rápido. Que un día miraría el calendario y ya serían cinco meses. Que los veranos se convierten en otoños sin avisar, y que algún día sentiría nostalgia de momentos que todavía estaba viviendo: la noche del columpio, los despertares a tu lado, las tardes cortas de noviembre caminando contigo.
+
+Y antes de irme le diría lo más importante: que no te dejara escapar. Que te cuidara, que te escuchara, que te eligiera todos los días. Que el mejor regalo que le iba a dar la vida tenía nombre, y *se llamaba Samanta*.
+
+No puedo volver atrás para decírselo. Pero sí puedo decírtelo a ti, hoy, cinco meses después: si tuviera que elegir otra vez, volvería a escribirte aquel mensaje. Con el mismo inglés malo, con los mismos nervios y con las mismas ganas.`,
+    close: "Te amo, Samanta. Más que ayer, menos que mañana.",
+    closeLast: "Felices 5 meses.",
+    sign: "Keyder",
+    ded: "para Samanta,<br>de todos los otoños que nos quedan"
+  },
+  en: {
+    date: "November 21, 2026",
+    to: "My dear Samanta,",
+    body:
+`Today we celebrate five months, and this time I want to begin in a different way.
+
+If I could go back to the night I wrote you that first “hello, how are you”, I would sit down next to that nervous boy and tell him not to be afraid.
+
+I would tell him that his “my English is so bad” wouldn't matter, because with you he was going to learn a language that isn't in any book. That he would understand you by the way you look, the way you laugh, the way you go quiet when something moves you.
+
+I would tell him he was very far from home, but about to find another one.
+
+I would tell him that one day he would write you a letter every month. That in the first he would talk about how impossible it was for our paths to cross; in the second he would confess how crazy he was about you; in the third he would discover that he no longer just wanted to fall in love, but to choose you; and in the fourth he would learn to say sorry and to promise to be more present.
+
+I would also warn him that time goes by fast. That one day he would look at the calendar and it would already be five months. That summers turn into autumns without warning, and that someday he would feel nostalgic for moments he was still living: the night on the swing, waking up next to you, the short November afternoons walking with you.
+
+And before leaving, I would tell him the most important thing: not to let you go. To take care of you, to listen to you, to choose you every single day. That the best gift life was going to give him had a name, and *it was Samanta*.
+
+I can't go back to tell him. But I can tell you, today, five months later: if I had to choose again, I would write you that message all over again. With the same bad English, the same nerves and the same longing.`,
+    close: "I love you, Samanta. More than yesterday, less than tomorrow.",
+    closeLast: "Happy 5 months.",
+    sign: "Keyder",
+    ded: "for Samanta,<br>from all the autumns we have left"
+  }
+};
+
+/* las notas de las hojas doradas */
+const NOTES = [
+  "Eres mi estación favorita.",
+  "Contigo hasta noviembre se siente cálido.",
+  "Cinco meses, y sigo enamorándome de tus detalles.",
+  "Mi lugar favorito sigue siendo a tu lado.",
+  "Gracias por quedarte en todas las estaciones.",
+  "Hasta el frío es bonito si es contigo.",
+  "Te elegiría en cada otoño de mi vida."
+];
+
+/* las cinco hojas, una por capítulo */
+const CHAPTERS = [
+  { n:'I',   title:'Nuestro primer mes',      page:'mes-1.html', shape:'maple', color:'#D9A23A', phrase:'La primera que guardé, cuando todo era nuevo.' },
+  { n:'II',  title:'Dos meses contigo',       page:'mes-2.html', shape:'oak',   color:'#8E2A22', phrase:'La que escondí entre las páginas de un libro antiguo.' },
+  { n:'III', title:'Nuestro propio universo', page:'mes-3.html', shape:'birch', color:'#6E4A7A', phrase:'La que miré a contraluz, y parecía una estrella.' },
+  { n:'IV',  title:'A la orilla de ti',       page:'mes-4.html', shape:'elm',   color:'#E0775A', phrase:'La que el mar devolvió a la orilla.' },
+  { n:'V',   title:'Nuestro otoño',           page:null,         shape:'maple', color:'#C8582E', phrase:'Esta. La que está cayendo ahora, despacio, contigo.' }
+];
+/* ======================================================================= */
+
+const $ = id => document.getElementById(id);
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const FINE = matchMedia('(pointer:fine)').matches;
+const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const DIAS  = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+const pad = n => String(n).padStart(2,'0');
+let started = false;
+
+/* =======================================================================
+   FORMAS DE HOJA — compartidas por el canvas y los SVG
+   Coordenadas unitarias: punta arriba (y = -1), tallo abajo.
+   ======================================================================= */
+const SHAPES = {
+  maple(){ const pts = [];
+    for(let i=0;i<=180;i++){ const t = i/180*Math.PI*2 - Math.PI/2;
+      let r = .44 + .56*Math.pow(Math.abs(Math.cos(2.5*(t + Math.PI/2))), 3.2);
+      if(Math.sin(t) > .2) r *= .8;
+      r += .035*Math.abs(Math.sin(t*26));
+      pts.push([Math.cos(t)*r*.95, Math.sin(t)*r]); }
+    return pts; },
+  oak(){ const pts = [];
+    for(let i=0;i<=180;i++){ const t = i/180*Math.PI*2;
+      const w = .42*(1 + .22*Math.sin(t*9));
+      pts.push([Math.sin(t)*w*(.6 + .4*Math.sin(t/2)), -Math.cos(t)]); }
+    return pts; },
+  birch(){ const pts = [];
+    for(let i=0;i<=120;i++){ const t = i/120*Math.PI*2;
+      const r = 1 + .04*Math.sin(t*30);
+      pts.push([Math.sin(t)*.62*r*(1 - .25*Math.cos(t)), -Math.cos(t)*.92*r]); }
+    return pts; },
+  elm(){ const pts = [];
+    for(let i=0;i<=140;i++){ const t = i/140*Math.PI*2;
+      const r = 1 + .05*Math.abs(Math.sin(t*22));
+      pts.push([Math.sin(t)*.42*r*Math.pow(Math.sin(t/2), .7), -Math.cos(t)*r]); }
+    return pts; }
+};
+const SHAPE_PTS = Object.fromEntries(Object.entries(SHAPES).map(([k,f]) => [k, f()]));
+function leafSVG(shape, color, opts = {}){
+  const d = 'M' + SHAPE_PTS[shape].map(p => (p[0]*50).toFixed(1) + ' ' + (p[1]*50).toFixed(1)).join('L') + 'Z';
+  const id = 'g' + Math.random().toString(36).slice(2,8);
+  return '<svg viewBox="-60 -60 120 130" aria-hidden="true"><defs><linearGradient id="'+id+'" x1="0" y1="0" x2="1" y2="1">'
+    + '<stop offset="0" stop-color="'+color+'" stop-opacity=".85"/><stop offset="1" stop-color="'+color+'"/></linearGradient></defs>'
+    + '<path d="'+d+'" fill="url(#'+id+')" stroke="rgba(60,30,15,.35)" stroke-width="1.2"/>'
+    + '<path d="M0 -44 L0 66" stroke="rgba(255,240,215,.55)" stroke-width="1.6" stroke-linecap="round"/>'
+    + '<path d="M0 -10 L-22 -30 M0 -10 L22 -30 M0 12 L-28 -4 M0 12 L28 -4 M0 32 L-18 22 M0 32 L18 22" stroke="rgba(255,240,215,.35)" stroke-width="1" fill="none"/>'
+    + '</svg>';
+}
+
+/* =======================================================================
+   EL OTOÑO — árbol, hojas con física, viento y suelo
+   ======================================================================= */
+const Autumn = (function(){
+  const canvas = $('autumn'), ctx = canvas.getContext('2d');
+  let W = 0, H = 0, D = 1, mobile = false;
+  const state = { prog:0, target:0, wind:0, gust:0, hold:null };
+
+  /* RNG con semilla para que el árbol sea siempre el mismo */
+  function rng(seed){ return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+
+  /* ---- sprites de hojas ---- */
+  const PAL = {
+    early:['#7E8F2C','#A6A02C','#D8B23A','#E3A53B'],
+    mid:  ['#E0882B','#D0632A','#B8492A','#C9772E'],
+    late: ['#8E2A22','#7A2E1E','#5E3420','#A3462A']
+  };
+  const SPR = { early:[], mid:[], late:[] }; let GOLD = null;
+  function sprite(shape, color, gold){
+    const S = 64, c = document.createElement('canvas'); c.width = c.height = S;
+    const x = c.getContext('2d'); x.translate(S/2, S/2); x.scale(S*.42, S*.42);
+    const pts = SHAPE_PTS[shape];
+    x.beginPath(); pts.forEach((p,i) => i ? x.lineTo(p[0],p[1]) : x.moveTo(p[0],p[1])); x.closePath();
+    const g = x.createLinearGradient(-1,-1,1,1);
+    if(gold){ g.addColorStop(0,'#FFF0B8'); g.addColorStop(.5,'#F4C75A'); g.addColorStop(1,'#D9962A'); }
+    else{ g.addColorStop(0,color); g.addColorStop(1,shade(color,-.28)); }
+    x.fillStyle = g; x.fill();
+    x.lineWidth = .03; x.strokeStyle = 'rgba(40,20,10,.35)'; x.stroke();
+    x.strokeStyle = gold ? 'rgba(255,255,230,.8)' : 'rgba(255,235,200,.35)'; x.lineWidth = .035;
+    x.beginPath(); x.moveTo(0,-.85); x.lineTo(0,1.15); x.stroke();
+    x.lineWidth = .02; x.beginPath();
+    [[-.2,-.5],[.2,-.5],[-.1,-.55],[.25,.0],[-.25,0]].forEach(([a,b]) => { x.moveTo(0,b*.4); x.lineTo(a*2,b); });
+    x.stroke();
+    return c;
+  }
+  function shade(hex, k){
+    const n = parseInt(hex.slice(1),16), r = n>>16, g = n>>8&255, b = n&255;
+    const f = v => Math.max(0, Math.min(255, Math.round(v*(1+k))));
+    return 'rgb(' + f(r) + ',' + f(g) + ',' + f(b) + ')';
+  }
+  const SHAPE_KEYS = Object.keys(SHAPES);
+  for(const k of ['early','mid','late']) for(const col of PAL[k]) for(const sh of SHAPE_KEYS) SPR[k].push(sprite(sh, col));
+  GOLD = sprite('maple', null, true);
+  function pickSprite(p){
+    const we = Math.max(0, 1 - p*2.2), wm = Math.max(0, 1 - Math.abs(p - .5)*2.2), wl = Math.max(0, p*2.2 - 1.2) + .05;
+    const r = Math.random()*(we+wm+wl);
+    const set = r < we ? SPR.early : r < we+wm ? SPR.mid : SPR.late;
+    return set[Math.random()*set.length|0];
+  }
+
+  /* ---- árbol ---- */
+  let tree = null, tips = [], attached = [], N = 0;
+  function buildTree(){
+    tree = document.createElement('canvas'); tree.width = Math.round(W*D); tree.height = Math.round(H*D);
+    const t = tree.getContext('2d'); t.scale(D, D); t.lineCap = 'round';
+    const R = rng(21062026); tips = [];
+    const tx = mobile ? W*.97 : W*.87, len = mobile ? H*.22 : H*.28, maxDepth = mobile ? 7 : 8;
+    function branch(x, y, ang, l, w, depth){
+      const x2 = x + Math.cos(ang)*l, y2 = y + Math.sin(ang)*l;
+      const bend = (R()-.5)*l*.3;
+      const g = t.createLinearGradient(x, y, x2, y2); g.addColorStop(0,'#1E140D'); g.addColorStop(1,'#2C1E14');
+      t.strokeStyle = g; t.lineWidth = w;
+      t.beginPath(); t.moveTo(x,y); t.quadraticCurveTo((x+x2)/2 + bend, (y+y2)/2, x2, y2); t.stroke();
+      if(depth >= 4) tips.push([x2, y2], [(x+x2)/2 + bend*.5, (y+y2)/2]);
+      if(depth >= maxDepth) return;
+      const kids = depth < 2 ? 2 : (R() < .35 ? 3 : 2);
+      for(let i=0;i<kids;i++){
+        const spread = (.32 + R()*.35) * (i % 2 ? 1 : -1) + (kids === 3 && i === 2 ? (R()-.5)*.2 : 0);
+        branch(x2, y2, ang + spread - (depth < 3 ? .12 : 0), l*(.68 + R()*.12), w*.68, depth+1);
+      }
+    }
+    branch(tx, H + 30, -Math.PI/2 - (mobile ? .16 : .06), len, mobile ? 16 : 22, 0);
+    /* hojas que viven en las ramas */
+    /* las hojas viven solo en la parte de la copa que no tapa el texto */
+    tips = tips.filter(([x,y]) => x > W*(mobile ? .5 : .56) || y < H*.12);
+    N = Math.min(tips.length, mobile ? 95 : 200);
+    const R2 = rng(5); tips.sort(() => R2() - .5);
+    attached = tips.slice(0, N).map(([x,y]) => ({ x: x + (R2()-.5)*16, y: y + (R2()-.5)*16, rot: R2()*6.28, size: (mobile ? 13 : 16) + R2()*8,
+      spr: pickSprite(state.prog), ph: R2()*6.28, a: 1 }));
+  }
+
+  /* ---- hojas que caen y hojas en el suelo ---- */
+  let falling = [], ground = [];
+  const CAP_FALL = () => mobile ? 70 : 130, CAP_GROUND = () => mobile ? 110 : 220;
+  function makeFalling(x, y, opts = {}){
+    if(falling.length >= CAP_FALL() && !opts.gold) return null;
+    const l = { x, y, vx: opts.vx || 0, vy: opts.vy || 0, rot: Math.random()*6.28, vr: (Math.random()-.5)*2.4,
+      flip: Math.random()*6.28, fs: 1.5 + Math.random()*2.5, size: opts.size || (mobile ? 13 : 16) + Math.random()*10,
+      f: .6 + Math.random()*.9, ph: Math.random()*6.28, drag: .6 + Math.random()*.6,
+      spr: opts.spr || pickSprite(state.prog), gold: !!opts.gold, a: 1 };
+    falling.push(l); return l;
+  }
+  const groundLine = x => H - 6 - Math.min(26, ground.length*.11) * (.75 + .25*Math.sin(x*.02));
+
+  /* ---- viento desde el dedo o el ratón ---- */
+  let lastP = null;
+  function pointerWind(x, y, t){
+    if(lastP){
+      const dt = Math.max(16, t - lastP.t), vx = (x - lastP.x)/dt*1000, vy = (y - lastP.y)/dt*1000;
+      state.gust += Math.max(-600, Math.min(600, vx))*.04;
+      for(const l of falling){
+        const dx = l.x - x, dy = l.y - y, d2 = dx*dx + dy*dy;
+        if(d2 < 130*130){ const k = 1 - Math.sqrt(d2)/130; l.vx += vx*.35*k; l.vy += vy*.25*k - 30*k; l.vr += (Math.random()-.5)*6*k; }
+      }
+    }
+    lastP = { x, y, t };
+  }
+  addEventListener('pointermove', e => { if(e.pointerType === 'mouse') pointerWind(e.clientX, e.clientY, performance.now()); }, { passive:true });
+  addEventListener('touchmove', e => { const t = e.touches[0]; if(t) pointerWind(t.clientX, t.clientY, performance.now()); }, { passive:true });
+  addEventListener('touchend', () => { lastP = null; }, { passive:true });
+
+  /* levantar las hojas del suelo al tocarlo */
+  function kick(x, y, power = 1){
+    let n = 0;
+    ground = ground.filter(l => {
+      const d = Math.abs(l.x - x);
+      if(d < 170*power && n < 40){
+        n++; const k = 1 - d/(170*power);
+        falling.push(Object.assign(l, { vx:(l.x - x)*2.2*k + (Math.random()-.5)*120, vy:-(260 + Math.random()*380)*k*power - 60, vr:(Math.random()-.5)*10, a:1 }));
+        return false;
+      }
+      return true;
+    });
+    for(let i=0;i<Math.round(6*power);i++) makeFalling(x + (Math.random()-.5)*80, H - 10, { vx:(Math.random()-.5)*260, vy:-(300 + Math.random()*300)*power });
+    return n;
+  }
+  /* sacudir el árbol: se sueltan hojas de golpe */
+  function shake(n){
+    for(let i=0;i<n && attached.length;i++){
+      const a = attached.splice(Math.random()*attached.length|0, 1)[0];
+      makeFalling(a.x, a.y, { spr:a.spr, size:a.size, vx:-(40 + Math.random()*120), vy:-20 });
+    }
+    state.gust -= 90;
+  }
+
+  /* ---- hoja dorada ---- */
+  let golden = null, nextGold = 9;
+  function spawnGold(){ golden = makeFalling(W*(.12 + Math.random()*.76), -40, { gold:true, spr:GOLD, size:(mobile ? 26 : 30), vx:0 }); }
+  function hitGold(x, y){
+    if(!golden || golden.a < .5) return false;
+    const dx = x - golden.x, dy = y - golden.y;
+    if(dx*dx + dy*dy > Math.pow(golden.size*1.9, 2)) return false;
+    falling = falling.filter(l => l !== golden); golden = null; nextGold = 22 + Math.random()*14;
+    return true;
+  }
+
+  /* ---- tamaño ---- */
+  let lastW = 0;
+  function resize(force){
+    const w = innerWidth, h = Math.max(innerHeight, document.documentElement.clientHeight);
+    if(!force && w === lastW && Math.abs(h - H) < 140) return;
+    const keepProg = state.prog;
+    lastW = w; W = w; H = h; D = Math.min(1.75, devicePixelRatio || 1); mobile = W < 700;
+    canvas.width = Math.round(W*D); canvas.height = Math.round(H*D);
+    ctx.setTransform(D,0,0,D,0,0);
+    buildTree(); state.prog = keepProg;
+    /* al cambiar de tamaño, se recolocan las del suelo */
+    ground.forEach(l => { l.x = Math.min(l.x, W - 4); l.y = groundLine(l.x) + Math.random()*5; });
+  }
+
+  /* ---- bucle ---- */
+  let last = performance.now(), T = 0, spawnAcc = 0, detachAcc = 0;
+  function draw(l, alphaMul){
+    const s = l.size, flat = l.ground ? .5 : .25 + .75*Math.abs(Math.cos(l.flip));
+    const c = Math.cos(l.rot), si = Math.sin(l.rot);
+    ctx.setTransform(D*c, D*si, -D*si*flat, D*c*flat, D*l.x, D*l.y);
+    ctx.globalAlpha = l.a*alphaMul;
+    ctx.drawImage(l.spr, -s, -s, s*2, s*2);
+  }
+  function frame(now){
+    requestAnimationFrame(frame);
+    if(document.hidden){ last = now; return; }
+    const dt = Math.min(.05, (now - last)/1000); last = now; T += dt;
+    /* avance del otoño con el scroll */
+    const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+    state.target = state.hold !== null ? state.hold : started ? Math.min(1, Math.max(0, scrollY/max)) : 0;
+    state.prog += (state.target - state.prog)*(RM ? 1 : .05);
+    if(Math.abs(state.prog - (+document.documentElement.style.getPropertyValue('--p') || 0)) > .002)
+      document.documentElement.style.setProperty('--p', state.prog.toFixed(3));
+    /* viento: brisa + ráfagas que se calman */
+    state.gust *= Math.pow(.25, dt);
+    state.wind = 14 + Math.sin(T*.23)*12 + Math.sin(T*.07)*8 + state.gust;
+
+    if(!RM){
+      /* el árbol se va quedando sin hojas según avanza el mes */
+      const want = Math.round(N*(1 - Math.min(1, state.prog*1.04)));
+      if(attached.length > want){
+        detachAcc += dt*Math.max(3, (attached.length - want)*1.5);
+        while(detachAcc >= 1 && attached.length > want){
+          detachAcc--; const a = attached.splice(Math.random()*attached.length|0, 1)[0];
+          makeFalling(a.x, a.y, { spr:a.spr, size:a.size, vx:state.wind*.3, vy:0 });
+        }
+      } else if(attached.length < want && tips.length){
+        /* si vuelve hacia arriba, el árbol rebrota poco a poco */
+        detachAcc += dt*6;
+        while(detachAcc >= 1 && attached.length < want){
+          detachAcc--; const [x,y] = tips[Math.random()*tips.length|0];
+          attached.push({ x:x+(Math.random()-.5)*16, y:y+(Math.random()-.5)*16, rot:Math.random()*6.28, size:(mobile?13:16)+Math.random()*8, spr:pickSprite(state.prog), ph:Math.random()*6.28, a:0 });
+        }
+      }
+      /* hojas que llegan desde arriba, aunque nadie toque nada */
+      spawnAcc += dt*(started ? .55 + state.prog*.9 : .9);
+      while(spawnAcc >= 1){ spawnAcc--; makeFalling(Math.random()*W*1.1 - W*.05, -30); }
+      if(started){ nextGold -= dt; if(nextGold <= 0 && !golden && Gold.count < NOTES.length){ spawnGold(); nextGold = 999; } }
+
+      for(const l of falling){
+        l.vy += 150*dt; l.vy *= Math.pow(.09, dt);                     // gravedad y rozamiento: caen despacio
+        const sway = Math.sin(T*l.f*2 + l.ph)*45;
+        l.vx += ((state.wind*l.drag + sway) - l.vx)*Math.min(1, dt*1.6);
+        l.x += l.vx*dt; l.y += l.vy*dt + Math.sin(T*l.f*3 + l.ph)*.35;
+        l.rot += l.vr*dt + Math.sin(T*l.f + l.ph)*dt*.8; l.flip += l.fs*dt;
+        if(l.x < -60) l.x = W + 50; else if(l.x > W + 60) l.x = -50;
+        if(l.vy > 0 && l.y >= groundLine(l.x)){
+          if(l.gold){ l.y = H + 100; continue; }
+          l.ground = true; l.y = groundLine(l.x) + Math.random()*6; l.rot = Math.random()*6.28; l.vx = l.vy = 0; ground.push(l);
+        }
+      }
+      falling = falling.filter(l => !l.ground && l.y < H + 80);
+      if(golden && golden.y > H + 60){ golden = null; nextGold = 8 + Math.random()*8; }
+      while(ground.length > CAP_GROUND()) ground.shift();
+      ground.forEach(l => l.ground = true);
+    }
+
+    ctx.setTransform(1,0,0,1,0,0); ctx.globalAlpha = 1;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    if(tree && started) ctx.drawImage(tree, 0, 0);
+    for(const a of (started ? attached : [])){
+      if(a.a < 1) a.a = Math.min(1, a.a + dt*.8);
+      a.flip = 0; const r0 = a.rot;
+      a.rot = r0 + Math.sin(T*1.6 + a.ph)*(.12 + Math.abs(state.wind)*.004);
+      draw(a, 1); a.rot = r0;
+    }
+    for(const l of ground) draw(l, .95);
+    for(const l of falling){
+      if(l.gold){
+        ctx.save(); ctx.shadowColor = 'rgba(255,210,110,.95)'; ctx.shadowBlur = 22*D; draw(l, 1); ctx.restore();
+      } else draw(l, 1);
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  resize(true); addEventListener('resize', () => resize(false));
+  if(RM){ /* sin movimiento: un fotograma por cambio de scroll */ }
+  requestAnimationFrame(frame);
+  return { state, kick, shake, hitGold, hold(v){ state.hold = v; }, get W(){ return W; }, get H(){ return H; } };
+})();
+
+/* =======================================================================
+   HOJAS DORADAS (las atrapadas se recuerdan en este navegador)
+   ======================================================================= */
+const Gold = (function(){
+  let got = [];
+  try{ got = JSON.parse(localStorage.getItem('ks_m5_gold') || '[]'); }catch(_){}
+  const dots = $('goldDots');
+  function paint(){
+    dots.innerHTML = NOTES.map((_,i) => '<i class="' + (got.includes(i) ? 'got' : '') + '"></i>').join('');
+    $('goldHint').textContent = got.length + ' de ' + NOTES.length + (got.length === NOTES.length ? ' · las encontraste todas' : '');
+  }
+  paint();
+  let tmr = 0;
+  function show(text, count){
+    $('noteText').textContent = text; $('noteCount').textContent = count;
+    $('note').classList.add('show'); clearTimeout(tmr); tmr = setTimeout(() => $('note').classList.remove('show'), 4200);
+  }
+  $('note').addEventListener('click', () => $('note').classList.remove('show'));
+  return {
+    get count(){ return got.length; },
+    catch(){
+      const left = NOTES.map((_,i) => i).filter(i => !got.includes(i));
+      if(!left.length) return;
+      const i = left[0]; got.push(i);
+      try{ localStorage.setItem('ks_m5_gold', JSON.stringify(got)); }catch(_){}
+      paint();
+      show(NOTES[i], got.length === NOTES.length ? 'las siete · eres mi otoño entero' : 'hoja dorada ' + got.length + ' de ' + NOTES.length);
+    }
+  };
+})();
+
+/* tocar: primero la hoja dorada; si no, el suelo levanta las hojas */
+addEventListener('pointerdown', e => {
+  if(Autumn.hitGold(e.clientX, e.clientY)){ Gold.catch(); return; }
+  if(e.target.closest('button,a,input,.pic,.lb,.read,.leafcard,.tome')) return;
+  if(e.clientY > innerHeight*.78) Autumn.kick(e.clientX, e.clientY, 1);
+});
+
+/* =======================================================================
+   CINCO HOJAS
+   ======================================================================= */
+$('leaves').innerHTML = CHAPTERS.map((c,i) => {
+  const now = !c.page;
+  return '<button class="leafcard r' + (now ? ' leafcard--now' : '') + '" style="--d:' + (i*.1) + 's" aria-label="Capítulo ' + c.n + ': ' + c.title + '">'
+    + '<div class="leafcard__in">'
+    +   '<div class="leafcard__f">' + (now ? '<span class="leafcard__here">estás aquí</span>' : '') + '<span class="leafcard__n">' + c.n + '</span>' + leafSVG(c.shape, c.color) + '<span class="leafcard__t">' + c.title + '</span></div>'
+    +   '<div class="leafcard__b"><span class="leafcard__n">' + c.n + '</span><p class="leafcard__p">' + c.phrase + '</p>'
+    +     (c.page ? '<a class="leafcard__go" href="' + c.page + '">volver a vivirlo →</a>' : '<span class="leafcard__go">capítulo ' + c.n + '</span>') + '</div>'
+    + '</div></button>';
+}).join('');
+document.querySelectorAll('.leafcard').forEach(card => card.addEventListener('click', e => {
+  if(e.target.closest('a')) return;
+  card.classList.toggle('open');
+  const r = card.getBoundingClientRect();
+  Autumn.state.gust += (r.left + r.width/2 < innerWidth/2 ? 1 : -1)*60;
+}));
+
+/* =======================================================================
+   EL MES, HOJA A HOJA
+   ======================================================================= */
+let PHOTOS = [];
+const parseTaken = s => { const m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(s || ''); return m ? { y:+m[1], mo:+m[2], d:+m[3], h:+m[4], mi:+m[5] } : null; };
+const dayTitle = t => DIAS[new Date(t.y, t.mo-1, t.d).getDay()] + ' ' + t.d + ' de ' + MESES[t.mo-1];
+const whenText = p => { const t = parseTaken(p.taken); return t ? dayTitle(t) + ' · ' + pad(t.h) + ':' + pad(t.mi) : ''; };
+const isNight = p => { const t = parseTaken(p.taken); return t && (t.h >= 20 || t.h < 5); };
+
+async function loadPhotos(){
+  try{
+    const r = await fetch(CONFIG.manifest, { cache:'no-cache' }); if(!r.ok) return [];
+    const j = await r.json();
+    return (j.photos || []).filter(p => p && p.file).map(p => ({ ...p, src:CONFIG.dir + p.file }))
+      .sort((a,b) => (a.taken||'').localeCompare(b.taken||''));
+  }catch(_){ return []; }
+}
+function rand(seed){ const x = Math.sin(seed*999.13)*43758.5453; return x - Math.floor(x); }
+
+function buildMonth(list){
+  const host = $('days');
+  if(!list.length){ host.innerHTML = '<div class="empty">Las hojas de este mes están cayendo…</div>'; return; }
+  const groups = [];
+  list.forEach((p,i) => {
+    const key = (p.taken || '').slice(0,10) || 'sin-fecha';
+    let g = groups[groups.length-1]; if(!g || g.key !== key){ g = { key, t:parseTaken(p.taken), items:[] }; groups.push(g); }
+    g.items.push(i);
+  });
+  host.innerHTML = groups.map(g => {
+    const first = parseTaken(list[g.items[0]].taken), lastT = parseTaken(list[g.items[g.items.length-1]].taken);
+    const span = g.items.length > 1 && first && lastT ? ' · de ' + pad(first.h) + ':' + pad(first.mi) + ' a ' + pad(lastT.h) + ':' + pad(lastT.mi)
+                : first ? ' · a las ' + pad(first.h) + ':' + pad(first.mi) : '';
+    const title = g.t ? dayTitle(g.t).replace(/^(\S+)/, '<em>$1</em>') : 'sin fecha';
+    const cells = g.items.map(i => {
+      const p = list[i], t = parseTaken(p.taken);
+      const wide = p.w && p.h && p.w/p.h > 1.15;
+      const rot = ((rand(i+1) - .5)*7).toFixed(2);
+      return '<button class="pic wait' + (wide ? ' wide' : '') + '" data-i="' + i + '" style="--r:' + rot + 'deg;--c:' + (p.color || '#4A2C18') + (wide ? ';aspect-ratio:' + (p.w/p.h).toFixed(3) : '') + '" aria-label="Abrir foto: ' + whenText(p) + '">'
+        + '<img src="' + p.src + '" alt="" loading="lazy" decoding="async">'
+        + (t ? '<span class="pic__t">' + pad(t.h) + ':' + pad(t.mi) + '</span>' : '') + '</button>';
+    }).join('');
+    return '<div class="day"><div class="day__h r"><h3>' + title + '</h3><span>' + g.items.length + ' foto' + (g.items.length === 1 ? '' : 's') + span + '</span></div><div class="pile">' + cells + '</div></div>';
+  }).join('');
+  host.querySelectorAll('.pic img').forEach(img => { const ok = () => img.classList.add('ok'); img.complete && img.naturalWidth ? ok() : img.addEventListener('load', ok, { once:true }); });
+  host.querySelectorAll('.pic').forEach(el => el.addEventListener('click', () => openLb(+el.dataset.i)));
+  /* cada día, al aparecer, deja caer sus fotos como hojas */
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if(!e.isIntersecting) return; io.unobserve(e.target);
+    e.target.querySelectorAll('.pic.wait').forEach((el,k) => dropIn(el, k));
+  }), { rootMargin:'0px 0px -12% 0px' });
+  host.querySelectorAll('.pile').forEach(p => io.observe(p));
+  /* cifras exactas de las propias fotos */
+  $('stats').hidden = false;
+  countUp($('stN'), list.length);
+  countUp($('stD'), groups.filter(g => g.t).length);
+  countUp($('stL'), list.filter(isNight).length);
+  $('mesSub').textContent = list.length + ' fotos en ' + groups.filter(g => g.t).length + ' días, cada una en su día y a la hora exacta en que la vivimos.';
+  whenPill();
+}
+function dropIn(el, k){
+  const rot = parseFloat(el.style.getPropertyValue('--r')) || 0;
+  el.classList.remove('wait');
+  if(RM || !el.animate) return;
+  const i = +el.dataset.i, dx = (rand(i*7) - .5)*160, h = innerHeight*(.45 + rand(i*3)*.25), r0 = (rand(i*5) - .5)*160;
+  el.animate([
+    { transform:'translate(' + dx + 'px,' + (-h) + 'px) rotate(' + r0 + 'deg) scale(.9)', opacity:0 },
+    { opacity:1, offset:.12 },
+    { transform:'translate(' + (-dx*.55) + 'px,' + (-h*.42) + 'px) rotate(' + (-r0*.4) + 'deg) scale(.95)', offset:.55 },
+    { transform:'translate(' + (dx*.15) + 'px,-10px) rotate(' + (rot - 4) + 'deg)', offset:.85 },
+    { transform:'rotate(' + rot + 'deg)', opacity:1 }
+  ], { duration:1500 + rand(i*11)*700, delay:k*110, easing:'cubic-bezier(.33,.5,.4,1)', fill:'backwards' });
+}
+function countUp(el, to){
+  if(RM){ el.textContent = to; return; }
+  const io = new IntersectionObserver(es => {
+    if(!es[0].isIntersecting) return; io.disconnect();
+    const t0 = performance.now();
+    (function f(ts){ const k = Math.min(1,(ts-t0)/1400); el.textContent = Math.round(to*(1-Math.pow(1-k,3))); if(k<1) requestAnimationFrame(f); })(t0);
+  });
+  io.observe(el);
+}
+/* arriba, el día y la hora de la foto que pasa por el centro */
+function whenPill(){
+  const pill = $('when'), cells = [...document.querySelectorAll('#days .pic')], sec = $('days');
+  let raf = 0, lastI = -1;
+  function upd(){
+    raf = 0;
+    const r = sec.getBoundingClientRect(), mid = innerHeight*.5, on = started && r.top < mid && r.bottom > mid;
+    pill.classList.toggle('show', on); document.documentElement.classList.toggle('whening', on);
+    if(!on) return;
+    let best = null, bd = 1e9;
+    for(const c of cells){ const b = c.getBoundingClientRect(); if(b.bottom < 0 || b.top > innerHeight) continue; const d = Math.abs((b.top+b.bottom)/2 - mid); if(d < bd){ bd = d; best = c; } }
+    if(!best) return; const i = +best.dataset.i; if(i === lastI) return; lastI = i;
+    const t = parseTaken(PHOTOS[i].taken);
+    $('whenA').textContent = t ? dayTitle(t) : ''; $('whenB').textContent = t ? pad(t.h) + ':' + pad(t.mi) : '';
+  }
+  addEventListener('scroll', () => { if(!raf) raf = requestAnimationFrame(upd); }, { passive:true });
+  upd();
+}
+
+/* ---- lightbox ---- */
+const lb = $('lb'); let lbI = 0;
+function showLb(i, dir){
+  lbI = (i + PHOTOS.length) % PHOTOS.length;
+  const p = PHOTOS[lbI], img = $('lbImg'), fig = $('lbFig');
+  fig.style.opacity = 0; fig.style.transform = 'translateX(' + (dir||0)*40 + 'px) rotate(' + (dir||0)*2 + 'deg)';
+  const pre = new Image(); pre.src = p.src;
+  const swap = () => { img.src = p.src; fig.style.transform = 'none'; fig.style.opacity = 1; };
+  pre.decode ? pre.decode().then(swap, swap) : (pre.onload = swap);
+  $('lbCap').textContent = p.caption || ''; $('lbWhen').textContent = whenText(p);
+  $('lbCount').textContent = (lbI+1) + ' / ' + PHOTOS.length;
+  [1,-1].forEach(k => { const n = PHOTOS[(lbI+k+PHOTOS.length)%PHOTOS.length]; if(n){ const im = new Image(); im.src = n.src; } });
+}
+function openLb(i){ if(!PHOTOS.length) return; lb.classList.add('open'); document.documentElement.style.overflow = 'hidden'; showLb(i, 0); }
+function closeLb(){ lb.classList.remove('open'); document.documentElement.style.overflow = ''; }
+$('lbX').onclick = closeLb; $('lbPrev').onclick = () => showLb(lbI-1, -1); $('lbNext').onclick = () => showLb(lbI+1, 1);
+lb.addEventListener('click', e => { if(e.target === lb) closeLb(); });
+(function(){ let x0 = null, y0 = 0;
+  lb.addEventListener('pointerdown', e => { x0 = e.clientX; y0 = e.clientY; });
+  lb.addEventListener('pointerup', e => { if(x0 === null) return; const dx = e.clientX - x0, dy = e.clientY - y0; x0 = null;
+    if(Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) showLb(lbI + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1); else if(dy > 90) closeLb(); });
+})();
+
+/* =======================================================================
+   EL LIBRO Y LA CARTA
+   ======================================================================= */
+const read = $('read'), readBody = $('readBody'); let lang = 'es', readSeen = false, readLive = false;
+const escH = t => t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+$('pressed').innerHTML = '<svg viewBox="0 0 320 300" aria-hidden="true">'
+  + [['maple','#D9A23A',70,90,-18,1],['oak','#8E2A22',190,70,24,.9],['birch','#6E4A7A',120,190,-40,.8],['elm','#E0775A',235,190,12,.85],['maple','#C8582E',160,130,6,1.05]]
+    .map(([s,c,x,y,r,k]) => '<g transform="translate(' + x + ' ' + y + ') rotate(' + r + ') scale(' + k + ')" opacity=".92">' + leafSVG(s,c).replace(/^<svg[^>]*>|<\/svg>$/g,'') + '</g>').join('')
+  + '<path d="M40 268 Q160 250 280 268" stroke="#9A6A44" stroke-width="1" fill="none" opacity=".5"/></svg>';
+function renderLetter(){
+  const L = LETTER[lang];
+  $('readDate').textContent = L.date; $('readDate2').textContent = L.date;
+  $('readTo').textContent = L.to; $('readDed').innerHTML = L.ded;
+  $('readText').innerHTML = L.body.trim().split(/\n\s*\n/).map(p => '<p class="lr">' + escH(p).replace(/\*(.+?)\*/g,'<em>$1</em>') + '</p>').join('');
+  $('readClose').innerHTML = escH(L.close) + '<b>' + escH(L.closeLast) + '</b>';
+  $('readSign').textContent = L.sign;
+  $('savePdf').textContent = lang === 'es' ? 'Guardar en PDF' : 'Save as PDF';
+  $('saveTxt').textContent = lang === 'es' ? 'Descargar el texto' : 'Download the text';
+  document.querySelectorAll('.lang button').forEach(b => b.classList.toggle('on', b.dataset.lang === lang));
+  if(readSeen) read.querySelectorAll('.lr').forEach(el => el.classList.add('in'));
+}
+function revealLetter(){
+  if(!readLive) return;
+  const limit = readBody.scrollTop + readBody.clientHeight*.92; let k = 0;
+  read.querySelectorAll('.lr:not(.in)').forEach(el => { if(el.offsetTop < limit){ el.style.setProperty('--d', (RM ? 0 : Math.min(k++,4)*.3) + 's'); el.classList.add('in'); } });
+}
+readBody.addEventListener('scroll', revealLetter, { passive:true });
+function openRead(){
+  renderLetter(); readBody.scrollTop = 0;
+  const cover = $('bookCover'); cover.classList.remove('done');
+  if(!readSeen){ readLive = false; read.querySelectorAll('.lr').forEach(el => el.classList.remove('in')); }
+  document.documentElement.style.overflow = 'hidden'; document.documentElement.classList.add('reading');
+  Autumn.hold(.42);
+  requestAnimationFrame(() => requestAnimationFrame(() => read.classList.add('open')));
+  setTimeout(() => cover.classList.add('done'), RM ? 0 : 1800);
+  if(!readSeen) setTimeout(() => { readLive = true; revealLetter(); }, RM ? 0 : 1400);
+  setTimeout(() => { readSeen = true; }, 6000);
+}
+function closeRead(){ read.classList.remove('open'); document.documentElement.style.overflow = ''; document.documentElement.classList.remove('reading'); Autumn.hold(null); }
+$('tome').addEventListener('click', () => { Autumn.state.gust -= 120; openRead(); });
+$('reread').addEventListener('click', openRead);
+$('readX').onclick = closeRead;
+read.addEventListener('click', e => { if(e.target === read) closeRead(); });
+document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => { lang = b.dataset.lang; readSeen = readLive = true; renderLetter(); }));
+$('savePdf').onclick = () => window.print();
+$('saveTxt').onclick = () => {
+  const L = LETTER[lang];
+  const txt = L.date + '\n\n' + L.to + '\n\n' + L.body.trim().replace(/\*(.+?)\*/g,'$1') + '\n\n' + L.close + '\n' + L.closeLast + '\n\n— ' + L.sign + '\n';
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([txt], { type:'text/plain;charset=utf-8' }));
+  a.download = lang === 'es' ? 'carta-cinco-meses.txt' : 'five-months-letter.txt';
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+};
+addEventListener('keydown', e => {
+  if(lb.classList.contains('open')){ if(e.key === 'Escape') closeLb(); if(e.key === 'ArrowRight') showLb(lbI+1,1); if(e.key === 'ArrowLeft') showLb(lbI-1,-1); }
+  else if(read.classList.contains('open') && e.key === 'Escape') closeRead();
+});
+
+/* =======================================================================
+   MÚSICA (YouTube)
+   ======================================================================= */
+const music = $('music'); let yt = null, ytReady = false, wantPlay = false;
+if(CONFIG.VIDEO_ID){
+  music.classList.add('show');
+  window.onYouTubeIframeAPIReady = function(){
+    yt = new YT.Player('ytplayer', { width:'150', height:'84', videoId:CONFIG.VIDEO_ID,
+      playerVars:{ autoplay:0, controls:0, rel:0, modestbranding:1, playsinline:1, loop:1, playlist:CONFIG.VIDEO_ID },
+      events:{ onReady:() => { ytReady = true; if(wantPlay) playSong(); },
+        onStateChange:e => { music.classList.toggle('playing', e.data === YT.PlayerState.PLAYING); if(e.data === YT.PlayerState.ENDED){ yt.seekTo(0); yt.playVideo(); } },
+        onError:() => music.classList.add('mute') } });
+  };
+  const s = document.createElement('script'); s.src = 'https://www.youtube.com/iframe_api'; s.onerror = () => music.classList.add('mute'); document.head.appendChild(s);
+  setTimeout(() => { if(!ytReady) music.classList.add('mute'); }, 9000);
+  music.addEventListener('click', () => { if(!ytReady) return; try{ yt.getPlayerState() === YT.PlayerState.PLAYING ? yt.pauseVideo() : playSong(); }catch(_){} });
+}
+function playSong(){
+  if(!CONFIG.VIDEO_ID) return;
+  if(!ytReady){ wantPlay = true; return; }
+  try{ yt.setVolume(0); yt.playVideo(); let v = 0; const f = setInterval(() => { v = Math.min(CONFIG.VOLUMEN, v+3); try{ yt.setVolume(v); }catch(_){} if(v >= CONFIG.VOLUMEN) clearInterval(f); }, 90); }
+  catch(_){ music.classList.add('mute'); }
+}
+
+/* =======================================================================
+   CONTADOR, ENTRADA Y ARRANQUE
+   ======================================================================= */
+(function liveClock(){
+  const m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(CONFIG.startDate);
+  const t0 = new Date(+m[1], +m[2]-1, +m[3], +m[4], +m[5]).getTime();
+  function tick(){ const s = Math.max(0, Math.floor((Date.now() - t0)/1000));
+    $('cD').textContent = Math.floor(s/86400); $('cH').textContent = pad(Math.floor(s/3600)%24); $('cM').textContent = pad(Math.floor(s/60)%60); $('cS').textContent = pad(s%60); }
+  tick(); setInterval(tick, 1000);
+})();
+(function splitTitle(){
+  const el = $('heroTitle'); let i = 0;
+  const wrap = node => [...node.childNodes].forEach(n => {
+    if(n.nodeType === 3){
+      const frag = document.createDocumentFragment();
+      [...n.textContent].forEach(ch => {
+        if(ch === ' '){ frag.appendChild(document.createTextNode(' ')); return; }
+        const s = document.createElement('span'); s.className = 'ch'; s.textContent = ch; s.setAttribute('aria-hidden','true');
+        s.style.setProperty('--i', i); s.style.setProperty('--x', ((Math.sin(i*12.9)*.5)*1.2).toFixed(2) + 'em'); s.style.setProperty('--rr', (Math.sin(i*7.3)*70).toFixed(0) + 'deg');
+        i++; frag.appendChild(s);
+      });
+      n.replaceWith(frag);
+    } else wrap(n);
+  });
+  wrap(el);
+})();
+const revealIO = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); revealIO.unobserve(e.target); } }), { threshold:.12, rootMargin:'0px 0px -6% 0px' });
+const observeReveals = () => document.querySelectorAll('.r:not(.in)').forEach(el => revealIO.observe(el));
+
+$('gateBtn').addEventListener('click', () => {
+  started = true;
+  $('gate').classList.add('gone');
+  document.documentElement.classList.remove('locked');
+  $('top').classList.add('show'); music.classList.add('on');
+  playSong();
+  Autumn.shake(24);
+  setTimeout(() => { $('gate').style.display = 'none'; $('heroTitle').classList.add('in'); observeReveals(); }, RM ? 0 : 700);
+});
+
+(async function boot(){
+  PHOTOS = await loadPhotos();
+  buildMonth(PHOTOS);
+  if(started) observeReveals();
+})();
+</script>
+</body>
+</html>
