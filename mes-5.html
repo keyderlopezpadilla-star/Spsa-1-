@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <script>try{if(localStorage.getItem('ks_key')!=='1'){location.replace('index.html');}}catch(e){}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#1A120D">
-<title>Capítulo V — Nuestro otoño</title>
+<title>Chapter V — Our autumn</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8D%81%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -323,6 +323,49 @@ section{ position:relative; padding:clamp(5rem,14vh,9rem) 16px; }
 .read__act button{ padding:.72rem 1.15rem; border-radius:99px; border:1px solid rgba(122,74,40,.3); font-size:.6rem; letter-spacing:.2em; text-transform:uppercase; color:#7A4A28; }
 .read__act button:hover{ background:#3A2617; color:#FBF4E6; }
 
+/* ---------- las dos pruebas antes de la carta ---------- */
+.trial{ position:fixed; inset:0; z-index:68; display:flex; align-items:center; justify-content:center; padding:16px;
+  background:radial-gradient(ellipse at 50% 50%, rgba(30,20,10,.55), rgba(10,7,4,.86) 85%);
+  opacity:0; pointer-events:none; transition:opacity .6s ease; }
+.trial.open{ opacity:1; pointer-events:auto; }
+.trial__card{ position:relative; width:min(600px,100%); max-height:calc(100svh - 32px); overflow:auto; text-align:center;
+  padding:clamp(1.4rem,4vw,2.2rem) clamp(1rem,4vw,2rem) clamp(1.2rem,3vw,1.8rem); border-radius:22px;
+  background:linear-gradient(170deg,#34221A,#1C120B); border:1px solid rgba(240,184,90,.3);
+  box-shadow:0 40px 100px rgba(0,0,0,.6); transform:translateY(18px) scale(.98); transition:transform .7s var(--ease); }
+.trial.open .trial__card{ transform:none; }
+.trial section{ padding:0; }
+html.trialing main, html.trialing .top, html.trialing .when{ opacity:0; pointer-events:none; transition:opacity .6s ease; }
+.trial__x{ position:absolute; top:12px; right:12px; width:38px; height:38px; border-radius:50%; border:1px solid var(--line); color:var(--ink-dim); z-index:2; }
+.trial__steps{ display:flex; gap:8px; justify-content:center; margin-bottom:1rem; }
+.trial__steps i{ width:34px; height:4px; border-radius:4px; background:rgba(246,235,221,.15); transition:background .5s ease; }
+.trial__steps i.on{ background:linear-gradient(90deg,#F0B85A,#C8582E); }
+.trial h3{ font-family:var(--display); font-weight:400; font-size:clamp(1.8rem,6vw,2.5rem); line-height:1.05; margin:.5rem 0 .5rem; }
+.trial h3 em{ font-style:italic; color:var(--amber); }
+.trial__lead{ font-family:var(--serif); font-style:italic; color:var(--ink-dim); font-size:1.05rem; margin-bottom:1.1rem; }
+.puzzle{ position:relative; display:grid; gap:3px; width:100%; margin:0 auto; border-radius:10px; padding:3px; background:rgba(0,0,0,.35);
+  touch-action:none; user-select:none; -webkit-user-select:none; transition:gap .8s var(--ease), padding .8s var(--ease); }
+.pz{ position:relative; display:block; width:100%; height:100%; padding:0; border-radius:4px; background-repeat:no-repeat; cursor:grab;
+  box-shadow:inset 0 0 0 1px rgba(255,240,220,.18); transition:box-shadow .3s ease, filter .3s ease; will-change:transform; }
+.pz.sel{ box-shadow:inset 0 0 0 3px var(--amber), 0 0 18px rgba(240,184,90,.6); filter:brightness(1.1); z-index:2; }
+.pz.drag{ cursor:grabbing; z-index:5; box-shadow:0 14px 30px rgba(0,0,0,.55), inset 0 0 0 2px var(--amber); }
+.puzzle.solved{ gap:0; padding:0; box-shadow:0 0 0 1px rgba(240,184,90,.5), 0 0 50px rgba(240,184,90,.35); }
+.puzzle.solved .pz{ border-radius:0; box-shadow:none; cursor:default; }
+.puzzle__peek{ position:absolute; inset:0; border-radius:10px; background-size:cover; background-position:center; opacity:0; pointer-events:none; transition:opacity .45s ease; z-index:6; }
+.puzzle.peek .puzzle__peek{ opacity:1; }
+.trial__row{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:1rem; flex-wrap:wrap; }
+.trial__row span{ font-size:.62rem; letter-spacing:.22em; text-transform:uppercase; color:var(--ink-faint); }
+.trial__win{ font-family:var(--display); font-style:italic; font-size:1.3rem; color:var(--amber); min-height:1.7rem; margin-top:.8rem; opacity:0; transition:opacity .6s ease; }
+.trial__win.show{ opacity:1; }
+.pass{ display:flex; flex-direction:column; align-items:center; gap:1rem; margin-top:.4rem; }
+.pass input{ width:min(320px,90%); background:rgba(246,235,221,.06); border:none; border-bottom:1px solid rgba(240,184,90,.5); padding:.85rem .6rem;
+  text-align:center; font-family:var(--serif); font-size:1.3rem; letter-spacing:.24em; color:var(--ink); outline:none; border-radius:6px 6px 0 0; }
+.pass input:focus{ border-color:var(--amber); background:rgba(246,235,221,.1); }
+.pass.bad input{ border-color:#E06A5A; animation:shake .45s ease; }
+@keyframes shake{ 0%,100%{transform:translateX(0);} 20%{transform:translateX(-9px);} 40%{transform:translateX(8px);} 60%{transform:translateX(-5px);} 80%{transform:translateX(4px);} }
+.pass__err{ min-height:1.3rem; font-family:var(--serif); font-style:italic; color:#F08A7A; opacity:0; transition:opacity .3s ease; }
+.pass__err.show{ opacity:1; }
+.pass .gate__btn{ margin-top:0; }
+
 /* ---------- final ---------- */
 .end{ min-height:150svh; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; text-align:center; padding-bottom:28vh; }
 .end h2{ font-family:var(--display); font-weight:400; font-size:clamp(2.6rem,10vw,6rem); line-height:1.02; text-shadow:0 4px 40px rgba(0,0,0,.5); }
@@ -370,6 +413,8 @@ section{ position:relative; padding:clamp(5rem,14vh,9rem) 16px; }
 .vbadge::before{ content:''; border-style:solid; border-width:5px 0 5px 8px; border-color:transparent transparent transparent #fff; }
 .lb__fig video{ display:block; max-width:min(92vw,1100px); max-height:76svh; background:#000; }
 </style>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="media/icons/apple-180.png">
 </head>
 <body>
 <script>document.documentElement.classList.add('locked');</script>
@@ -381,8 +426,8 @@ section{ position:relative; padding:clamp(5rem,14vh,9rem) 16px; }
 <div class="fog"></div>
 <div class="veil"></div>
 
-<div class="top" id="top"><a class="back" href="index.html">‹ Capítulos</a></div>
-<button class="music" id="music" aria-label="Poner o quitar la música">
+<div class="top" id="top"><a class="back" href="index.html">‹ Chapters</a></div>
+<button class="music" id="music" aria-label="Play or pause the music">
   <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#E3A53B" d="M12 2l1.6 4.2 3.4-2-1 4.4 4.4-.6-2.6 3.4 3.2 2.2-4.3 1 .7 4.4-3.9-2.3L12 22l-1.5-5.3-3.9 2.3.7-4.4-4.3-1 3.2-2.2L3.6 8l4.4.6-1-4.4 3.4 2z"/></svg>
 </button>
 <div class="ytbox"><div id="ytplayer"></div></div>
@@ -394,8 +439,8 @@ section{ position:relative; padding:clamp(5rem,14vh,9rem) 16px; }
 
 <!-- ============ ENTRADA ============ -->
 <div class="gate" id="gate">
-  <span class="gate__eye">Capítulo Quinto · Nuestro otoño</span>
-  <div class="poster" id="poster" role="img" aria-label="You and me. My anniversary with you. 21 de noviembre de 2026.">
+  <span class="gate__eye">Chapter Five · Our autumn</span>
+  <div class="poster" id="poster" role="img" aria-label="You and me. My anniversary with you. November 21, 2026.">
     <div class="poster__row">
       <span class="pl" style="--img:url(media/m5/20261031-213125-ac342d.jpg);--pos:30% 22%;--dl:.1s">Y</span>
       <span class="pl" style="--img:url(media/m5/20261031-213158-8eca94.jpg);--pos:34% 30%;--size:auto 115%;--dl:.25s">O</span>
@@ -411,24 +456,24 @@ section{ position:relative; padding:clamp(5rem,14vh,9rem) 16px; }
   </div>
   <button class="gate__btn" id="gateBtn">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#9B1C1C" d="M12 2l1.6 4.2 3.4-2-1 4.4 4.4-.6-2.6 3.4 3.2 2.2-4.3 1 .7 4.4-3.9-2.3L12 22l-1.5-5.3-3.9 2.3.7-4.4-4.3-1 3.2-2.2L3.6 8l4.4.6-1-4.4 3.4 2z"/></svg>
-    Entrar al otoño
+    Step into autumn
   </button>
 </div>
 
 <main id="main">
   <!-- ============ HERO ============ -->
   <section class="hero" id="hero">
-    <span class="hero__date r">21 octubre — 21 noviembre</span>
-    <h2 class="hero__title" id="heroTitle" aria-label="Cinco meses">Cinco <em>meses</em></h2>
-    <p class="hero__line r" style="--d:1.2s">Dicen que en otoño los árboles enseñan lo bonito que es soltar. Yo, contigo, solo aprendo a quedarme.</p>
-    <div class="clock r" style="--d:1.5s" role="timer" aria-label="Tiempo juntos">
-      <div class="clock__u"><b id="cD">0</b><span>días</span></div>
-      <div class="clock__u"><b id="cH">00</b><span>horas</span></div>
+    <span class="hero__date r">October 21 — November 21</span>
+    <h2 class="hero__title" id="heroTitle" aria-label="Five months">Five <em>months</em></h2>
+    <p class="hero__line r" style="--d:1.2s">They say that in autumn the trees teach us how beautiful it is to let go. With you, all I learn is how to stay.</p>
+    <div class="clock r" style="--d:1.5s" role="timer" aria-label="Time together">
+      <div class="clock__u"><b id="cD">0</b><span>days</span></div>
+      <div class="clock__u"><b id="cH">00</b><span>hours</span></div>
       <div class="clock__u"><b id="cM">00</b><span>min</span></div>
-      <div class="clock__u"><b id="cS">00</b><span>seg</span></div>
+      <div class="clock__u"><b id="cS">00</b><span>sec</span></div>
     </div>
-    <small class="clock__cap r" style="--d:1.7s">juntos desde el 21 de junio, y contando</small>
-    <div class="cue"><span>desliza despacio · el otoño avanza contigo</span><i></i></div>
+    <small class="clock__cap r" style="--d:1.7s">together since June 21, and counting</small>
+    <div class="cue"><span>scroll slowly · autumn moves along with you</span><i></i></div>
   </section>
 
   <!-- ============ CINCO HOJAS ============ -->
@@ -436,8 +481,8 @@ section{ position:relative; padding:clamp(5rem,14vh,9rem) 16px; }
     <div class="wrap">
       <div class="head r">
         <span class="eyebrow">I · II · III · IV · V</span>
-        <h2>Cinco <em>hojas</em></h2>
-        <p>Guardé una hoja de cada mes. Tócalas para darles la vuelta.</p>
+        <h2>Five <em>leaves</em></h2>
+        <p>I kept one leaf from every month. Tap them to turn them over.</p>
       </div>
       <div class="leaves" id="leaves"></div>
     </div>
@@ -447,11 +492,11 @@ section{ position:relative; padding:clamp(5rem,14vh,9rem) 16px; }
   <section class="golden" id="doradas">
     <div class="wrap">
       <div class="head r" style="margin-bottom:0">
-        <span class="eyebrow">un juego para ti</span>
-        <h2>Las hojas <em>doradas</em></h2>
-        <p>De vez en cuando, entre todas las que caen, cae una dorada. Atrápala: cada una trae algo que quería decirte.</p>
+        <span class="eyebrow">a little game for you</span>
+        <h2>The golden <em>leaves</em></h2>
+        <p>Every now and then, among all the falling leaves, a golden one falls. Catch it: each one carries something I wanted to tell you.</p>
         <div class="golden__dots" id="goldDots"></div>
-        <div class="golden__hint" id="goldHint">0 de 7</div>
+        <div class="golden__hint" id="goldHint">0 of 7</div>
       </div>
     </div>
   </section>
@@ -460,17 +505,17 @@ section{ position:relative; padding:clamp(5rem,14vh,9rem) 16px; }
   <section id="mes">
     <div class="wrap">
       <div class="head r">
-        <span class="eyebrow">del 21 de octubre al 21 de noviembre</span>
-        <h2>El mes, <em>hoja a hoja</em></h2>
-        <p id="mesSub">Cada foto cae en su día, a la hora exacta en que la vivimos.</p>
+        <span class="eyebrow">from October 21 to November 21</span>
+        <h2>The month, <em>leaf by leaf</em></h2>
+        <p id="mesSub">Every photo falls on its day, at the exact time we lived it.</p>
         <div class="stats" id="stats" hidden>
-          <div class="stat"><b id="stN">0</b><span>fotos</span></div>
-          <div class="stat" id="stVw" hidden><b id="stV">0</b><span>vídeos</span></div>
-          <div class="stat"><b id="stD">0</b><span>días con fotos</span></div>
-          <div class="stat"><b id="stL">0</b><span>de noche</span></div>
+          <div class="stat"><b id="stN">0</b><span>photos</span></div>
+          <div class="stat" id="stVw" hidden><b id="stV">0</b><span>videos</span></div>
+          <div class="stat"><b id="stD">0</b><span>days with photos</span></div>
+          <div class="stat"><b id="stL">0</b><span>at night</span></div>
         </div>
       </div>
-      <div id="days"><div class="empty">Las hojas de este mes están cayendo…</div></div>
+      <div id="days"><div class="empty">This month’s leaves are falling…</div></div>
     </div>
   </section>
 
@@ -478,54 +523,83 @@ section{ position:relative; padding:clamp(5rem,14vh,9rem) 16px; }
   <section id="libro">
     <div class="wrap">
       <div class="head r">
-        <span class="eyebrow">entre las páginas</span>
-        <h2>Un libro con <em>hojas prensadas</em></h2>
-        <p>Guardé las hojas de estos meses donde se guardan las cosas que importan. Y la carta con ellas.</p>
+        <span class="eyebrow">between the pages</span>
+        <h2>A book of <em>pressed leaves</em></h2>
+        <p>I kept the leaves from these months where the things that matter are kept. And the letter with them.</p>
       </div>
-      <button class="tome r" id="tome" aria-label="Abrir el libro y leer la carta">
+      <button class="tome r" id="tome" aria-label="Open the book and read the letter">
         <div class="tome__in">
           <div class="tome__pages"></div>
           <div class="tome__cover">
             <span>K &amp; S</span>
             <svg viewBox="-60 -70 120 140" aria-hidden="true"><path fill="#C8823A" opacity=".85" d="M0-62 9-36 26-50 22-22 48-30 34-6 54 6 28 12 34 36 10 26 4 50 0 40-4 50-10 26-34 36-28 12-54 6-34-6-48-30-22-22-26-50-9-36Z"/><path d="M0-50V62" stroke="#E8D2A6" stroke-width="2" opacity=".6"/></svg>
-            <b>Nuestro otoño</b>
-            <span>cinco meses</span>
+            <b>Our autumn</b>
+            <span>five months</span>
           </div>
         </div>
       </button>
-      <span class="tome__hint r">ábrelo</span>
+      <span class="tome__hint r">open it</span>
     </div>
   </section>
 
   <!-- ============ FINAL ============ -->
   <section class="end" id="fin">
-    <h2 class="r">En otoño todo cae.<br><em>Menos lo que siento por ti.</em></h2>
-    <p class="r" style="--d:.2s">Felices cinco meses, mi amor.</p>
+    <h2 class="r">In autumn, everything falls.<br><em>Except what I feel for you.</em></h2>
+    <p class="r" style="--d:.2s">Happy five months, my love.</p>
     <div class="end__sig r" style="--d:.4s">K &amp; S</div>
-    <div class="end__next r" style="--d:.6s">continuará · capítulo VI</div>
+    <div class="end__next r" style="--d:.6s">to be continued · chapter VI</div>
     <div class="end__links r" style="--d:.7s">
-      <button class="chip" id="reread">Volver a leer la carta</button>
-      <a class="chip" href="media/m5/portada.jpg" download="you-and-me-cinco-meses.jpg">Guardar nuestra portada</a>
-      <a class="chip" href="index.html">Volver a los capítulos</a>
+      <button class="chip" id="reread">Read the letter again</button>
+      <a class="chip" href="media/m5/portada.jpg" download="you-and-me-five-months.jpg">Save our cover</a>
+      <a class="chip" href="index.html">Back to the chapters</a>
     </div>
   </section>
 </main>
 
 <!-- ============ LIGHTBOX ============ -->
-<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Foto">
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo">
   <span class="lb__count" id="lbCount"></span>
-  <button class="lb__x" id="lbX" aria-label="Cerrar">✕</button>
-  <button class="lb__nav lb__prev" id="lbPrev" aria-label="Anterior">‹</button>
-  <button class="lb__nav lb__next" id="lbNext" aria-label="Siguiente">›</button>
+  <button class="lb__x" id="lbX" aria-label="Close">✕</button>
+  <button class="lb__nav lb__prev" id="lbPrev" aria-label="Previous">‹</button>
+  <button class="lb__nav lb__next" id="lbNext" aria-label="Next">›</button>
   <div class="lb__fig" id="lbFig"><img id="lbImg" alt=""><video id="lbVid" controls playsinline preload="metadata" hidden></video></div>
   <div class="lb__cap"><p id="lbCap"></p><small id="lbWhen"></small></div>
 </div>
 
+<!-- ============ LAS DOS PRUEBAS ============ -->
+<div class="trial" id="trial" role="dialog" aria-modal="true" aria-label="Two little tests before the letter">
+  <div class="trial__card">
+    <button class="trial__x" id="trialX" aria-label="Close">✕</button>
+    <div class="trial__steps"><i class="on" id="dot1"></i><i id="dot2"></i></div>
+    <section id="stepPuzzle">
+      <span class="eyebrow">test 1 of 2</span>
+      <h3>Put <em>us</em> back together</h3>
+      <p class="trial__lead">Tap two pieces to swap them, or drag one onto another.</p>
+      <div class="puzzle" id="puzzle"><div class="puzzle__peek" id="peekImg"></div></div>
+      <div class="trial__row"><button class="chip" id="peekBtn" type="button">Peek at the photo</button><span id="pzMoves">0 moves</span></div>
+      <p class="trial__win" id="pzWin">That’s us. 🍂</p>
+    </section>
+    <section id="stepPass" hidden>
+      <span class="eyebrow">test 2 of 2</span>
+      <h3>One last <em>secret</em></h3>
+      <p class="trial__lead">Type the three words I always tell you — all together, no spaces.</p>
+      <form class="pass" id="passForm" autocomplete="off">
+        <input id="passIn" type="password" placeholder="· · · · · · · ·" aria-label="Password" autocapitalize="off" autocorrect="off" spellcheck="false">
+        <p class="pass__err" id="passErr">Not quite… try again 🍂</p>
+        <button class="gate__btn" type="submit">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#E3A53B" d="M12 2l1.6 4.2 3.4-2-1 4.4 4.4-.6-2.6 3.4 3.2 2.2-4.3 1 .7 4.4-3.9-2.3L12 22l-1.5-5.3-3.9 2.3.7-4.4-4.3-1 3.2-2.2L3.6 8l4.4.6-1-4.4 3.4 2z"/></svg>
+          Open the book
+        </button>
+      </form>
+    </section>
+  </div>
+</div>
+
 <!-- ============ EL LIBRO ABIERTO ============ -->
-<div class="read" id="read" role="dialog" aria-modal="true" aria-label="La carta">
+<div class="read" id="read" role="dialog" aria-modal="true" aria-label="The letter">
   <div class="read__bar">
-    <div class="lang"><button class="on" data-lang="es">ES</button><button data-lang="en">EN</button></div>
-    <button class="read__x" id="readX" aria-label="Cerrar el libro">✕</button>
+    <div class="lang"><button class="on" data-lang="en">EN</button><button data-lang="es">ES</button></div>
+    <button class="read__x" id="readX" aria-label="Close the book">✕</button>
   </div>
   <div class="book">
     <div class="book__page book__page--l">
@@ -541,8 +615,8 @@ section{ position:relative; padding:clamp(5rem,14vh,9rem) 16px; }
         <div class="l-close lr" id="readClose"></div>
         <div class="l-sign lr" id="readSign"></div>
         <div class="read__act lr">
-          <button id="savePdf">Guardar en PDF</button>
-          <button id="saveTxt">Descargar el texto</button>
+          <button id="savePdf">Save as PDF</button>
+          <button id="saveTxt">Download the text</button>
         </div>
       </div>
     </div>
@@ -559,7 +633,10 @@ const CONFIG = {
   dir: "media/m5/",
   startDate: "2026-06-21T00:00:00",         // el día en que empezó todo
   VIDEO_ID: "iggmiF7DNoM",                  // we fell in love in october — girl in red
-  VOLUMEN: 72
+  VOLUMEN: 72,
+
+  /* ✎ las dos pruebas antes de la carta: un rompecabezas con nuestra foto y la contraseña */
+  trials: { photo:"media/m5/20261021-131118-e2a3d8.jpg", cols:4, rows:3, password:"iloveyou" }
 };
 
 /* ✎ La carta del quinto mes. Párrafos separados por una línea en blanco; *así* se resalta una frase. */
@@ -616,30 +693,30 @@ I can't go back to tell him. But I can tell you, today, five months later: if I 
 
 /* las notas de las hojas doradas */
 const NOTES = [
-  "Eres mi estación favorita.",
-  "Contigo hasta noviembre se siente cálido.",
-  "Cinco meses, y sigo enamorándome de tus detalles.",
-  "Mi lugar favorito sigue siendo a tu lado.",
-  "Gracias por quedarte en todas las estaciones.",
-  "Hasta el frío es bonito si es contigo.",
-  "Te elegiría en cada otoño de mi vida."
+  "You are my favorite season.",
+  "With you, even November feels warm.",
+  "Five months, and I'm still falling for your little details.",
+  "My favorite place is still right next to you.",
+  "Thank you for staying through every season.",
+  "Even the cold is beautiful when it's with you.",
+  "I would choose you in every autumn of my life."
 ];
 
 /* las cinco hojas, una por capítulo */
 const CHAPTERS = [
-  { n:'I',   title:'Nuestro primer mes',      page:'mes-1.html', shape:'maple', color:'#D9A23A', phrase:'La primera que guardé, cuando todo era nuevo.' },
-  { n:'II',  title:'Dos meses contigo',       page:'mes-2.html', shape:'oak',   color:'#8E2A22', phrase:'La que escondí entre las páginas de un libro antiguo.' },
-  { n:'III', title:'Nuestro propio universo', page:'mes-3.html', shape:'birch', color:'#6E4A7A', phrase:'La que miré a contraluz, y parecía una estrella.' },
-  { n:'IV',  title:'A la orilla de ti',       page:'mes-4.html', shape:'elm',   color:'#E0775A', phrase:'La que el mar devolvió a la orilla.' },
-  { n:'V',   title:'Nuestro otoño',           page:null,         shape:'maple', color:'#C8582E', phrase:'Esta. La que está cayendo ahora, despacio, contigo.' }
+  { n:'I',   title:'Our first month',         page:'mes-1.html', shape:'maple', color:'#D9A23A', phrase:'The first one I kept, when everything was new.' },
+  { n:'II',  title:'Two months with you',     page:'mes-2.html', shape:'oak',   color:'#8E2A22', phrase:'The one I hid between the pages of an old book.' },
+  { n:'III', title:'Our own universe',        page:'mes-3.html', shape:'birch', color:'#6E4A7A', phrase:'The one I held up to the light, and it looked like a star.' },
+  { n:'IV',  title:'On the shore of you',     page:'mes-4.html', shape:'elm',   color:'#E0775A', phrase:'The one the sea brought back to the shore.' },
+  { n:'V',   title:'Our autumn',              page:null,         shape:'maple', color:'#C8582E', phrase:'This one. The one falling right now, slowly, with you.' }
 ];
 /* ======================================================================= */
 
 const $ = id => document.getElementById(id);
 const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const FINE = matchMedia('(pointer:fine)').matches;
-const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
-const DIAS  = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+const MESES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DIAS  = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const pad = n => String(n).padStart(2,'0');
 let started = false;
 
@@ -939,7 +1016,7 @@ const Gold = (function(){
   const dots = $('goldDots');
   function paint(){
     dots.innerHTML = NOTES.map((_,i) => '<i class="' + (got.includes(i) ? 'got' : '') + '"></i>').join('');
-    $('goldHint').textContent = got.length + ' de ' + NOTES.length + (got.length === NOTES.length ? ' · las encontraste todas' : '');
+    $('goldHint').textContent = got.length + ' of ' + NOTES.length + (got.length === NOTES.length ? ' · you found them all' : '');
   }
   paint();
   let tmr = 0;
@@ -956,15 +1033,16 @@ const Gold = (function(){
       const i = left[0]; got.push(i);
       try{ localStorage.setItem('ks_m5_gold', JSON.stringify(got)); }catch(_){}
       paint();
-      show(NOTES[i], got.length === NOTES.length ? 'las siete · eres mi otoño entero' : 'hoja dorada ' + got.length + ' de ' + NOTES.length);
+      show(NOTES[i], got.length === NOTES.length ? 'all seven · you are my whole autumn' : 'golden leaf ' + got.length + ' of ' + NOTES.length);
     }
   };
 })();
 
 /* tocar: primero la hoja dorada; si no, el suelo levanta las hojas */
 addEventListener('pointerdown', e => {
+  if(e.target.closest('.trial,.read,.lb')) return;
   if(Autumn.hitGold(e.clientX, e.clientY)){ Gold.catch(); return; }
-  if(e.target.closest('button,a,input,.pic,.lb,.read,.leafcard,.tome')) return;
+  if(e.target.closest('button,a,input,.pic,.lb,.read,.leafcard,.tome,.trial')) return;
   if(e.clientY > innerHeight*.78) Autumn.kick(e.clientX, e.clientY, 1);
 });
 
@@ -973,11 +1051,11 @@ addEventListener('pointerdown', e => {
    ======================================================================= */
 $('leaves').innerHTML = CHAPTERS.map((c,i) => {
   const now = !c.page;
-  return '<button class="leafcard r' + (now ? ' leafcard--now' : '') + '" style="--d:' + (i*.1) + 's" aria-label="Capítulo ' + c.n + ': ' + c.title + '">'
+  return '<button class="leafcard r' + (now ? ' leafcard--now' : '') + '" style="--d:' + (i*.1) + 's" aria-label="Chapter ' + c.n + ': ' + c.title + '">'
     + '<div class="leafcard__in">'
-    +   '<div class="leafcard__f">' + (now ? '<span class="leafcard__here">estás aquí</span>' : '') + '<span class="leafcard__n">' + c.n + '</span>' + leafSVG(c.shape, c.color) + '<span class="leafcard__t">' + c.title + '</span></div>'
+    +   '<div class="leafcard__f">' + (now ? '<span class="leafcard__here">you are here</span>' : '') + '<span class="leafcard__n">' + c.n + '</span>' + leafSVG(c.shape, c.color) + '<span class="leafcard__t">' + c.title + '</span></div>'
     +   '<div class="leafcard__b"><span class="leafcard__n">' + c.n + '</span><p class="leafcard__p">' + c.phrase + '</p>'
-    +     (c.page ? '<a class="leafcard__go" href="' + c.page + '">volver a vivirlo →</a>' : '<span class="leafcard__go">capítulo ' + c.n + '</span>') + '</div>'
+    +     (c.page ? '<a class="leafcard__go" href="' + c.page + '">live it again →</a>' : '<span class="leafcard__go">chapter ' + c.n + '</span>') + '</div>'
     + '</div></button>';
 }).join('');
 document.querySelectorAll('.leafcard').forEach(card => card.addEventListener('click', e => {
@@ -992,7 +1070,7 @@ document.querySelectorAll('.leafcard').forEach(card => card.addEventListener('cl
    ======================================================================= */
 let PHOTOS = [];
 const parseTaken = s => { const m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(s || ''); return m ? { y:+m[1], mo:+m[2], d:+m[3], h:+m[4], mi:+m[5] } : null; };
-const dayTitle = t => DIAS[new Date(t.y, t.mo-1, t.d).getDay()] + ' ' + t.d + ' de ' + MESES[t.mo-1];
+const dayTitle = t => DIAS[new Date(t.y, t.mo-1, t.d).getDay()] + ', ' + MESES[t.mo-1] + ' ' + t.d;
 const whenText = p => { const t = parseTaken(p.taken); return t ? dayTitle(t) + ' · ' + pad(t.h) + ':' + pad(t.mi) : ''; };
 const isNight = p => { const t = parseTaken(p.taken); return t && (t.h >= 20 || t.h < 5); };
 
@@ -1008,7 +1086,7 @@ function rand(seed){ const x = Math.sin(seed*999.13)*43758.5453; return x - Math
 
 function buildMonth(list){
   const host = $('days');
-  if(!list.length){ host.innerHTML = '<div class="empty">Las hojas de este mes están cayendo…</div>'; return; }
+  if(!list.length){ host.innerHTML = '<div class="empty">This month’s leaves are falling…</div>'; return; }
   const groups = [];
   list.forEach((p,i) => {
     const key = (p.taken || '').slice(0,10) || 'sin-fecha';
@@ -1017,14 +1095,14 @@ function buildMonth(list){
   });
   host.innerHTML = groups.map(g => {
     const first = parseTaken(list[g.items[0]].taken), lastT = parseTaken(list[g.items[g.items.length-1]].taken);
-    const span = g.items.length > 1 && first && lastT ? ' · de ' + pad(first.h) + ':' + pad(first.mi) + ' a ' + pad(lastT.h) + ':' + pad(lastT.mi)
-                : first ? ' · a las ' + pad(first.h) + ':' + pad(first.mi) : '';
-    const title = g.t ? dayTitle(g.t).replace(/^(\S+)/, '<em>$1</em>') : 'sin fecha';
+    const span = g.items.length > 1 && first && lastT ? ' · from ' + pad(first.h) + ':' + pad(first.mi) + ' to ' + pad(lastT.h) + ':' + pad(lastT.mi)
+                : first ? ' · at ' + pad(first.h) + ':' + pad(first.mi) : '';
+    const title = g.t ? dayTitle(g.t).replace(/^(\S+)/, '<em>$1</em>') : 'no date';
     const cells = g.items.map(i => {
       const p = list[i], t = parseTaken(p.taken);
       const wide = p.w && p.h && p.w/p.h > 1.15;
       const rot = ((rand(i+1) - .5)*7).toFixed(2);
-      return '<button class="pic wait' + (wide ? ' wide' : '') + '" data-i="' + i + '" style="--r:' + rot + 'deg;--c:' + (p.color || '#4A2C18') + (wide ? ';aspect-ratio:' + (p.w/p.h).toFixed(3) : '') + '" aria-label="Abrir ' + (p.type === 'video' ? 'vídeo' : 'foto') + ': ' + whenText(p) + '">'
+      return '<button class="pic wait' + (wide ? ' wide' : '') + '" data-i="' + i + '" style="--r:' + rot + 'deg;--c:' + (p.color || '#4A2C18') + (wide ? ';aspect-ratio:' + (p.w/p.h).toFixed(3) : '') + '" aria-label="Open ' + (p.type === 'video' ? 'video' : 'photo') + ': ' + whenText(p) + '">'
         + '<img src="' + (p.poster || p.src) + '" alt="" loading="lazy" decoding="async">' + videoBits(p)
         + (t ? '<span class="pic__t">' + pad(t.h) + ':' + pad(t.mi) + '</span>' : '') + '</button>';
     }).join('');
@@ -1046,7 +1124,7 @@ function buildMonth(list){
   if(nVid){ $('stVw').hidden = false; countUp($('stV'), nVid); }
   countUp($('stD'), groups.filter(g => g.t).length);
   countUp($('stL'), list.filter(isNight).length);
-  $('mesSub').textContent = countLabel(list) + ' en ' + groups.filter(g => g.t).length + ' días, cada uno en su día y a la hora exacta en que lo vivimos.';
+  $('mesSub').textContent = countLabel(list) + ' over ' + groups.filter(g => g.t).length + ' days, each one on its day and at the exact time we lived it.';
   whenPill();
 }
 function dropIn(el, k){
@@ -1109,7 +1187,7 @@ function videoBits(p){
 }
 function countLabel(items){
   const nv = items.filter(p => p.type === 'video').length, nf = items.length - nv;
-  return [nf ? nf + ' foto' + (nf === 1 ? '' : 's') : '', nv ? nv + ' vídeo' + (nv === 1 ? '' : 's') : ''].filter(Boolean).join(' y ');
+  return [nf ? nf + ' photo' + (nf === 1 ? '' : 's') : '', nv ? nv + ' video' + (nv === 1 ? '' : 's') : ''].filter(Boolean).join(' and ');
 }
 /* mientras suena un vídeo en el visor, la canción de la página se pausa */
 let ducked = false;
@@ -1155,7 +1233,7 @@ lb.addEventListener('click', e => { if(e.target === lb) closeLb(); });
 /* =======================================================================
    EL LIBRO Y LA CARTA
    ======================================================================= */
-const read = $('read'), readBody = $('readBody'); let lang = 'es', readSeen = false, readLive = false;
+const read = $('read'), readBody = $('readBody'); let lang = 'en', readSeen = false, readLive = false;
 const escH = t => t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 $('pressed').innerHTML = '<svg viewBox="0 0 320 300" aria-hidden="true">'
   + [['maple','#D9A23A',70,90,-18,1],['oak','#8E2A22',190,70,24,.9],['birch','#6E4A7A',120,190,-40,.8],['elm','#E0775A',235,190,12,.85],['maple','#C8582E',160,130,6,1.05]]
@@ -1191,8 +1269,122 @@ function openRead(){
   setTimeout(() => { readSeen = true; }, 6000);
 }
 function closeRead(){ read.classList.remove('open'); document.documentElement.style.overflow = ''; document.documentElement.classList.remove('reading'); Autumn.hold(null); }
-$('tome').addEventListener('click', () => { Autumn.state.gust -= 120; openRead(); });
-$('reread').addEventListener('click', openRead);
+/* =======================================================================
+   LAS DOS PRUEBAS: rompecabezas de 12 piezas + contraseña.
+   Una vez superadas, este móvil las recuerda y la carta se abre directamente.
+   ======================================================================= */
+const Trials = (function(){
+  const T = CONFIG.trials, KEY = 'ks_m5_unlocked';
+  const trial = $('trial'), board = $('puzzle'), N = T.cols * T.rows;
+  let built = false, moves = 0, sel = null, solved = false;
+  const unlocked = () => { try{ return localStorage.getItem(KEY) === '1'; }catch(_){ return false; } };
+  const norm = v => v.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z]/g,'');
+
+  function build(){
+    built = true;
+    const img = new Image(); img.src = T.photo;
+    const setRatio = () => { board.style.aspectRatio = (img.naturalWidth || 16) + ' / ' + (img.naturalHeight || 9); };
+    img.complete ? setRatio() : img.addEventListener('load', setRatio, { once:true });
+    board.style.aspectRatio = '16 / 9';
+    board.style.gridTemplateColumns = 'repeat(' + T.cols + ',1fr)';
+    $('peekImg').style.backgroundImage = 'url(' + T.photo + ')';
+    /* un orden al azar con casi ninguna pieza en su sitio */
+    let order;
+    do{ order = [...Array(N).keys()].sort(() => Math.random() - .5); }while(order.filter((v,i) => v === i).length > 1);
+    order.forEach(id => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'pz'; b.dataset.id = id;
+      b.setAttribute('aria-label', 'Piece ' + (id + 1));
+      const c = id % T.cols, r = Math.floor(id / T.cols);
+      b.style.backgroundImage = 'url(' + T.photo + ')';
+      b.style.backgroundSize = (T.cols * 100) + '% ' + (T.rows * 100) + '%';
+      b.style.backgroundPosition = (c / (T.cols - 1) * 100) + '% ' + (r / (T.rows - 1) * 100) + '%';
+      board.appendChild(b);
+    });
+    wire();
+  }
+  const pieces = () => [...board.querySelectorAll('.pz')];
+  function swap(a, b, from){
+    const before = new Map([a, b].map(el => [el, el.getBoundingClientRect()]));
+    const t = document.createElement('i'); a.before(t); b.before(a); t.replaceWith(b);
+    [a, b].forEach(el => {
+      const o = (from && from.el === el) ? from.rect : before.get(el), n = el.getBoundingClientRect();
+      if(!RM && el.animate) el.animate([{ transform:'translate(' + (o.left - n.left) + 'px,' + (o.top - n.top) + 'px)' }, { transform:'none' }], { duration:280, easing:'cubic-bezier(.2,.8,.2,1)' });
+    });
+    moves++; $('pzMoves').textContent = moves + (moves === 1 ? ' move' : ' moves');
+    check();
+  }
+  function check(){
+    if(!pieces().every((el, i) => +el.dataset.id === i)) return;
+    solved = true; board.classList.add('solved'); $('pzWin').classList.add('show');
+    Autumn.state.gust -= 160;
+    setTimeout(() => {
+      $('stepPuzzle').hidden = true; $('stepPass').hidden = false; $('dot2').classList.add('on');
+      $('passIn').focus({ preventScroll:true });
+    }, RM ? 300 : 1700);
+  }
+  function tap(el){
+    if(solved) return;
+    if(!sel){ sel = el; el.classList.add('sel'); return; }
+    if(sel === el){ el.classList.remove('sel'); sel = null; return; }
+    const a = sel; a.classList.remove('sel'); sel = null; swap(a, el);
+  }
+  function wire(){
+    let drag = null;
+    board.addEventListener('pointerdown', e => {
+      const el = e.target.closest('.pz'); if(!el || solved) return;
+      drag = { el, x:e.clientX, y:e.clientY, moved:false, rect:el.getBoundingClientRect(), id:e.pointerId };
+      el.setPointerCapture(e.pointerId);
+    });
+    board.addEventListener('pointermove', e => {
+      if(!drag || e.pointerId !== drag.id) return;
+      const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+      if(!drag.moved && Math.hypot(dx, dy) < 8) return;
+      if(!drag.moved){ drag.moved = true; drag.el.classList.add('drag'); if(sel){ sel.classList.remove('sel'); sel = null; } }
+      drag.el.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(1.06)';
+    });
+    const end = e => {
+      if(!drag || e.pointerId !== drag.id) return;
+      const d = drag; drag = null;
+      if(!d.moved){ tap(d.el); return; }
+      const now = d.el.getBoundingClientRect();
+      d.el.style.pointerEvents = 'none';
+      const under = document.elementFromPoint(e.clientX, e.clientY);
+      d.el.style.pointerEvents = ''; d.el.style.transform = ''; d.el.classList.remove('drag');
+      const target = under && under.closest && under.closest('.pz');
+      if(target && target !== d.el && board.contains(target)) swap(d.el, target, { el:d.el, rect:now });
+      else if(!RM && d.el.animate){ const n = d.el.getBoundingClientRect(); d.el.animate([{ transform:'translate(' + (now.left - n.left) + 'px,' + (now.top - n.top) + 'px)' }, { transform:'none' }], { duration:250, easing:'ease-out' }); }
+    };
+    board.addEventListener('pointerup', end); board.addEventListener('pointercancel', end);
+    /* teclado: Enter/Espacio sobre una pieza */
+    board.addEventListener('click', e => { if(e.detail === 0){ const el = e.target.closest('.pz'); if(el) tap(el); } });
+    $('peekBtn').addEventListener('click', () => { board.classList.add('peek'); setTimeout(() => board.classList.remove('peek'), 1600); });
+    $('passForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const f = $('passForm');
+      if(norm($('passIn').value) === norm(T.password)){
+        try{ localStorage.setItem(KEY, '1'); }catch(_){}
+        $('passErr').classList.remove('show');
+        close(); Autumn.shake(40); setTimeout(openRead, RM ? 0 : 500);
+      }else{
+        $('passErr').classList.add('show'); f.classList.add('bad'); setTimeout(() => f.classList.remove('bad'), 500);
+        $('passIn').value = ''; $('passIn').focus();
+      }
+    });
+  }
+  function open(){
+    if(unlocked()){ openRead(); return; }
+    if(!built) build();
+    trial.classList.add('open'); document.documentElement.style.overflow = 'hidden'; document.documentElement.classList.add('trialing');
+  }
+  function close(){ trial.classList.remove('open'); document.documentElement.style.overflow = ''; document.documentElement.classList.remove('trialing'); }
+  $('trialX').addEventListener('click', close);
+  trial.addEventListener('click', e => { if(e.target === trial) close(); });
+  return { open, close, get isOpen(){ return trial.classList.contains('open'); } };
+})();
+
+$('tome').addEventListener('click', () => { Autumn.state.gust -= 120; Trials.open(); });
+$('reread').addEventListener('click', () => Trials.open());
 $('readX').onclick = closeRead;
 read.addEventListener('click', e => { if(e.target === read) closeRead(); });
 document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => { lang = b.dataset.lang; readSeen = readLive = true; renderLetter(); }));
@@ -1208,6 +1400,7 @@ $('saveTxt').onclick = () => {
 addEventListener('keydown', e => {
   if(lb.classList.contains('open')){ if(e.key === 'Escape') closeLb(); if(e.key === 'ArrowRight') showLb(lbI+1,1); if(e.key === 'ArrowLeft') showLb(lbI-1,-1); }
   else if(read.classList.contains('open') && e.key === 'Escape') closeRead();
+  else if(Trials.isOpen && e.key === 'Escape') Trials.close();
 });
 
 /* =======================================================================
@@ -1279,5 +1472,6 @@ $('gateBtn').addEventListener('click', () => {
   if(started) observeReveals();
 })();
 </script>
+<script>if('serviceWorker' in navigator) addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));</script>
 </body>
 </html>

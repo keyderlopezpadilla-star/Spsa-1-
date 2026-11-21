@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <!-- Access guard -->
 <script>try{if(localStorage.getItem('ks_key')!=='1'){location.replace('index.html');}}catch(e){}</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#F2E7D3">
-<meta name="description" content="Capítulo II — Dos meses, y se siente como toda una vida.">
-<title>Capítulo II — Dos meses contigo · K &amp; S</title>
+<meta name="description" content="Chapter II — Two months, and it feels like a whole lifetime.">
+<title>Chapter II — Two months with you · K &amp; S</title>
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Capítulo II — Dos meses contigo">
-<meta property="og:description" content="Nuestra historia clásica apenas comienza…">
+<meta property="og:title" content="Chapter II — Two months with you">
+<meta property="og:description" content="Our classic story is only just beginning…">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%8C%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -612,6 +612,8 @@ footer a{ color:rgba(201,169,106,.7); text-decoration:none; }
   .read__to,.read__sign,.read__love,.read__seal{ break-inside:avoid; page-break-inside:avoid; }
 }
 </style>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="media/icons/apple-180.png">
 </head>
 <body>
 
@@ -623,17 +625,17 @@ footer a{ color:rgba(201,169,106,.7); text-decoration:none; }
 <div class="grain"></div>
 <div class="vig"></div>
 
-<a class="back" id="back" href="index.html">‹ Capítulos</a>
+<a class="back" id="back" href="index.html">‹ Chapters</a>
 
 <!-- ============ APERTURA ============ -->
 <div class="open" id="opener">
   <div class="open__inner">
     <div class="rule">K &amp; S</div>
     <p class="open__num" style="margin-top:1.2rem">II</p>
-    <h1>Capítulo Segundo</h1>
-    <p>Pon el disco a girar, mi amor.<br>Esto se lee despacio.</p>
-    <button class="btn" id="openBtn">Comenzar</button>
-    <p class="open__hint">se escucha mejor con sonido 🎵</p>
+    <h1>Chapter Two</h1>
+    <p>Set the record spinning, my love.<br>This is meant to be read slowly.</p>
+    <button class="btn" id="openBtn">Begin</button>
+    <p class="open__hint">it sounds better with the volume up 🎵</p>
   </div>
 </div>
 
@@ -642,10 +644,10 @@ footer a{ color:rgba(201,169,106,.7); text-decoration:none; }
 <div class="ytbox"><div id="ytplayer"></div></div>
 
 <div class="player" id="player">
-  <button class="deck" id="deck" aria-label="Poner o quitar la música">
+  <button class="deck" id="deck" aria-label="Play or pause the music">
     <span class="deck__disc"></span>
     <span class="deck__shine"></span>
-    <span class="deck__label"><b>K &amp; S</b><i>Cap. II</i></span>
+    <span class="deck__label"><b>K &amp; S</b><i>Ch. II</i></span>
     <span class="deck__hole"></span>
     <span class="deck__arm"><b></b><i></i></span>
   </button>
@@ -658,14 +660,14 @@ footer a{ color:rgba(201,169,106,.7); text-decoration:none; }
   <section class="hero">
     <div class="wrap">
       <div class="hero__frame">
-        <p class="hero__chapter" data-anim="fade">Capítulo Segundo</p>
+        <p class="hero__chapter" data-anim="fade">Chapter Two</p>
         <p class="hero__num" data-anim="up">II</p>
         <h1 class="hero__title" data-anim="fade" style="margin-left:auto;margin-right:auto">
-          <b>Dos meses</b>, y se siente<br>como toda una vida
+          <b>Two months</b>, and it feels<br>like a whole lifetime
         </h1>
       </div>
-      <p class="hero__sub" data-anim="fade">para Samanta,<br>otra vez y siempre</p>
-      <p class="hero__cue"><i></i>desliza</p>
+      <p class="hero__sub" data-anim="fade">for Samanta,<br>again and always</p>
+      <p class="hero__cue"><i></i>scroll</p>
     </div>
   </section>
 
@@ -673,14 +675,14 @@ footer a{ color:rgba(201,169,106,.7); text-decoration:none; }
   <section class="section time">
     <div class="wrap">
       <div class="center" style="margin-bottom:clamp(2.6rem,7vw,4rem)">
-        <div class="rule" data-anim="fade">El tiempo</div>
-        <h2 class="h2" data-anim="up" style="margin-top:1.1rem">Lo que marca <em>el reloj</em></h2>
+        <div class="rule" data-anim="fade">Time</div>
+        <h2 class="h2" data-anim="up" style="margin-top:1.1rem">What the <em>clock</em> keeps</h2>
       </div>
 
       <div class="time__grid">
         <!-- reloj de bolsillo -->
         <div class="watch" data-anim="fade">
-          <svg viewBox="4 -18 312 388" role="img" aria-label="Reloj de bolsillo antiguo">
+          <svg viewBox="4 -18 312 388" role="img" aria-label="Antique pocket watch">
             <defs>
               <linearGradient id="caseG" x1="0" y1="0" x2="1" y2="1">
                 <stop offset="0" stop-color="#E3CE9E"/><stop offset=".38" stop-color="#A9853F"/>
@@ -728,11 +730,11 @@ footer a{ color:rgba(201,169,106,.7); text-decoration:none; }
               <!-- subdial: días -->
               <circle cx="160" cy="286" r="35" fill="#EFE2C6" stroke="#B79B6B" stroke-width=".8"/>
               <circle cx="160" cy="286" r="35" filter="url(#dialTex)" opacity=".35"/>
-              <text class="wsub" x="160" y="271" text-anchor="middle">Días</text>
+              <text class="wsub" x="160" y="271" text-anchor="middle">Days</text>
               <text class="wbig" id="wDays" x="160" y="298" text-anchor="middle">00</text>
 
               <!-- firma en el dial -->
-              <text class="wsig" x="160" y="172" text-anchor="middle">K &amp; S · desde el 21 de junio</text>
+              <text class="wsig" x="160" y="172" text-anchor="middle">K &amp; S · since June 21</text>
 
               <!-- manecillas -->
               <g id="wHands">
@@ -753,9 +755,9 @@ footer a{ color:rgba(201,169,106,.7); text-decoration:none; }
         <!-- palabras + calendario -->
         <div class="time__words">
           <p class="time__count" data-anim="fade">
-            <em id="daysWord">sesenta y un</em> <span id="daysUnit">días</span><br>de estar contigo
+            <em id="daysWord">sixty-one</em> <span id="daysUnit">days</span><br>of being with you
           </p>
-          <p class="time__note" data-anim="fade" id="timeNote">y ya no me imagino los días sin ti</p>
+          <p class="time__note" data-anim="fade" id="timeNote">and I can’t imagine my days without you anymore</p>
 
           <div class="cal" id="cal"></div>
         </div>
@@ -766,10 +768,9 @@ footer a{ color:rgba(201,169,106,.7); text-decoration:none; }
   <!-- ============ TIRA DE PELÍCULA ============ -->
   <section class="section film" id="film">
     <div class="wrap film__head">
-      <span class="eyebrow" data-anim="fade">Rollo n.º 02</span>
-      <h2 class="h2" data-anim="up" style="margin-top:1rem">Nuestro <em>negativo</em></h2>
-      <p class="lede" data-anim="fade">Cuarenta y dos fotogramas, del 25 de julio al 21 de agosto, en el
-        orden exacto en que pasaron. Todo lo que este mes quiso quedarse.</p>
+      <span class="eyebrow" data-anim="fade">Roll No. 02</span>
+      <h2 class="h2" data-anim="up" style="margin-top:1rem">Our <em>negative</em></h2>
+      <p class="lede" data-anim="fade">Forty-two frames, from July 25 to August 21, in the exact order they happened. Everything this month wanted to keep.</p>
     </div>
     <div class="film__pin" id="filmPin">
       <div class="film__strip" id="filmStrip"></div>
@@ -780,10 +781,9 @@ footer a{ color:rgba(201,169,106,.7); text-decoration:none; }
   <section class="section table">
     <div class="wrap">
       <div class="table__head">
-        <span class="eyebrow" data-anim="fade">Del primer mes</span>
-        <h2 class="h2" data-anim="up" style="margin-top:1rem">Las que <em>sigo mirando</em></h2>
-        <p class="lede" data-anim="fade">Saqué de la caja algunas del mes pasado y las dejé aquí, un poco
-          desordenadas, como quedan las cosas que se miran mucho.</p>
+        <span class="eyebrow" data-anim="fade">From the first month</span>
+        <h2 class="h2" data-anim="up" style="margin-top:1rem">The ones <em>I keep looking at</em></h2>
+        <p class="lede" data-anim="fade">I took a few from last month out of the box and left them here, a little messy, the way things end up when you look at them a lot.</p>
       </div>
       <div class="polas" id="polas"></div>
     </div>
@@ -793,9 +793,9 @@ footer a{ color:rgba(201,169,106,.7); text-decoration:none; }
   <section class="section mail">
     <div class="wrap">
       <div class="mail__head">
-        <span class="eyebrow" data-anim="fade">Correspondencia</span>
-        <h2 class="h2" data-anim="up" style="margin-top:1rem">Te escribí <em>una carta</em></h2>
-        <p class="lede" data-anim="fade">Está cerrada con cera, con nuestras iniciales.<br>Rompe el sello, mi amor. Es tuya.</p>
+        <span class="eyebrow" data-anim="fade">Correspondence</span>
+        <h2 class="h2" data-anim="up" style="margin-top:1rem">I wrote you <em>a letter</em></h2>
+        <p class="lede" data-anim="fade">It’s sealed with wax, with our initials.<br>Break the seal, my love. It’s yours.</p>
       </div>
 
       <div class="envwrap" data-anim="fade">
@@ -803,14 +803,14 @@ footer a{ color:rgba(201,169,106,.7); text-decoration:none; }
           <div class="env__body"></div>
           <div class="env__peek"></div>
           <div class="env__pocket"></div>
-          <div class="env__addr">para Samanta,<br>de Keyder</div>
+          <div class="env__addr">for Samanta,<br>from Keyder</div>
           <div class="env__flap"><i></i></div>
-          <button class="wax" id="wax" aria-label="Romper el sello de cera y abrir la carta">
+          <button class="wax" id="wax" aria-label="Break the wax seal and open the letter">
             <span class="wax__half l"><span class="wax__disc"><span class="wax__mono">S<i>&amp;</i>K</span></span></span>
             <span class="wax__half r"><span class="wax__disc"><span class="wax__mono">S<i>&amp;</i>K</span></span></span>
           </button>
         </div>
-        <p class="wax__hint" id="waxHint">toca el sello para romperlo</p>
+        <p class="wax__hint" id="waxHint">tap the seal to break it</p>
       </div>
     </div>
   </section>
@@ -819,63 +819,62 @@ footer a{ color:rgba(201,169,106,.7); text-decoration:none; }
   <section class="end">
     <div class="wrap">
       <p class="end__orn orn3" data-anim="fade"><i></i><i></i><i></i></p>
-      <h2 data-anim="up">Nuestra historia clásica<br><b>apenas comienza…</b></h2>
+      <h2 data-anim="up">Our classic story<br><b>is only just beginning…</b></h2>
 
       <div class="end__frame" data-anim="fade">
-        <p class="end__cont">Continuará<span>.</span><span>.</span><span>.</span></p>
+        <p class="end__cont">To be continued<span>.</span><span>.</span><span>.</span></p>
       </div>
 
-      <p class="end__sub" data-anim="fade">Guarda esta página, mi amor. El capítulo tercero ya se está escribiendo,
-        y quiero que estés aquí cuando lo abra.</p>
-      <button class="end__save" id="saveBtn">Guardar este capítulo</button>
-      <p class="end__tip" id="saveTip">en iPhone: Compartir → «Añadir a inicio».<br>en Android: menú (tres puntos) → «Añadir a pantalla de inicio».<br>o guárdala en favoritos 💛</p>
-      <p class="end__done" id="saveDone">Guardado. Te espero aquí. 💛</p>
+      <p class="end__sub" data-anim="fade">Save this page, my love. Chapter three is already being written, and I want you here when it opens.</p>
+      <button class="end__save" id="saveBtn">Save this chapter</button>
+      <p class="end__tip" id="saveTip">on iPhone: Share → “Add to Home Screen”.<br>on Android: menu (three dots) → “Add to Home screen”.<br>or bookmark it 💛</p>
+      <p class="end__done" id="saveDone">Saved. I’ll be waiting for you here. 💛</p>
     </div>
   </section>
 </main>
 
 <footer>
-  K &amp; S · Capítulo II · Hecho a mano con todo mi amor ·
-  Música: <a href="https://www.youtube.com/watch?v=dJPdkhsr0gU" target="_blank" rel="noopener">Everywhere, Everything — Noah Kahan</a> ·
-  <a href="index.html">volver a los capítulos</a>
+  K &amp; S · Chapter II · Handmade with all my love ·
+  Music: <a href="https://www.youtube.com/watch?v=dJPdkhsr0gU" target="_blank" rel="noopener">Everywhere, Everything — Noah Kahan</a> ·
+  <a href="index.html">back to the chapters</a>
 </footer>
 
 <!-- ============ CARTA ============ -->
 <div class="read" id="read">
-  <button class="read__close" id="readClose" aria-label="Cerrar">×</button>
+  <button class="read__close" id="readClose" aria-label="Close">×</button>
   <div class="read__sheet" id="readSheet">
     <div class="read__bg"></div>
     <div class="read__content" id="readContent" data-lenis-prevent>
       <div class="read__lang">
-        <button id="langEs" class="on">Español</button>
-        <button id="langEn">English</button>
+        <button id="langEn" class="on">English</button>
+        <button id="langEs">Español</button>
       </div>
       <p class="read__orn orn3"><i></i><i></i><i></i></p>
-      <p class="read__to" id="readTo">Para Samanta,<br>mi amor…</p>
+      <p class="read__to" id="readTo">To Samanta,<br>my love…</p>
       <div class="read__rule"></div>
       <p class="read__text" id="readText"></p>
-      <p class="read__love" id="readLove">TE AMO</p>
+      <p class="read__love" id="readLove">I LOVE YOU</p>
       <p class="read__sign" id="readSign">Keyder…</p>
       <div class="read__seal">S&amp;K</div>
 
       <div class="read__actions">
-        <p class="read__keep" id="readKeep">para que te la quedes</p>
+        <p class="read__keep" id="readKeep">so you can keep it</p>
         <div class="read__btns">
-          <button id="btnPdf" type="button">Guardar en PDF</button>
-          <button id="btnTxt" type="button">Descargar el texto</button>
+          <button id="btnPdf" type="button">Save as PDF</button>
+          <button id="btnTxt" type="button">Download the text</button>
         </div>
       </div>
     </div>
-    <p class="read__hint" id="readHint">desliza para leer <b class="chev"></b></p>
+    <p class="read__hint" id="readHint">scroll to read <b class="chev"></b></p>
   </div>
 </div>
 
 <!-- ============ LIGHTBOX ============ -->
 <div class="lb" id="lb">
-  <button class="lb__btn lb__close" id="lbClose" aria-label="Cerrar">×</button>
-  <button class="lb__btn lb__prev" id="lbPrev" aria-label="Anterior">‹</button>
+  <button class="lb__btn lb__close" id="lbClose" aria-label="Close">×</button>
+  <button class="lb__btn lb__prev" id="lbPrev" aria-label="Previous">‹</button>
   <div class="lb__pane"><img id="lbImg" src="" alt=""><p class="lb__cap" id="lbCap"></p></div>
-  <button class="lb__btn lb__next" id="lbNext" aria-label="Siguiente">›</button>
+  <button class="lb__btn lb__next" id="lbNext" aria-label="Next">›</button>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -915,42 +914,42 @@ const CONFIG = {
       "p37.jpg","p38.jpg","p39.jpg","p40.jpg","p41.jpg","p42.jpg"
     ],
     captions: {
-      1:   "25 de julio",
-      2:   "2 de agosto",
+      1:   "July 25",
+      2:   "August 2",
       3:   "",
       4:   "",
       5:   "",
       6:   "",
       7:   "",
       8:   "",
-      9:   "3 de agosto",
+      9:   "August 3",
       10:  "",
       11:  "",
-      12:  "4 de agosto",
-      13:  "6 de agosto",
+      12:  "August 4",
+      13:  "August 6",
       14:  "",
-      15:  "7 de agosto",
+      15:  "August 7",
       16:  "",
       17:  "",
       18:  "",
       19:  "",
-      20:  "10 de agosto",
+      20:  "August 10",
       21:  "",
-      22:  "11 de agosto",
+      22:  "August 11",
       23:  "",
       24:  "",
       25:  "",
       26:  "",
-      27:  "12 de agosto",
-      28:  "13 de agosto",
-      29:  "17 de agosto",
+      27:  "August 12",
+      28:  "August 13",
+      29:  "August 17",
       30:  "",
       31:  "",
       32:  "",
       33:  "",
       34:  "",
-      35:  "20 de agosto",
-      36:  "21 de agosto · dos meses",
+      35:  "August 20",
+      36:  "August 21 · two months",
       37:  "",
       38:  "",
       39:  "",
@@ -973,7 +972,7 @@ const CONFIG = {
       "q19.jpg","q20.jpg"
     ],
     captions: {
-      1:   "donde empezó todo",
+      1:   "where it all began",
       2:   "",
       3:   "",
       4:   "",
@@ -1053,23 +1052,17 @@ I am crazy about you, Samanta. Thank you for these two beautiful months. I want 
 /* =========================================================================
    NÚMEROS EN PALABRAS (para que nada parezca un contador digital)
    ========================================================================= */
-const UNI = ['cero','uno','dos','tres','cuatro','cinco','seis','siete','ocho','nueve','diez',
-  'once','doce','trece','catorce','quince','dieciséis','diecisiete','dieciocho','diecinueve','veinte',
-  'veintiuno','veintidós','veintitrés','veinticuatro','veinticinco','veintiséis','veintisiete','veintiocho','veintinueve'];
-const DEC = ['','','','treinta','cuarenta','cincuenta','sesenta','setenta','ochenta','noventa'];
-const CEN = ['','ciento','doscientos','trescientos','cuatrocientos','quinientos','seiscientos','setecientos','ochocientos','novecientos'];
+const UNI = ['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve',
+  'thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen'];
+const DEC = ['','','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety'];
 function enPalabras(n){
   n = Math.max(0, Math.floor(n));
-  if(n < 30) return UNI[n];
-  if(n < 100){ const d = Math.floor(n/10), u = n%10; return DEC[d] + (u ? ' y ' + UNI[u] : ''); }
-  if(n === 100) return 'cien';
-  if(n < 1000){ const c = Math.floor(n/100), r = n%100; return CEN[c] + (r ? ' ' + enPalabras(r) : ''); }
+  if(n < 20) return UNI[n];
+  if(n < 100){ const t = Math.floor(n/10), u = n%10; return DEC[t] + (u ? '-' + UNI[u] : ''); }
+  if(n < 1000){ const h = Math.floor(n/100), r = n%100; return UNI[h] + ' hundred' + (r ? ' and ' + enPalabras(r) : ''); }
   return String(n);
 }
-/* apócope: "sesenta y uno días" → "sesenta y un días" */
-function enPalabrasDias(n){
-  return enPalabras(n).replace(/veintiuno$/,'veintiún').replace(/uno$/,'un');
-}
+const enPalabrasDias = enPalabras;
 
 /* =========================================================================
    RELOJ DE BOLSILLO
@@ -1117,7 +1110,7 @@ function enPalabrasDias(n){
     const d = Math.max(0, Math.floor((now - start) / 864e5));
     if(wDays) wDays.textContent = pad(d);
     if(daysWord) daysWord.textContent = enPalabrasDias(d);
-    if(daysUnit) daysUnit.textContent = (d === 1 ? 'día' : 'días');
+    if(daysUnit) daysUnit.textContent = (d === 1 ? 'day' : 'days');
   }
   tick(); setInterval(tick, 1000);
 })();
@@ -1127,9 +1120,9 @@ function enPalabrasDias(n){
    ========================================================================= */
 (function calendar(){
   const host = $('cal'); if(!host) return;
-  const MES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio',
-               'Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  const DOW = ['L','M','X','J','V','S','D'];
+  const MES = ['January','February','March','April','May','June','July',
+               'August','September','October','November','December'];
+  const DOW = ['M','T','W','T','F','S','S'];
   const day0 = d => new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
 
   const start = new Date(CONFIG.startDate), now = new Date();
@@ -1166,7 +1159,7 @@ function enPalabrasDias(n){
           + '</div>';
     sheet++; m++; if(m > 11){ m = 0; y++; }
   }
-  html += '<p class="cal__legend">cada cruz es un día que te tuve · el círculo rojo, un mes cumplido</p>';
+  html += '<p class="cal__legend">each cross is a day I had you · the red circle, a month together</p>';
   host.innerHTML = html;
 })();
 
@@ -1257,7 +1250,7 @@ function renderLB(){
   const p = PHOTOS[lbI]; if(!p || !p.src) return;
   lbImg.src = p.src;
   const cuantas = PHOTOS.filter(x => x.grupo === p.grupo).length;
-  const donde = p.grupo === 'polaroid' ? ' · del primer mes' : '';
+  const donde = p.grupo === 'polaroid' ? ' · from the first month' : '';
   lbCap.textContent = p.cap || (pad(p.i) + ' / ' + pad(cuantas) + donde);
 }
 function openLB(g){
@@ -1337,7 +1330,7 @@ const read = $('read'), readSheet = $('readSheet'), readContent = $('readContent
       readText = $('readText'), readTo = $('readTo'), readLove = $('readLove'),
       readSign = $('readSign'), readHint = $('readHint');
 
-let curLang = 'es';
+let curLang = 'en';
 const T = {
   es: { keep:'para que te la quedes', pdf:'Guardar en PDF', txt:'Descargar el texto' },
   en: { keep:'so you can keep it',    pdf:'Save as PDF',    txt:'Download the text' }
@@ -1406,7 +1399,7 @@ $('btnTxt').addEventListener('click', () => {
 });
 $('langEs').addEventListener('click', () => setLang('es'));
 $('langEn').addEventListener('click', () => setLang('en'));
-setLang('es');
+setLang('en');
 
 function openLetter(){
   read.classList.add('open');
@@ -1446,7 +1439,7 @@ function markNoDisc(){
   ytFailed = true;
   player.classList.add('empty');
   deck.setAttribute('aria-disabled','true');
-  $('playerCap').innerHTML = '<b>el disco no carga</b>revisa la conexión';
+  $('playerCap').innerHTML = '<b>the record won’t load</b>check your connection';
 }
 
 /* la API de YouTube llama a esta función global cuando termina de cargar */
@@ -1652,5 +1645,6 @@ function initMotion(){
   setTimeout(() => { if(window.ScrollTrigger) ScrollTrigger.refresh(); }, 1200);
 })();
 </script>
+<script>if('serviceWorker' in navigator) addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));</script>
 </body>
 </html>

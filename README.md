@@ -170,6 +170,56 @@ al V, en un solo commit. Cada foto muestra su destino («→ Cap. V») antes de 
 Las repetidas se detectan contra todos los capítulos. Para el VI, añade una línea a
 `CHAPTERS` en `subir.html` con su rango de fechas.
 
+
+## El sitio en inglés
+
+Todo el sitio está en inglés: portada, los cinco capítulos, fechas («Wednesday,
+October 21»), números con letra del Capítulo II, botones y textos generados. Las
+cartas se abren en **English** y conservan el botón **Español** para leer el original.
+`subir.html` sigue en español porque es la herramienta de Keyder.
+
+## La app instalable y las notificaciones
+
+El sitio es una **PWA**: en Android (Chrome) y en Chromebook se instala como una app,
+con su icono (el sello S&K) en el escritorio, el cajón de apps o la estantería, se
+abre a pantalla completa y, al mantener pulsado el icono, ofrece accesos directos a
+los capítulos. Las webs no pueden crear *widgets* de verdad en Android ni en ChromeOS;
+la app instalada con accesos directos es lo más parecido.
+
+- `manifest.webmanifest`, `sw.js` y `media/icons/`. El *service worker* pide siempre
+  las páginas a la red (nunca muestra una versión vieja) y solo usa la caché sin conexión.
+- En la portada, el panel **Keep us close** ofrece *Install our app* (cuando el
+  navegador lo permite) y *Turn on notifications*.
+
+### Notificaciones push
+
+| Ruta | Qué hace |
+|---|---|
+| `api/push-key` | Da la clave pública para suscribirse |
+| `api/subscribe` | Guarda (o quita) un dispositivo de Samanta |
+| `api/notify` | Envía una notificación; solo con `Authorization: Bearer <GITHUB_TOKEN>` |
+| `api/cron` | Vercel la llama a diario (`vercel.json`); los días 21 envía «Happy N months 💛» |
+
+- Las suscripciones se guardan **cifradas** (AES-256-GCM) en
+  `data/push-subscriptions.enc.json`, porque el repositorio es público.
+- Desde `subir.html`, Keyder puede enviarle un mensaje cuando quiera, y se le avisa
+  sola al publicar fotos o vídeos nuevos (se puede desactivar).
+- **Configuración en Vercel** (Settings → Environment Variables), una sola vez:
+  `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY` y `GITHUB_TOKEN` (el mismo token de
+  `subir.html`, con *Contents: Read and write*). Opcional: `CRON_SECRET`.
+  Sin ellas, el sitio funciona igual y simplemente no ofrece avisos.
+
+## Las dos pruebas de la carta del Capítulo V
+
+Para abrir el libro, Samanta tiene que:
+1. Resolver un **rompecabezas de 12 piezas** (4×3) con nuestra foto del estanque:
+   se tocan dos piezas para intercambiarlas o se arrastra una sobre otra. Hay un botón
+   para echar un vistazo a la foto.
+2. Escribir la **contraseña** `iloveyou` (sin importar mayúsculas, espacios ni tildes).
+
+Una vez superadas, ese móvil lo recuerda. La foto, el tamaño y la contraseña están en
+`CONFIG.trials` de `mes-5.html`.
+
 ---
 
 ## Las fotos del Capítulo II

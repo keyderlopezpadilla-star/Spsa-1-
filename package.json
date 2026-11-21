@@ -1,0 +1,9 @@
+{
+  "name": "ks-nuestra-historia",
+  "private": true,
+  "description": "K & S — sitio estático + funciones de Vercel para las notificaciones push",
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "web-push": "3.6.7"
+  }
+}
