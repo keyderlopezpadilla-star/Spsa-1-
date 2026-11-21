@@ -9,6 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="Subir fotos">
 <title>Subir fotos — K &amp; S</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%B7%3C/text%3E%3C/svg%3E">
+<script type="importmap">{ "imports": { "mediabunny": "https://cdn.jsdelivr.net/npm/mediabunny@1.65.2/dist/bundles/mediabunny.min.mjs" } }</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -93,6 +94,12 @@ h1 em{ font-style:italic; background:var(--grad); -webkit-background-clip:text; 
   transition:opacity .3s ease, border-color .3s ease; }
 .item__img{ position:relative; width:92px; height:118px; border-radius:11px; overflow:hidden; background:var(--card-2); }
 .item__img img{ width:100%; height:100%; object-fit:cover; display:block; }
+.item__img .play{ position:absolute; left:50%; top:50%; width:34px; height:34px; margin:-17px 0 0 -17px; border-radius:50%;
+  background:rgba(20,12,28,.6); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; }
+.item__img .play::before{ content:''; margin-left:3px; border-style:solid; border-width:7px 0 7px 11px; border-color:transparent transparent transparent #fff; }
+.item__img .dur{ position:absolute; right:5px; bottom:5px; font-size:.62rem; font-weight:700; padding:.1rem .35rem; border-radius:5px; background:rgba(20,12,28,.7); }
+.item__img .bar{ position:absolute; left:8px; right:8px; bottom:8px; height:4px; border-radius:4px; background:rgba(255,255,255,.18); overflow:hidden; }
+.item__img .bar i{ display:block; height:100%; width:0; background:var(--grad); transition:width .3s ease; }
 .item__img .spin{ position:absolute; inset:0; margin:auto; width:26px; height:26px; border-radius:50%; border:2px solid var(--line); border-top-color:var(--amber); animation:spin 1s linear infinite; }
 @keyframes spin{ to{ transform:rotate(360deg); } }
 .item__body{ min-width:0; display:flex; flex-direction:column; gap:6px; }
@@ -183,10 +190,10 @@ h1 em{ font-style:italic; background:var(--grad); -webkit-background-clip:text; 
   <!-- ===== elegir ===== -->
   <section id="app" hidden>
     <label class="drop" id="drop">
-      <input type="file" id="files" accept="image/*,.heic,.heif" multiple>
+      <input type="file" id="files" accept="image/*,video/*,.heic,.heif,.mov,.mp4,.m4v" multiple>
       <span class="drop__plus">+</span>
-      <b>Elegir fotos</b>
-      <small>De la galería o la cámara. JPG, PNG o HEIC.<br>Se reducen a 1400 px y se les quita la ubicación GPS.</small>
+      <b>Elegir fotos y vídeos</b>
+      <small>De la galería o la cámara: JPG, PNG, HEIC, MOV o MP4.<br>Las fotos se reducen a 1400 px y los vídeos a 720p, hasta 1 minuto.<br>A todo se le quita la ubicación GPS.</small>
     </label>
 
     <div class="sec" id="queueSec" hidden>
@@ -233,7 +240,10 @@ const CHAPTERS = [
 ];
 const DEFAULTS = { owner:'keyderlopezpadilla-star', repo:'Spsa-1-', branch:'main' };
 const MAX_SIDE = 1400, QUALITY = .82, DUP_DIST = 6;
+/* vídeos: H.264 + AAC en MP4, que se reproduce en cualquier navegador */
+const VIDEO = { maxSide:1280, bitrate:2200000, audioBitrate:128000, maxSeconds:60, maxFps:30 };
 const LIBS = {
+  aac:     'https://cdn.jsdelivr.net/npm/@mediabunny/aac-encoder@1.65.2/dist/bundles/mediabunny-aac-encoder.min.mjs',
   exifr:   'https://cdn.jsdelivr.net/npm/exifr@7.1.3/dist/full.umd.js',
   heic2any:'https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js'
 };
@@ -356,18 +366,123 @@ async function processFile(file){
   cx.drawImage(img, 0, 0, w, h);
   URL.revokeObjectURL(url);
   const blob = await new Promise((res, rej) => cv.toBlob(b => b ? res(b) : rej(new Error('encode')), 'image/jpeg', QUALITY));
-  /* huella perceptual (dHash 64 bits) + color medio */
+  return { kind:'photo', blob, w, h, taken, dateSrc:src, ...fingerprint(cv), thumb:URL.createObjectURL(blob) };
+}
+
+/* huella perceptual (dHash 64 bits) + color medio de una imagen */
+function fingerprint(source){
   const s = document.createElement('canvas'); s.width = 9; s.height = 8;
-  const sx = s.getContext('2d', { willReadFrequently:true }); sx.drawImage(cv, 0, 0, 9, 8);
+  const sx = s.getContext('2d', { willReadFrequently:true }); sx.drawImage(source, 0, 0, 9, 8);
   const px = sx.getImageData(0,0,9,8).data;
   const lum = i => px[i*4]*.299 + px[i*4+1]*.587 + px[i*4+2]*.114;
   let bits = 0n, R = 0, G = 0, B = 0;
   for(let y=0;y<8;y++) for(let x=0;x<8;x++){ bits = (bits << 1n) | (lum(y*9+x) > lum(y*9+x+1) ? 1n : 0n); }
   for(let i=0;i<72;i++){ R += px[i*4]; G += px[i*4+1]; B += px[i*4+2]; }
   const hex = v => Math.round(v*.7).toString(16).padStart(2,'0');
-  return { blob, w, h, taken, dateSrc:src, hash:bits.toString(16).padStart(16,'0'),
-           color:'#' + hex(R/72) + hex(G/72) + hex(B/72), thumb:URL.createObjectURL(blob) };
+  return { hash:bits.toString(16).padStart(16,'0'), color:'#' + hex(R/72) + hex(G/72) + hex(B/72) };
 }
+
+/* =======================================================================
+   VÍDEOS — también se preparan en el móvil (WebCodecs, sin servidor)
+   ======================================================================= */
+const isVideo = f => /^video\//.test(f.type) || /\.(mov|mp4|m4v|3gp|webm)$/i.test(f.name);
+let MB = null;
+function mediabunny(){
+  if(!MB) MB = import('mediabunny').then(async M => {
+    /* Safari y otros no traen codificador AAC: se usa uno en WebAssembly */
+    if(!(await M.canEncodeAudio('aac').catch(() => false))){
+      try{ (await import(LIBS.aac)).registerAacEncoder(); }catch(e){ console.warn('[vídeo] AAC:', e); }
+    }
+    return M;
+  }).catch(e => { MB = null; throw e; });
+  return MB;
+}
+/* fecha de creación guardada en la cabecera del MP4 (caja mvhd, en UTC) */
+async function mvhdDate(file){
+  const rd = async (a, n) => new DataView(await file.slice(a, a + n).arrayBuffer());
+  let off = 0;
+  for(let guard = 0; off + 8 <= file.size && guard < 64; guard++){
+    const h = await rd(off, 16);
+    let len = h.getUint32(0), hdr = 8;
+    const type = String.fromCharCode(h.getUint8(4), h.getUint8(5), h.getUint8(6), h.getUint8(7));
+    if(len === 1){ len = Number(h.getBigUint64(8)); hdr = 16; } else if(len === 0) len = file.size - off;
+    if(type === 'moov'){
+      const m = await rd(off + hdr, Math.min(len - hdr, 65536));
+      for(let q = 0; q + 8 <= m.byteLength;){
+        const l = m.getUint32(q), t = String.fromCharCode(m.getUint8(q+4), m.getUint8(q+5), m.getUint8(q+6), m.getUint8(q+7));
+        if(t === 'mvhd'){
+          const secs = m.getUint8(q+8) === 1 ? Number(m.getBigUint64(q+12)) : m.getUint32(q+12);
+          const d = new Date((secs - 2082844800) * 1000);       // segundos desde 1904
+          return secs && d.getFullYear() > 2000 ? d : null;
+        }
+        if(l < 8) break; q += l;
+      }
+      return null;
+    }
+    if(len < 8) break; off += len;
+  }
+  return null;
+}
+/* la fecha real del vídeo: la del iPhone (hora local) → nombre del archivo → cabecera MP4 → fecha del archivo */
+async function readVideoTaken(file, tags){
+  const apple = tags && tags.raw && tags.raw['com.apple.quicktime.creationdate'];
+  const am = typeof apple === 'string' && /^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2}:\d{2})/.exec(apple);
+  if(am) return { taken:am[1] + 'T' + am[2], src:'exif' };
+  const m = /(20\d{2})(\d{2})(\d{2})[_-](\d{2})(\d{2})(\d{2})/.exec(file.name);
+  if(m) return { taken:`${m[1]}-${m[2]}-${m[3]}T${m[4]}:${m[5]}:${m[6]}`, src:'nombre' };
+  let d = tags && tags.date instanceof Date && !isNaN(tags.date) ? tags.date : null;
+  if(!d) d = await mvhdDate(file).catch(() => null);
+  if(d) return { taken:naive(d), src:'exif' };
+  return { taken:naive(new Date(file.lastModified || Date.now())), src:'archivo' };
+}
+async function processVideo(file, onProgress, onPoster){
+  let M;
+  try{ M = await mediabunny(); }catch(_){ throw new Error('No se pudo cargar el conversor de vídeo. Revisa la conexión y vuelve a intentarlo.'); }
+  if(typeof VideoEncoder === 'undefined' || !(await M.canEncodeVideo('avc').catch(() => false)))
+    throw new Error('Este navegador no puede preparar vídeos. Usa Chrome, o Safari actualizado (iOS 16.4 o posterior).');
+  const input = new M.Input({ source:new M.BlobSource(file), formats:M.ALL_FORMATS });
+  const vt = await input.getPrimaryVideoTrack();
+  if(!vt) throw new Error('Este archivo no tiene vídeo');
+  const tags = await input.getMetadataTags().catch(() => ({}));
+  const { taken, src } = await readVideoTaken(file, tags);
+  const full = await input.computeDuration();
+  const end = Math.min(full, VIDEO.maxSeconds);
+  const k = Math.min(1, VIDEO.maxSide / Math.max(vt.displayWidth, vt.displayHeight));
+  const w = Math.max(2, Math.round(vt.displayWidth*k/2)*2), h = Math.max(2, Math.round(vt.displayHeight*k/2)*2);
+
+  /* póster: un fotograma del primer tercio, sirve también para detectar repetidos */
+  const sink = new M.CanvasSink(vt, { width:w, height:h, fit:'contain' });
+  const frame = (await sink.getCanvas(Math.min(1, end/3))) || (await sink.getCanvas(0));
+  if(!frame) throw new Error('No se pudo leer el vídeo');
+  const pc = document.createElement('canvas'); pc.width = w; pc.height = h;
+  pc.getContext('2d').drawImage(frame.canvas, 0, 0, w, h);
+  const poster = await new Promise((res, rej) => pc.toBlob(b => b ? res(b) : rej(new Error('poster')), 'image/jpeg', QUALITY));
+  const thumb = URL.createObjectURL(poster);
+  onPoster && onPoster(thumb);
+
+  /* conversión a MP4 H.264 + AAC, sin metadatos (fuera la ubicación GPS) */
+  let fps = null;
+  try{ const st = await vt.computePacketStats(90); if(st.averagePacketRate > VIDEO.maxFps + 1) fps = VIDEO.maxFps; }catch(_){}
+  /* bitrate según el tamaño: ~2,2 Mbps en 720p, menos si el vídeo es más pequeño */
+  const bitrate = Math.round(Math.min(VIDEO.bitrate, Math.max(400000, w*h*30*.08)));
+  const output = new M.Output({ format:new M.Mp4OutputFormat({ fastStart:'in-memory' }), target:new M.BufferTarget() });
+  const conv = await M.Conversion.init({
+    input, output,
+    video:{ width:w, height:h, fit:'contain', codec:'avc', bitrate, forceTranscode:true, ...(fps ? { frameRate:fps } : {}) },
+    audio:{ codec:'aac', bitrate:VIDEO.audioBitrate, numberOfChannels:2, sampleRate:44100, forceTranscode:true },
+    trim:{ start:0, end },
+    tags:{},
+    showWarnings:false
+  });
+  if(!conv.isValid) throw new Error('No se puede convertir este vídeo (' + conv.discardedTracks.map(d => d.reason).join(', ') + ')');
+  const mute = conv.discardedTracks.some(d => d.track.type === 'audio');
+  conv.onProgress = pr => onProgress && onProgress(pr);
+  await conv.execute();
+  const blob = new Blob([output.target.buffer], { type:'video/mp4' });
+  return { kind:'video', blob, poster, w, h, duration:Math.round(end*10)/10, trimmed:full > end + .5, mute,
+           taken, dateSrc:src, ...fingerprint(pc), thumb };
+}
+const mmss = t => Math.floor(t/60) + ':' + String(Math.round(t%60)).padStart(2,'0');
 
 const hamming = (a, b) => { let x = BigInt('0x'+a) ^ BigInt('0x'+b), n = 0; while(x){ n += Number(x & 1n); x >>= 1n; } return n; };
 function findDup(hash, selfId){
@@ -386,7 +501,7 @@ function findDup(hash, selfId){
    ======================================================================= */
 let qid = 0, working = false;
 function addFiles(list){
-  const files = [...list].filter(f => /^image\//.test(f.type) || isHeic(f));
+  const files = [...list].filter(f => /^image\//.test(f.type) || isHeic(f) || isVideo(f));
   if(!files.length) return;
   files.forEach(f => queue.push({ id:++qid, file:f, state:'wait', caption:'', include:true }));
   renderQueue(); pump();
@@ -397,7 +512,8 @@ async function pump(){
   while((q = queue.find(x => x.state === 'wait'))){
     q.state = 'work'; renderQueue();
     try{
-      Object.assign(q, await processFile(q.file));
+      q.video = isVideo(q.file);
+      Object.assign(q, q.video ? await processVideo(q.file, pr => showPct(q, pr), url => { q.thumb = url; renderQueue(); }) : await processFile(q.file));
       const dup = findDup(q.hash, q.id);
       q.state = dup ? 'dup' : 'ready'; q.dupWhy = dup; q.include = !dup;
     }catch(e){ q.state = 'error'; q.err = e.message; q.include = false; }
@@ -405,7 +521,16 @@ async function pump(){
   }
   working = false;
 }
-const fileName = q => q.taken.replace(/[-:]/g,'').replace('T','-') + '-' + q.hash.slice(0,6) + '.jpg';
+const baseName = q => q.taken.replace(/[-:]/g,'').replace('T','-') + '-' + q.hash.slice(0,6);
+const fileName = q => baseName(q) + (q.kind === 'video' ? '.mp4' : '.jpg');
+const posterName = q => baseName(q) + '.jpg';
+/* progreso de la compresión de un vídeo, sin redibujar toda la lista */
+function showPct(q, pr){
+  q.pct = pr;
+  const it = document.querySelector('.item[data-id="' + q.id + '"]'); if(!it) return;
+  const t = it.querySelector('.tag'); if(t) t.textContent = 'comprimiendo ' + Math.round(pr*100) + '%';
+  const b = it.querySelector('.bar i'); if(b) b.style.width = Math.round(pr*100) + '%';
+}
 
 function renderQueue(){
   $('queueSec').hidden = !queue.length;
@@ -415,7 +540,7 @@ function renderQueue(){
   $('queueInfo').textContent = busy ? 'preparando ' + busy + '…' : ready + ' lista' + (ready === 1 ? '' : 's');
   host.innerHTML = queue.map(q => {
     let tag = '<span class="tag">en espera</span>', note = '';
-    if(q.state === 'work') tag = '<span class="tag">preparando</span>';
+    if(q.state === 'work') tag = '<span class="tag">' + (q.video ? (q.pct ? 'comprimiendo ' + Math.round(q.pct*100) + '%' : 'leyendo el vídeo') : 'preparando') + '</span>';
     if(q.state === 'ready') tag = '<span class="tag ok">lista</span>';
     if((q.state === 'ready' || q.state === 'dup') && q.taken){
       const dest = chapterFor(q.taken);
@@ -425,13 +550,20 @@ function renderQueue(){
     if(q.state === 'error') tag = '<span class="tag bad">error</span>';
     if(q.state === 'dup') note = '<span class="item__note"><b>Parece ' + q.dupWhy + '.</b></span><button class="link" data-act="force">' + (q.include ? 'no subirla' : 'subirla igualmente') + '</button>';
     if(q.state === 'error') note = '<span class="item__note">' + q.err + '</span>';
+    if(q.kind === 'video' && (q.state === 'ready' || q.state === 'dup')){
+      tag += ' <span class="tag">vídeo · ' + mmss(q.duration) + '</span>';
+      if(q.trimmed) note += '<span class="item__note"><b>Se queda con el primer minuto.</b></span>';
+      if(q.mute) note += '<span class="item__note">Sin sonido: este navegador no pudo convertir el audio.</span>';
+    }
     if((q.state === 'ready' || q.state === 'dup') && q.dateSrc !== 'exif') note += '<span class="item__note"><b>Fecha aproximada</b> (del ' + q.dateSrc + '). Corrígela si hace falta.</span>';
     const fields = (q.state === 'ready' || q.state === 'dup')
       ? '<input type="text" data-f="caption" placeholder="Un texto (opcional)" value="' + esc(q.caption) + '" maxlength="140">'
       + '<input type="datetime-local" data-f="taken" step="60" value="' + q.taken.slice(0,16) + '">'
       : '';
     return '<div class="item' + (q.include || q.state === 'wait' || q.state === 'work' ? '' : ' skip') + '" data-id="' + q.id + '">'
-      + '<div class="item__img">' + (q.thumb ? '<img src="' + q.thumb + '" alt="">' : '<span class="spin"></span>') + '</div>'
+      + '<div class="item__img">' + (q.thumb ? '<img src="' + q.thumb + '" alt="">' : '<span class="spin"></span>')
+      + (q.kind === 'video' ? '<span class="play"></span><span class="dur">' + mmss(q.duration) + '</span>' : '')
+      + (q.video && q.state === 'work' ? '<span class="bar"><i style="width:' + Math.round((q.pct||0)*100) + '%"></i></span>' : '') + '</div>'
       + '<div class="item__body"><div class="item__top"><span>' + tag + '</span><button class="x" data-act="drop" aria-label="Quitar">✕</button></div>'
       + fields + note + '</div></div>';
   }).join('');
@@ -478,7 +610,8 @@ function renderPublished(){
     const cap = ed.caption !== undefined ? ed.caption : (p.caption || '');
     const del = removed.has(p.file);
     return '<div class="item' + (del ? ' del' : '') + '" data-file="' + esc(p.file) + '">'
-      + '<div class="item__img" style="background:' + (p.color || 'var(--card-2)') + '"><img data-src="' + esc(p.file) + '" alt="" loading="lazy"></div>'
+      + '<div class="item__img" style="background:' + (p.color || 'var(--card-2)') + '"><img data-src="' + esc(p.poster || p.file) + '" alt="" loading="lazy">'
+      + (p.type === 'video' ? '<span class="play"></span><span class="dur">' + mmss(p.duration || 0) + '</span>' : '') + '</div>'
       + '<div class="item__body"><div class="item__top"><span class="tag">' + (p.taken || '').slice(0,16).replace('T',' · ') + '</span>'
       + '<button class="x" data-act="del" aria-label="' + (del ? 'No borrar' : 'Borrar') + '">' + (del ? '↺' : '✕') + '</button></div>'
       + '<input type="text" data-f="caption" placeholder="Un texto (opcional)" value="' + esc(cap) + '" maxlength="140"' + (del ? ' disabled' : '') + '>'
@@ -550,6 +683,10 @@ async function publish(){
       let q;
       while((q = todo.shift())){
         const r = await gh('/git/blobs', { method:'POST', body:JSON.stringify({ content:await blobToB64(q.blob), encoding:'base64' }) });
+        if(q.kind === 'video' && !q.posterSha){
+          const rp = await gh('/git/blobs', { method:'POST', body:JSON.stringify({ content:await blobToB64(q.poster), encoding:'base64' }) });
+          q.posterSha = rp.sha;
+        }
         q.blobSha = r.sha; done++;
         progress(.85*done/p.add.length, null, 'Subiendo ' + done + ' de ' + p.add.length + '…');
       }
@@ -569,13 +706,16 @@ async function publish(){
       const groupOf = ch => { if(!groups.has(ch.id)) groups.set(ch.id, { ch, add:[] }); return groups.get(ch.id); };
       p.add.forEach(q => groupOf(chapterFor(q.taken) || chapter).add.push(q));
       if(p.del.length || p.edit.length) groupOf(chapter);
-      let dels = [];
+      let dels = [], nDel = 0;
       const freshByCh = new Map();
       for(const g of groups.values()){
         const fresh = await fetchManifestOf(g.ch, head);
         if(g.ch === chapter){
           const present = new Set(fresh.photos.map(x => x.file));
           dels = p.del.filter(f => present.has(f));
+          nDel = dels.length;
+          /* un vídeo se borra junto con su póster */
+          fresh.photos.filter(x => p.del.includes(x.file) && x.poster).forEach(x => dels.push(x.poster));
           fresh.photos = fresh.photos.filter(x => !p.del.includes(x.file));
           dels.forEach(f => tree.push({ path:chapter.dir + f, mode:'100644', type:'blob', sha:null }));
           fresh.photos.forEach(x => { const ed = edits.get(x.file); if(ed && ed.caption !== undefined) x.caption = ed.caption; });
@@ -584,6 +724,10 @@ async function publish(){
           const file = fileName(q);
           tree.push({ path:g.ch.dir + file, mode:'100644', type:'blob', sha:q.blobSha });
           const entry = { file, taken:q.taken, w:q.w, h:q.h, hash:q.hash, color:q.color, caption:q.caption || '' };
+          if(q.kind === 'video'){
+            tree.push({ path:g.ch.dir + posterName(q), mode:'100644', type:'blob', sha:q.posterSha });
+            Object.assign(entry, { type:'video', poster:posterName(q), duration:q.duration });
+          }
           const i = fresh.photos.findIndex(x => x.file === file);
           i >= 0 ? (fresh.photos[i] = entry) : fresh.photos.push(entry);
         });
@@ -595,8 +739,10 @@ async function publish(){
 
       const t = await gh('/git/trees', { method:'POST', body:JSON.stringify({ base_tree:commit.tree.sha, tree }) });
       const bits = [];
-      if(p.add.length) bits.push(p.add.length + ' foto' + (p.add.length === 1 ? '' : 's') + ' nueva' + (p.add.length === 1 ? '' : 's'));
-      if(dels.length) bits.push(dels.length + ' borrada' + (dels.length === 1 ? '' : 's'));
+      const nv = p.add.filter(q => q.kind === 'video').length, nf = p.add.length - nv;
+      if(nf) bits.push(nf + ' foto' + (nf === 1 ? '' : 's') + ' nueva' + (nf === 1 ? '' : 's'));
+      if(nv) bits.push(nv + ' vídeo' + (nv === 1 ? '' : 's') + ' nuevo' + (nv === 1 ? '' : 's'));
+      if(nDel) bits.push(nDel + ' borrada' + (nDel === 1 ? '' : 's'));
       if(p.edit.length) bits.push(p.edit.length + ' texto' + (p.edit.length === 1 ? '' : 's'));
       const order = [...groups.values()].sort((x,y) => CHAPTERS.indexOf(x.ch) - CHAPTERS.indexOf(y.ch));
       const names = order.map(g => g.ch.n);
