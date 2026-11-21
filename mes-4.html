@@ -388,6 +388,14 @@ html.reading .tide{ opacity:0; }
   .l-text p{ color:#1A1014 !important; font-size:12.5pt !important; line-height:1.8 !important; orphans:3; widows:3; }
   .l-text em{ background:none !important; }
 }
+
+/* ---------- vídeos: vista previa en silencio + insignia ---------- */
+.vthumb{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .7s ease; pointer-events:none; }
+.vthumb.on{ opacity:1; }
+.vbadge{ position:absolute; left:8px; top:8px; z-index:1; display:flex; align-items:center; gap:.35rem; font-family:system-ui,sans-serif; font-size:.6rem; font-weight:600;
+  letter-spacing:.04em; padding:.26rem .55rem .26rem .45rem; border-radius:99px; background:rgba(0,0,0,.45); color:#fff; backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); }
+.vbadge::before{ content:''; border-style:solid; border-width:5px 0 5px 8px; border-color:transparent transparent transparent #fff; }
+.lb__fig video{ display:block; max-width:min(92vw,1100px); max-height:76svh; background:#000; }
 </style>
 </head>
 <body>
@@ -496,6 +504,7 @@ html.reading .tide{ opacity:0; }
         <p id="mareaSub">Cada foto, en el día y a la hora exacta en que la vivimos.</p>
         <div class="stats" id="stats" hidden>
           <div class="stat"><b id="stN">0</b><span>fotos</span></div>
+          <div class="stat" id="stVw" hidden><b id="stV">0</b><span>vídeos</span></div>
           <div class="stat"><b id="stD">0</b><span>días con fotos</span></div>
           <div class="stat"><b id="stG">0</b><span>tardes doradas</span></div>
         </div>
@@ -579,7 +588,7 @@ html.reading .tide{ opacity:0; }
   <button class="lb__x" id="lbX" aria-label="Cerrar">✕</button>
   <button class="lb__nav lb__prev" id="lbPrev" aria-label="Anterior">‹</button>
   <button class="lb__nav lb__next" id="lbNext" aria-label="Siguiente">›</button>
-  <div class="lb__fig" id="lbFig"><img id="lbImg" alt=""></div>
+  <div class="lb__fig" id="lbFig"><img id="lbImg" alt=""><video id="lbVid" controls playsinline preload="metadata" hidden></video></div>
   <div class="lb__cap"><p id="lbCap"></p><small id="lbWhen"></small></div>
 </div>
 
@@ -944,7 +953,7 @@ const parseTaken = s => {           // "2026-09-25T18:32:10" → partes locales,
   return m ? { y:+m[1], mo:+m[2], d:+m[3], h:+m[4], mi:+m[5] } : null;
 };
 const hourOf = p => { const t = parseTaken(p.taken); return t ? t.h + t.mi/60 : null; };
-const isGolden = p => { const h = hourOf(p); return h !== null && h >= CONFIG.horaDorada[0] && h <= CONFIG.horaDorada[1]; };
+const isGolden = p => { const h = hourOf(p); return p.type !== 'video' && h !== null && h >= CONFIG.horaDorada[0] && h <= CONFIG.horaDorada[1]; };
 function momentOf(h){
   if(h === null) return '';
   if(h >= 5 && h < 8) return 'amanecer';
@@ -969,7 +978,7 @@ async function loadPhotos(){
   CHAPTERS = (mem && mem.chapters) || [{ n:4, title:'A la orilla de ti', range:'21 sep — 21 oct', page:'mes-4.html' }];
   const byTaken = (a,b) => (a.taken ? 0 : 1) - (b.taken ? 0 : 1) || (a.taken || '').localeCompare(b.taken || '');
   const old = (mem && mem.photos || []).filter(p => p && p.src);
-  const mine = (man && man.photos || []).filter(p => p && p.file).map(p => ({ ...p, src:CONFIG.dir + p.file, ch:4 }));
+  const mine = (man && man.photos || []).filter(p => p && p.file).map(p => ({ ...p, src:CONFIG.dir + p.file, poster:p.poster ? CONFIG.dir + p.poster : null, ch:4 }));
   const out = [];
   [1,2,3].forEach(n => {
     const xs = old.filter(p => p.ch === n);
@@ -988,8 +997,8 @@ function cellHTML(p, i, k){
   const wide = p.w && p.h && p.w/p.h > 1.15;
   const t = parseTaken(p.taken);
   const st = '--c:'+(p.color||'#5A2F48')+';--d:'+(k%6*.07).toFixed(2)+'s' + (wide ? ';aspect-ratio:'+(p.w/p.h).toFixed(3) : '');
-  return '<button class="ph'+(wide?' wide':'')+'" data-i="'+i+'" style="'+st+'" aria-label="Abrir foto: '+whenText(p)+'">'
-    + '<span class="ph__w"><img src="'+p.src+'" alt="" loading="lazy" decoding="async">'
+  return '<button class="ph'+(wide?' wide':'')+'" data-i="'+i+'" style="'+st+'" aria-label="Abrir ' + (p.type === 'video' ? 'vídeo' : 'foto') + ': '+whenText(p)+'">'
+    + '<span class="ph__w"><img src="'+(p.poster || p.src)+'" alt="" loading="lazy" decoding="async">' + videoBits(p)
     + (t ? '<span class="ph__t">'+pad(t.h)+':'+pad(t.mi)+'</span>' : '')
     + '</span></button>';
 }
@@ -1024,7 +1033,7 @@ function buildGallery(list){
       if(g.t){
         title = dayTitle(g.t);
         const moments = [...new Set(g.items.map(i => momentOf(hourOf(list[i]))).filter(Boolean))];
-        tag = g.items.length + ' foto' + (g.items.length === 1 ? '' : 's') + ' · ' + moments.join(' · ');
+        tag = countLabel(g.items.map(i => list[i])) + ' · ' + moments.join(' · ');
       } else if(c.n === 1){
         title = 'del 21 de junio al 21 de julio';
         tag = 'en el orden del capítulo I · estas fotos llegaron sin su hora';
@@ -1039,6 +1048,7 @@ function buildGallery(list){
   }).join('');
   host.innerHTML = html;
   host.querySelectorAll('.ph img').forEach(imgOnLoad);
+  watchVideos(host);
   host.querySelectorAll('.ph').forEach(el => {
     el.addEventListener('click', () => openLb(+el.dataset.i));
     if(FINE && !RM){
@@ -1053,10 +1063,12 @@ function buildGallery(list){
   /* cifras exactas, calculadas de las propias fotos */
   const dated = list.filter(p => p.taken);
   $('stats').hidden = false;
-  countUp($('stN'), list.length);
+  const nVid = list.filter(p => p.type === 'video').length;
+  countUp($('stN'), list.length - nVid);
+  if(nVid){ $('stVw').hidden = false; countUp($('stV'), nVid); }
   countUp($('stD'), new Set(dated.map(p => p.taken.slice(0,10))).size);
   countUp($('stG'), new Set(list.filter(isGolden).map(p => p.taken.slice(0,10))).size);
-  $('mareaSub').textContent = list.length + ' fotos de cuatro meses. ' + dated.length + ' con el día y la hora exactos, leídos de cada foto.';
+  $('mareaSub').textContent = countLabel(list) + ' de cuatro meses. ' + dated.length + ' con el día y la hora exactos, leídos de cada una.';
   tideClock();
 }
 
@@ -1146,22 +1158,61 @@ function buildGolden(list){
   flow();
 }
 
+
+/* ---- vídeos: vista previa en silencio al aparecer; con sonido en el visor ---- */
+const mmss = t => Math.floor(t/60) + ':' + String(Math.round(t%60)).padStart(2,'0');
+const SAVE_DATA = !!(navigator.connection && navigator.connection.saveData);
+const previewIO = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => {
+  const v = e.target;
+  if(e.isIntersecting && !RM && !SAVE_DATA){
+    if(!v.getAttribute('src')) v.src = v.dataset.src;
+    v.play().then(() => v.classList.add('on')).catch(() => {});
+  } else v.pause();
+}), { threshold:.6 }) : null;
+function watchVideos(root){ if(previewIO) root.querySelectorAll('video.vthumb').forEach(v => previewIO.observe(v)); }
+function videoBits(p){
+  return p.type === 'video'
+    ? '<video class="vthumb" muted playsinline loop preload="none" data-src="' + p.src + '"></video><span class="vbadge">' + mmss(p.duration || 0) + '</span>'
+    : '';
+}
+function countLabel(items){
+  const nv = items.filter(p => p.type === 'video').length, nf = items.length - nv;
+  return [nf ? nf + ' foto' + (nf === 1 ? '' : 's') : '', nv ? nv + ' vídeo' + (nv === 1 ? '' : 's') : ''].filter(Boolean).join(' y ');
+}
+/* mientras suena un vídeo en el visor, la canción de la página se pausa */
+let ducked = false;
+function duckMusic(on){
+  try{
+    if(on && yt && ytReady && yt.getPlayerState() === YT.PlayerState.PLAYING){ yt.pauseVideo(); ducked = true; }
+    else if(!on && ducked){ ducked = false; yt.playVideo(); }
+  }catch(_){}
+}
+function stopLbVideo(){ const v = $('lbVid'); if(!v) return; v.pause(); v.removeAttribute('src'); v.load(); }
+
 /* ---- lightbox con gestos ---- */
 const lb = $('lb'); let lbI = 0;
 function showLb(i, dir){
   lbI = (i + PHOTOS.length) % PHOTOS.length;
-  const p = PHOTOS[lbI], img = $('lbImg'), fig = $('lbFig');
-  fig.style.opacity = 0; fig.style.transform = 'translateX('+(dir||0)*40+'px)';
-  const pre = new Image(); pre.src = p.src;
-  const swap = () => { img.src = p.src; fig.style.transform = 'none'; fig.style.opacity = 1; };
-  pre.decode ? pre.decode().then(swap, swap) : (pre.onload = swap);
+  const p = PHOTOS[lbI], img = $('lbImg'), fig = $('lbFig'), vid = $('lbVid');
+  stopLbVideo();
+  if(p.type === 'video'){
+    img.hidden = true; vid.hidden = false; vid.poster = p.poster || ''; vid.src = p.src;
+    fig.style.transform = 'none'; fig.style.opacity = 1;
+    vid.play().catch(() => {}); duckMusic(true);
+  } else {
+    vid.hidden = true; img.hidden = false; duckMusic(false);
+    fig.style.opacity = 0; fig.style.transform = 'translateX('+(dir||0)*40+'px)';
+    const pre = new Image(); pre.src = p.src;
+    const swap = () => { img.src = p.src; fig.style.transform = 'none'; fig.style.opacity = 1; };
+    pre.decode ? pre.decode().then(swap, swap) : (pre.onload = swap);
+  }
   $('lbCap').textContent = p.caption || '';
   $('lbWhen').textContent = whenText(p);
   $('lbCount').textContent = (lbI+1) + ' / ' + PHOTOS.length;
-  [1,-1].forEach(k => { const n = PHOTOS[(lbI+k+PHOTOS.length)%PHOTOS.length]; if(n){ const im = new Image(); im.src = n.src; } });
+  [1,-1].forEach(k => { const n = PHOTOS[(lbI+k+PHOTOS.length)%PHOTOS.length]; if(n){ const im = new Image(); im.src = n.poster || n.src; } });
 }
 function openLb(i){ if(!PHOTOS.length) return; lb.classList.add('open'); document.documentElement.style.overflow = 'hidden'; showLb(i, 0); }
-function closeLb(){ lb.classList.remove('open'); document.documentElement.style.overflow = ''; }
+function closeLb(){ stopLbVideo(); duckMusic(false); lb.classList.remove('open'); document.documentElement.style.overflow = ''; }
 $('lbX').onclick = closeLb;
 $('lbPrev').onclick = () => showLb(lbI-1, -1);
 $('lbNext').onclick = () => showLb(lbI+1, 1);

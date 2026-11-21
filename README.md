@@ -138,6 +138,30 @@ arriba, el árbol rebrota.
 - **Fotos de la portada:** cada letra lleva su foto en el atributo `style` (`--img`, y `--pos`/`--size` para encuadrarla).
 - Las 53 fotos del 21 oct al 1 nov estaban en `media/m4/` y se movieron a `media/m5/`.
 
+## Vídeos
+
+`subir.html` también acepta **vídeos** (MOV del iPhone, MP4 de Android…) y los
+prepara en el propio móvil, sin servidor, con [Mediabunny](https://mediabunny.dev)
+1.65.2 sobre WebCodecs:
+
+- Se convierten a **MP4 H.264 + AAC**, que se reproduce en cualquier navegador
+  (el iPhone graba en HEVC, que muchos no saben mostrar), a **720p** como máximo,
+  30 fps y ~2,2 Mbps (menos si el vídeo es más pequeño). Un minuto ocupa ~17 MB.
+- Se quedan con el **primer minuto** como máximo.
+- Se les quitan **todos los metadatos**: ni ubicación GPS ni modelo del móvil.
+- La **fecha** sale de los metadatos del iPhone (hora local), del nombre del
+  archivo o de la cabecera del MP4, y cada vídeo va solo al capítulo que le toca.
+- Se genera un **póster** (un fotograma) que sirve de miniatura y para detectar
+  repetidos.
+- En Safari, que no trae codificador AAC, se usa uno en WebAssembly
+  (`@mediabunny/aac-encoder`), que solo se descarga si hace falta. Hace falta
+  Chrome o Safari 16.4+; si el navegador no puede, se avisa y no se sube nada.
+
+En los capítulos IV y V los vídeos aparecen en la galería con su duración y se
+reproducen solos, en silencio, al pasar por delante (salvo con ahorro de datos o
+movimiento reducido). Al abrirlos suenan, y la canción de la página se pausa
+mientras tanto. En el manifiesto llevan `type: "video"`, `poster` y `duration`.
+
 ## subir.html reparte las fotos solo
 
 Cada foto va al capítulo que le toca **por su fecha** (del día 21 al 21 siguiente),
