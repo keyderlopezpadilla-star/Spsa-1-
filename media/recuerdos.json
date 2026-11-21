@@ -5,26 +5,26 @@
  "chapters": [
   {
    "n": 1,
-   "title": "Nuestro primer mes",
-   "range": "21 jun — 21 jul",
+   "title": "Our first month",
+   "range": "Jun 21 — Jul 21",
    "page": "mes-1.html"
   },
   {
    "n": 2,
-   "title": "Dos meses contigo",
-   "range": "21 jul — 21 ago",
+   "title": "Two months with you",
+   "range": "Jul 21 — Aug 21",
    "page": "mes-2.html"
   },
   {
    "n": 3,
-   "title": "Nuestro propio universo",
-   "range": "21 ago — 21 sep",
+   "title": "Our own universe",
+   "range": "Aug 21 — Sep 21",
    "page": "mes-3.html"
   },
   {
    "n": 4,
-   "title": "A la orilla de ti",
-   "range": "21 sep — 21 oct",
+   "title": "On the shore of you",
+   "range": "Sep 21 — Oct 21",
    "page": "mes-4.html"
   }
  ],

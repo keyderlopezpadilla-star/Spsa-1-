@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1A1210">
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Nuestra historia, capítulo por capítulo.">
-<title>K &amp; S — Nuestra historia</title>
+<meta name="description" content="Our story, chapter by chapter.">
+<title>K &amp; S — Our story</title>
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="K &amp; S — Nuestra historia">
-<meta property="og:description" content="Una historia escrita en capítulos.">
+<meta property="og:title" content="K &amp; S — Our story">
+<meta property="og:description" content="A story written in chapters.">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%9B%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -186,11 +186,23 @@ body{
   cursor:pointer; transition:color .3s ease; }
 .pick__out:hover{ color:var(--gold-soft); }
 
+/* ---------- «Keep us close»: instalar la app y activar avisos ---------- */
+.app{ margin:clamp(2.4rem,6vh,3.6rem) auto 0; max-width:460px; padding:1.4rem 1.3rem 1.2rem; border:1px solid rgba(169,133,70,.35);
+  border-radius:3px; background:linear-gradient(180deg,rgba(244,235,220,.05),rgba(244,235,220,.02)); position:relative; }
+.app::before{ content:''; position:absolute; inset:5px; border:1px solid rgba(169,133,70,.14); pointer-events:none; }
+.app__t{ font-family:'Cinzel',serif; font-size:.7rem; letter-spacing:.34em; text-transform:uppercase; color:var(--gold-soft); }
+.app__s{ font-style:italic; color:rgba(244,235,220,.6); font-size:1.02rem; margin:.5rem 0 1.1rem; line-height:1.5; }
+.app__btns{ display:flex; gap:.7rem; justify-content:center; flex-wrap:wrap; }
+.app__btns .btn{ padding:.75rem 1.3rem; }
+.app__btns .btn.done{ border-color:rgba(169,133,70,.25); color:rgba(201,169,106,.7); pointer-events:none; }
+.app__note{ min-height:1.2rem; margin-top:.9rem; font-size:.92rem; font-style:italic; color:rgba(244,235,220,.55); line-height:1.5; }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
   .card{ opacity:1 !important; }
 }
 </style>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="media/icons/apple-180.png">
 </head>
 <body>
 
@@ -202,18 +214,18 @@ body{
 <div class="screen" id="keyScreen">
   <div class="key">
     <div class="key__seal">S&amp;K</div>
-    <span class="eyebrow">Cerrado con cera</span>
-    <h1>Esto es solo para <em>ti</em></h1>
-    <p class="key__note">Escribe nuestra clave, mi amor. Ya sabes cuál es — es lo que te digo todos los días.</p>
+    <span class="eyebrow">Sealed with wax</span>
+    <h1>This is only for <em>you</em></h1>
+    <p class="key__note">Type our password, my love. You already know it — it’s what I tell you every day.</p>
 
     <form class="key__form" id="keyForm" autocomplete="off">
       <input class="key__input" id="keyInput" type="password" placeholder="· · · · · · · · ·"
-             aria-label="Clave de acceso" autocapitalize="off" autocorrect="off" spellcheck="false">
-      <p class="key__err" id="keyErr">Esa no es, intenta otra vez 🤍</p>
-      <button class="btn" type="submit">Abrir</button>
+             aria-label="Password" autocapitalize="off" autocorrect="off" spellcheck="false">
+      <p class="key__err" id="keyErr">That’s not it, try again 🤍</p>
+      <button class="btn" type="submit">Open</button>
     </form>
 
-    <p class="key__hint">pista: son ocho letras,<br>y te las digo en inglés.</p>
+    <p class="key__hint">hint: eight letters,<br>three little words, no spaces.</p>
   </div>
 </div>
 
@@ -222,8 +234,8 @@ body{
   <div class="pick">
     <div class="pick__head">
       <div class="rule">K &amp; S</div>
-      <h1>Nuestra historia</h1>
-      <p>Elige el capítulo que quieras volver a vivir.</p>
+      <h1>Our story</h1>
+      <p>Choose the chapter you want to live again.</p>
     </div>
 
     <div class="cards">
@@ -231,42 +243,42 @@ body{
       <a class="card" href="mes-1.html" style="--rot:-1.6deg">
         <span class="card__wax">I</span>
         <div class="card__win">
-          <img src="media/f09.jpg" alt="Nuestro primer mes" loading="lazy"
+          <img src="media/f09.jpg" alt="Our first month" loading="lazy"
                onerror="this.style.display='none';this.parentNode.querySelector('.card__ph').style.display='flex'">
           <span class="card__ph" style="display:none">I</span>
         </div>
-        <span class="card__num">Capítulo Primero</span>
-        <h2 class="card__ttl">Nuestro primer mes</h2>
-        <p class="card__sub">donde todo empezó, y donde te dije sí a todo</p>
-        <span class="card__date">21 junio — 21 julio</span>
+        <span class="card__num">Chapter One</span>
+        <h2 class="card__ttl">Our first month</h2>
+        <p class="card__sub">where it all began, and where I said yes to everything</p>
+        <span class="card__date">June 21 — July 21</span>
       </a>
 
       <!-- MES II -->
       <a class="card" href="mes-2.html" style="--rot:1.9deg">
         <span class="card__wax">II</span>
         <div class="card__win">
-          <img src="media/m2/p01.jpg" alt="Nuestro segundo mes" loading="lazy"
+          <img src="media/m2/p01.jpg" alt="Our second month" loading="lazy"
                onerror="this.style.display='none';this.parentNode.querySelector('.card__ph').style.display='flex'">
           <span class="card__ph" style="display:none">II</span>
         </div>
-        <span class="card__num">Capítulo Segundo</span>
-        <h2 class="card__ttl">Dos meses contigo</h2>
-        <p class="card__sub">y ya no me imagino los días sin ti</p>
-        <span class="card__date">21 julio — 21 agosto</span>
+        <span class="card__num">Chapter Two</span>
+        <h2 class="card__ttl">Two months with you</h2>
+        <p class="card__sub">and I can’t imagine my days without you anymore</p>
+        <span class="card__date">July 21 — August 21</span>
       </a>
 
       <!-- MES III -->
       <a class="card" href="mes-3.html" style="--rot:-.9deg">
         <span class="card__wax">III</span>
         <div class="card__win">
-          <img src="media/m3/p01.jpg" alt="Nuestro tercer mes" loading="lazy"
+          <img src="media/m3/p01.jpg" alt="Our third month" loading="lazy"
                onerror="this.style.display='none';this.parentNode.querySelector('.card__ph').style.display='flex'">
           <span class="card__ph" style="display:none">III</span>
         </div>
-        <span class="card__num">Capítulo Tercero</span>
-        <h2 class="card__ttl">Nuestro propio universo</h2>
-        <p class="card__sub">tres meses encontrándote en todas partes</p>
-        <span class="card__date">21 agosto — 21 septiembre</span>
+        <span class="card__num">Chapter Three</span>
+        <h2 class="card__ttl">Our own universe</h2>
+        <p class="card__sub">three months finding you everywhere</p>
+        <span class="card__date">August 21 — September 21</span>
       </a>
       <!-- MES IV -->
       <a class="card" href="mes-4.html" style="--rot:1.3deg">
@@ -274,10 +286,10 @@ body{
         <div class="card__win">
           <div class="card__sunset" aria-hidden="true"></div>
         </div>
-        <span class="card__num">Capítulo Cuarto</span>
-        <h2 class="card__ttl">A la orilla de ti</h2>
-        <p class="card__sub">cuatro meses, y un atardecer que no se acaba</p>
-        <span class="card__date">21 septiembre — 21 octubre</span>
+        <span class="card__num">Chapter Four</span>
+        <h2 class="card__ttl">On the shore of you</h2>
+        <p class="card__sub">four months, and a sunset that never ends</p>
+        <span class="card__date">September 21 — October 21</span>
       </a>
 
       <!-- MES V -->
@@ -288,15 +300,25 @@ body{
                onerror="this.style.display='none';this.parentNode.querySelector('.card__ph').style.display='flex'">
           <span class="card__ph" style="display:none">V</span>
         </div>
-        <span class="card__num">Capítulo Quinto</span>
-        <h2 class="card__ttl">Nuestro otoño</h2>
-        <p class="card__sub">cinco meses, y todo cambia de color menos lo nuestro</p>
-        <span class="card__date">21 octubre — 21 noviembre</span>
+        <span class="card__num">Chapter Five</span>
+        <h2 class="card__ttl">Our autumn</h2>
+        <p class="card__sub">five months, and everything changes color except us</p>
+        <span class="card__date">October 21 — November 21</span>
       </a>
     </div>
 
-    <p class="pick__foot">y las hojas siguen cayendo, despacio, sobre nosotros…</p>
-    <button class="pick__out" id="lockAgain">cerrar con cera de nuevo</button>
+    <div class="app" id="appPanel" hidden>
+      <p class="app__t">Keep us close</p>
+      <p class="app__s">Put our story on your home screen, and let it tell you when something new is waiting for you.</p>
+      <div class="app__btns">
+        <button class="btn" id="installBtn" hidden>Install our app</button>
+        <button class="btn" id="notifyBtn" hidden>Turn on notifications</button>
+      </div>
+      <p class="app__note" id="appNote"></p>
+    </div>
+
+    <p class="pick__foot">and the leaves keep falling, slowly, all around us…</p>
+    <button class="pick__out" id="lockAgain">seal it with wax again</button>
   </div>
 </div>
 
@@ -363,6 +385,56 @@ document.getElementById('lockAgain').addEventListener('click', ()=>{
   location.reload();
 });
 
+/* ---------- «Keep us close»: app instalable + notificaciones push ---------- */
+(function keepClose(){
+  const panel = document.getElementById('appPanel'), installBtn = document.getElementById('installBtn'),
+        notifyBtn = document.getElementById('notifyBtn'), note = document.getElementById('appNote');
+  const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  const show = () => { panel.hidden = installBtn.hidden && notifyBtn.hidden && !note.textContent; };
+  let deferred = null;
+  addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferred = e; if(!standalone){ installBtn.hidden = false; show(); } });
+  installBtn.addEventListener('click', async () => {
+    if(!deferred) return;
+    deferred.prompt();
+    const r = await deferred.userChoice.catch(() => null); deferred = null;
+    if(r && r.outcome === 'accepted'){ installBtn.textContent = 'Installed 💛'; installBtn.classList.add('done'); }
+  });
+  addEventListener('appinstalled', () => { installBtn.textContent = 'Installed 💛'; installBtn.classList.add('done'); installBtn.hidden = false; show(); });
+
+  const b64 = s => { const p = '='.repeat((4 - s.length % 4) % 4), r = atob((s + p).replace(/-/g,'+').replace(/_/g,'/')); return Uint8Array.from(r, c => c.charCodeAt(0)); };
+  const canPush = 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
+  async function setup(){
+    if(!canPush) return;
+    let key;
+    try{ const r = await fetch('/api/push-key', { cache:'no-store' }); if(!r.ok) return; key = (await r.json()).publicKey; }catch(_){ return; }
+    const reg = await navigator.serviceWorker.ready;
+    const sub = await reg.pushManager.getSubscription();
+    if(sub && Notification.permission === 'granted'){ notifyBtn.textContent = 'Notifications on ✓'; notifyBtn.classList.add('done'); }
+    else if(Notification.permission === 'denied'){ note.textContent = 'Notifications are blocked for this site. You can allow them in your browser settings.'; }
+    notifyBtn.hidden = Notification.permission === 'denied'; show();
+    notifyBtn.onclick = async () => {
+      notifyBtn.disabled = true; note.textContent = '';
+      try{
+        const perm = await Notification.requestPermission();
+        if(perm !== 'granted'){ note.textContent = perm === 'denied' ? 'Notifications are blocked. You can allow them in your browser settings.' : 'Maybe later 🤍'; return; }
+        const s = (await reg.pushManager.getSubscription()) || await reg.pushManager.subscribe({ userVisibleOnly:true, applicationServerKey:b64(key) });
+        const device = (navigator.userAgentData && navigator.userAgentData.platform) || (/Android/.test(navigator.userAgent) ? 'Android' : /CrOS/.test(navigator.userAgent) ? 'ChromeOS' : 'browser');
+        const r = await fetch('/api/subscribe', { method:'POST', headers:{ 'Content-Type':'application/json' }, body:JSON.stringify({ subscription:s.toJSON(), device }) });
+        if(!r.ok) throw new Error('subscribe ' + r.status);
+        notifyBtn.textContent = 'Notifications on ✓'; notifyBtn.classList.add('done');
+        reg.showNotification('You’re all set 💌', { body:'I’ll let you know whenever there’s something new waiting for you.', icon:'media/icons/icon-192.png', badge:'media/icons/badge-96.png', data:{ url:'/' } });
+      }catch(e){
+        note.textContent = 'Something went wrong turning them on. Try again in a moment.';
+      }finally{ notifyBtn.disabled = false; show(); }
+    };
+  }
+  /* solo cuando la clave ya está puesta y el selector de capítulos se ve */
+  const start = () => { setup(); show(); };
+  if(document.getElementById('pickStage').style.display !== 'none') start();
+  else new MutationObserver((m, o) => { if(document.getElementById('pickStage').style.display !== 'none'){ o.disconnect(); start(); } })
+         .observe(document.getElementById('pickStage'), { attributes:true, attributeFilter:['style'] });
+})();
+
 /* ---------- corazoncitos al acertar ---------- */
 function hearts(n){
   const e = ['💛','🤍','❤️','·'];
@@ -407,5 +479,6 @@ function hearts(n){
   })();
 })();
 </script>
+<script>if('serviceWorker' in navigator) addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));</script>
 </body>
 </html>

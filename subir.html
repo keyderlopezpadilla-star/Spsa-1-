@@ -72,6 +72,8 @@ h1 em{ font-style:italic; background:var(--grad); -webkit-background-clip:text; 
 .actions{ display:flex; gap:8px; flex-wrap:wrap; margin-top:1rem; }
 .msg{ margin-top:.8rem; font-size:.85rem; min-height:1.2em; }
 .msg.ok{ color:var(--ok); } .msg.bad{ color:var(--bad); }
+.check{ display:flex; gap:.6rem; align-items:flex-start; margin-top:.9rem; font-size:.88rem; color:var(--dim); line-height:1.45; }
+.check input{ margin-top:.2rem; accent-color:var(--coral); width:18px; height:18px; flex:none; }
 
 /* ---------- zona para elegir ---------- */
 .drop{ position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:.5rem;
@@ -195,6 +197,16 @@ h1 em{ font-style:italic; background:var(--grad); -webkit-background-clip:text; 
       <b>Elegir fotos y vídeos</b>
       <small>De la galería o la cámara: JPG, PNG, HEIC, MOV o MP4.<br>Las fotos se reducen a 1400 px y los vídeos a 720p, hasta 1 minuto.<br>A todo se le quita la ubicación GPS.</small>
     </label>
+
+    <section class="panel" id="notif" hidden>
+      <h2>Avisar a Samanta</h2>
+      <p id="notifInfo">Comprobando…</p>
+      <label class="check"><input type="checkbox" id="autoNotify" checked> Avisarle automáticamente cuando publique fotos o vídeos nuevos</label>
+      <label class="field"><span>Título</span><input id="nTitle" maxlength="80" placeholder="Thinking of you 💛"></label>
+      <label class="field"><span>Mensaje</span><input id="nBody" maxlength="240" placeholder="Open our story, there’s something new for you"></label>
+      <div class="actions"><button class="btn btn--main" id="nSend">Enviar notificación</button></div>
+      <p class="msg" id="nMsg"></p>
+    </section>
 
     <div class="sec" id="queueSec" hidden>
       <div class="sec__h"><h3>Nuevas</h3><span id="queueInfo"></span></div>
@@ -771,6 +783,15 @@ async function publish(){
                : dest.length ? ' Van al ' + dest[0].ch.name.split('·')[0].trim() + '.' : '';
     progress(1, '¡Publicado!', 'En un minuto aparecen, mientras la web se actualiza.' + where);
     $('ovSee').href = (dest[0] ? dest[0].ch : chapter).page; $('ovAct').hidden = false;
+    /* aviso automático a Samanta (en inglés, como el sitio) */
+    if(dest.length && push.ready && $('autoNotify').checked){
+      const nv = dest.reduce((n, g) => n + g.add.filter(q => q.kind === 'video').length, 0);
+      const nf = dest.reduce((n, g) => n + g.add.length, 0) - nv;
+      const what = [nf ? nf + ' new photo' + (nf === 1 ? '' : 's') : '', nv ? nv + ' new video' + (nv === 1 ? '' : 's') : ''].filter(Boolean).join(' and ');
+      const where = dest.length === 1 ? ' to Chapter ' + dest[0].ch.n : '';
+      notify({ title:'New memories for you 💛', body:'Keyder added ' + what + where + '. Come and see them.', url:'/' + dest[0].ch.page, tag:'new-photos' })
+        .then(r => { if(r && r.sent) $('ovP').textContent += ' Samanta ya tiene el aviso.'; }).catch(() => {});
+    }
   }catch(e){
     ov.classList.add('done');
     const why = e.status === 401 ? 'El token no es válido o caducó.'
@@ -844,9 +865,49 @@ const drop = $('drop');
 drop.addEventListener('drop', e => addFiles(e.dataTransfer.files));
 addEventListener('beforeunload', e => { if(pending().add.length || removed.size || edits.size){ e.preventDefault(); e.returnValue = ''; } });
 
+/* =======================================================================
+   NOTIFICACIONES A SAMANTA (api/notify, con el mismo token)
+   ======================================================================= */
+const push = { ready:false, devices:0 };
+async function notify(payload){
+  const r = await fetch('/api/notify', { method:'POST', headers:{ 'Content-Type':'application/json', Authorization:'Bearer ' + cfg().token }, body:JSON.stringify(payload) });
+  const j = await r.json().catch(() => ({}));
+  if(!r.ok) throw Object.assign(new Error(j.error || r.status), { status:r.status });
+  return j;
+}
+async function setupNotify(){
+  const box = $('notif'), info = $('notifInfo');
+  try{ $('autoNotify').checked = store.get('autoNotify', '1') === '1'; }catch(_){}
+  $('autoNotify').onchange = e => store.set('autoNotify', e.target.checked ? '1' : '0');
+  let r;
+  try{ r = await fetch('/api/notify', { headers:{ Authorization:'Bearer ' + cfg().token }, cache:'no-store' }); }catch(_){ return; }
+  if(r.status === 404) return;                                       // sitio sin funciones (p. ej. en local)
+  box.hidden = false;
+  if(r.status === 503){ info.innerHTML = 'Las notificaciones aún no están configuradas en Vercel: faltan las variables <b>VAPID_PUBLIC_KEY</b>, <b>VAPID_PRIVATE_KEY</b> y <b>GITHUB_TOKEN</b>.'; $('nSend').disabled = true; return; }
+  if(r.status === 401){ info.innerHTML = 'El <b>GITHUB_TOKEN</b> de Vercel no es el mismo token que tienes en esta app. Pon el mismo en los dos sitios.'; $('nSend').disabled = true; return; }
+  const j = await r.json().catch(() => ({}));
+  push.ready = r.ok; push.devices = j.devices || 0;
+  info.textContent = push.devices
+    ? 'Samanta tiene los avisos activados en ' + push.devices + ' dispositivo' + (push.devices === 1 ? '' : 's') + '. Los mensajes le llegan en inglés, como el sitio.'
+    : 'Samanta aún no ha activado los avisos. Lo hace ella desde la portada del sitio, con el botón «Turn on notifications».';
+}
+$('nSend').addEventListener('click', async () => {
+  const msg = $('nMsg'), title = $('nTitle').value.trim() || 'Thinking of you 💛', body = $('nBody').value.trim();
+  msg.className = 'msg'; msg.textContent = 'Enviando…'; $('nSend').disabled = true;
+  try{
+    const r = await notify({ title, body, url:'/', tag:'from-keyder' });
+    msg.className = 'msg ok';
+    msg.textContent = r.sent ? 'Enviada a ' + r.sent + ' dispositivo' + (r.sent === 1 ? '' : 's') + '. 💌' : 'No hay ningún dispositivo con los avisos activados todavía.';
+    if(r.sent){ $('nTitle').value = ''; $('nBody').value = ''; }
+  }catch(e){
+    msg.className = 'msg bad'; msg.textContent = 'No se pudo enviar (' + e.message + ').';
+  }finally{ $('nSend').disabled = false; }
+});
+
 function start(){
   $('app').hidden = false; $('dock').hidden = false;
   loadPublished();
+  setupNotify();
   lib('exifr').catch(() => {});      // precarga para que la primera foto vaya rápida
 }
 if(cfg().token){ start(); } else { showSetup(true); }

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <script>try{if(localStorage.getItem('ks_key')!=='1'){location.replace('index.html');}}catch(e){}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#2A1530">
-<title>Capítulo IV — A la orilla de ti</title>
+<title>Chapter IV — On the shore of you</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%85%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -397,6 +397,8 @@ html.reading .tide{ opacity:0; }
 .vbadge::before{ content:''; border-style:solid; border-width:5px 0 5px 8px; border-color:transparent transparent transparent #fff; }
 .lb__fig video{ display:block; max-width:min(92vw,1100px); max-height:76svh; background:#000; }
 </style>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="media/icons/apple-180.png">
 </head>
 <body>
 <script>document.documentElement.classList.add('locked');</script>
@@ -410,22 +412,22 @@ html.reading .tide{ opacity:0; }
 </div>
 
 <div class="top" id="top">
-  <a class="back" href="index.html">‹ Capítulos</a>
+  <a class="back" href="index.html">‹ Chapters</a>
 </div>
-<button class="sunbtn" id="sunbtn" aria-label="Poner o quitar la música"><span class="sunbtn__rays"></span><span class="sunbtn__core"></span></button>
+<button class="sunbtn" id="sunbtn" aria-label="Play or pause the music"><span class="sunbtn__rays"></span><span class="sunbtn__core"></span></button>
 <div class="ytbox"><div id="ytplayer"></div></div>
 <div class="toast" id="toast" role="status"></div>
 
 <!-- ============ ENTRADA ============ -->
 <div class="gate" id="gate">
   <div class="gate__top">
-    <span class="eyebrow">Capítulo Cuarto</span>
-    <h1>A la orilla<br><em>de ti</em></h1>
-    <p>Cuatro meses. Y un atardecer que no quiero que se termine.</p>
+    <span class="eyebrow">Chapter Four</span>
+    <h1>On the shore<br><em>of you</em></h1>
+    <p>Four months. And a sunset I never want to end.</p>
   </div>
   <div class="gate__bottom">
-    <button class="gate__btn" id="gateBtn"><span class="gate__dot"></span>Ver el atardecer</button>
-    <small>toca el agua cuando quieras</small>
+    <button class="gate__btn" id="gateBtn"><span class="gate__dot"></span>Watch the sunset</button>
+    <small>touch the water whenever you like</small>
   </div>
 </div>
 
@@ -433,17 +435,17 @@ html.reading .tide{ opacity:0; }
 
   <!-- ============ HERO ============ -->
   <section class="hero" id="hero">
-    <span class="hero__date r">21 septiembre — 21 octubre</span>
-    <h2 class="hero__title" id="heroTitle" aria-label="Cuatro meses">Cuatro <em>meses</em></h2>
-    <p class="hero__line r" style="--d:.9s">Dicen que los atardeceres más bonitos se ven a la orilla del mar. Yo los veo cada vez que me miras.</p>
-    <div class="clock r" style="--d:1.2s" role="timer" aria-label="Tiempo juntos">
-      <div class="clock__u"><b id="cD">0</b><span>días</span></div>
-      <div class="clock__u"><b id="cH">00</b><span>horas</span></div>
+    <span class="hero__date r">September 21 — October 21</span>
+    <h2 class="hero__title" id="heroTitle" aria-label="Four months">Four <em>months</em></h2>
+    <p class="hero__line r" style="--d:.9s">They say the most beautiful sunsets are seen from the shore. I see them every time you look at me.</p>
+    <div class="clock r" style="--d:1.2s" role="timer" aria-label="Time together">
+      <div class="clock__u"><b id="cD">0</b><span>days</span></div>
+      <div class="clock__u"><b id="cH">00</b><span>hours</span></div>
       <div class="clock__u"><b id="cM">00</b><span>min</span></div>
-      <div class="clock__u"><b id="cS">00</b><span>seg</span></div>
+      <div class="clock__u"><b id="cS">00</b><span>sec</span></div>
     </div>
-    <small class="clock__cap r" style="--d:1.4s">juntos desde el 21 de junio, y contando</small>
-    <div class="cue"><span>desliza despacio · el sol baja contigo</span><i></i></div>
+    <small class="clock__cap r" style="--d:1.4s">together since June 21, and counting</small>
+    <div class="cue"><span>scroll slowly · the sun sets with you</span><i></i></div>
   </section>
 
   <!-- ============ CUATRO OLAS ============ -->
@@ -451,33 +453,33 @@ html.reading .tide{ opacity:0; }
     <div class="wrap">
       <div class="head r">
         <span class="eyebrow">I · II · III · IV</span>
-        <h2>Cuatro <em>olas</em></h2>
-        <p>Cada mes llegó como una ola. Ninguna se fue: todas se quedaron en la orilla.</p>
+        <h2>Four <em>waves</em></h2>
+        <p>Every month arrived like a wave. None of them left: they all stayed on the shore.</p>
       </div>
       <div class="waves">
         <button class="wave r" style="--d:0s" data-wave>
           <span class="wave__n">I</span>
-          <span><span class="wave__t">Nuestro primer mes</span>
-          <span class="wave__p">La ola que me tomó por sorpresa, cuando todavía no sabía nadar en esto.</span>
-          <a class="wave__go" href="mes-1.html">volver a vivirlo →</a></span>
+          <span><span class="wave__t">Our first month</span>
+          <span class="wave__p">The wave that took me by surprise, when I still didn’t know how to swim in this.</span>
+          <a class="wave__go" href="mes-1.html">live it again →</a></span>
         </button>
         <button class="wave r" style="--d:.1s" data-wave>
           <span class="wave__n">II</span>
-          <span><span class="wave__t">Dos meses contigo</span>
-          <span class="wave__p">La que me enseñó que al mar no se le tiene miedo cuando vas de tu mano.</span>
-          <a class="wave__go" href="mes-2.html">volver a vivirlo →</a></span>
+          <span><span class="wave__t">Two months with you</span>
+          <span class="wave__p">The one that taught me the sea isn’t scary when I’m holding your hand.</span>
+          <a class="wave__go" href="mes-2.html">live it again →</a></span>
         </button>
         <button class="wave r" style="--d:.2s" data-wave>
           <span class="wave__n">III</span>
-          <span><span class="wave__t">Nuestro propio universo</span>
-          <span class="wave__p">La que nos llevó más allá del horizonte, hasta las estrellas.</span>
-          <a class="wave__go" href="mes-3.html">volver a vivirlo →</a></span>
+          <span><span class="wave__t">Our own universe</span>
+          <span class="wave__p">The one that took us beyond the horizon, all the way to the stars.</span>
+          <a class="wave__go" href="mes-3.html">live it again →</a></span>
         </button>
         <button class="wave wave--now r" style="--d:.3s" data-wave>
-          <span class="wave__here">estás aquí</span>
+          <span class="wave__here">you are here</span>
           <span class="wave__n">IV</span>
-          <span><span class="wave__t">A la orilla de ti</span>
-          <span class="wave__p">Esta. La que todavía está llegando, y la que no quiero que se vaya.</span></span>
+          <span><span class="wave__t">On the shore of you</span>
+          <span class="wave__p">This one. The one still arriving, and the one I never want to leave.</span></span>
         </button>
       </div>
     </div>
@@ -487,9 +489,9 @@ html.reading .tide{ opacity:0; }
   <section id="hora" hidden>
     <div class="wrap">
       <div class="head r">
-        <span class="eyebrow">entre las 4:30 y las 8 de la tarde</span>
-        <h2>Nuestra hora <em>dorada</em></h2>
-        <p id="goldSub">Las fotos que tomamos de verdad mientras el sol bajaba, a la hora exacta de cada una.</p>
+        <span class="eyebrow">between 4:30 and 8 in the evening</span>
+        <h2>Our golden <em>hour</em></h2>
+        <p id="goldSub">The photos we really took while the sun was going down, at the exact time of each one.</p>
       </div>
     </div>
     <div class="gold r" id="gold"></div>
@@ -499,17 +501,17 @@ html.reading .tide{ opacity:0; }
   <section id="marea">
     <div class="wrap">
       <div class="head r">
-        <span class="eyebrow">cuatro meses, en el orden exacto en que pasaron</span>
-        <h2>Lo que guardó <em>la marea</em></h2>
-        <p id="mareaSub">Cada foto, en el día y a la hora exacta en que la vivimos.</p>
+        <span class="eyebrow">four months, in the exact order they happened</span>
+        <h2>What the <em>tide</em> kept</h2>
+        <p id="mareaSub">Every photo, on the day and at the exact time we lived it.</p>
         <div class="stats" id="stats" hidden>
-          <div class="stat"><b id="stN">0</b><span>fotos</span></div>
-          <div class="stat" id="stVw" hidden><b id="stV">0</b><span>vídeos</span></div>
-          <div class="stat"><b id="stD">0</b><span>días con fotos</span></div>
-          <div class="stat"><b id="stG">0</b><span>tardes doradas</span></div>
+          <div class="stat"><b id="stN">0</b><span>photos</span></div>
+          <div class="stat" id="stVw" hidden><b id="stV">0</b><span>videos</span></div>
+          <div class="stat"><b id="stD">0</b><span>days with photos</span></div>
+          <div class="stat"><b id="stG">0</b><span>golden evenings</span></div>
         </div>
       </div>
-      <div id="days"><div class="empty"><i></i>La marea está trayendo las fotos…</div></div>
+      <div id="days"><div class="empty"><i></i>The tide is bringing in the photos…</div></div>
     </div>
   </section>
   <div class="tide" id="tide" aria-hidden="true"><i></i><b id="tideA"></b><span id="tideB"></span></div>
@@ -518,16 +520,16 @@ html.reading .tide{ opacity:0; }
   <section id="arena">
     <div class="wrap">
       <div class="head r">
-        <span class="eyebrow">con el dedo</span>
-        <h2>Escribe en la <em>arena</em></h2>
-        <p>Dibuja lo que quieras. El mar se lo lleva, pero yo me lo quedo.</p>
+        <span class="eyebrow">with your finger</span>
+        <h2>Write in the <em>sand</em></h2>
+        <p>Draw whatever you want. The sea takes it away, but I keep it.</p>
       </div>
-      <div class="sand r" id="sand" aria-label="Arena para dibujar con el dedo">
+      <div class="sand r" id="sand" aria-label="Sand to draw on with your finger">
         <canvas id="sandBase"></canvas><canvas id="sandInk"></canvas><canvas id="sandFoam"></canvas>
       </div>
       <div class="sand__ui r">
-        <button class="chip" id="sandWave">Que lo borre el mar</button>
-        <button class="chip" id="sandKS">Escribir K ♥ S</button>
+        <button class="chip" id="sandWave">Let the sea wash it away</button>
+        <button class="chip" id="sandKS">Write K ♥ S</button>
       </div>
     </div>
   </section>
@@ -536,11 +538,11 @@ html.reading .tide{ opacity:0; }
   <section id="botella">
     <div class="wrap">
       <div class="head r">
-        <span class="eyebrow">llegó con la marea</span>
-        <h2>Un mensaje en <em>una botella</em></h2>
-        <p>La dejé en la orilla para ti. Tiene tu nombre.</p>
+        <span class="eyebrow">it came with the tide</span>
+        <h2>A message in <em>a bottle</em></h2>
+        <p>I left it on the shore for you. It has your name on it.</p>
       </div>
-      <button class="bottle r" id="bottle" aria-label="Abrir la botella y leer la carta">
+      <button class="bottle r" id="bottle" aria-label="Open the bottle and read the letter">
         <div class="bottle__float">
           <svg viewBox="0 0 120 260" aria-hidden="true">
             <defs>
@@ -564,39 +566,39 @@ html.reading .tide{ opacity:0; }
           </svg>
         </div>
         <div class="bottle__shadow"></div>
-        <span class="bottle__hint">tócala</span>
+        <span class="bottle__hint">tap it</span>
       </button>
     </div>
   </section>
 
   <!-- ============ FINAL ============ -->
   <section class="end" id="fin">
-    <h2 class="r">El sol se esconde,<br><em>pero nosotros nos quedamos.</em></h2>
-    <p class="r" style="--d:.2s">Y mañana, otro atardecer contigo.</p>
+    <h2 class="r">The sun goes down,<br><em>but we stay.</em></h2>
+    <p class="r" style="--d:.2s">And tomorrow, another sunset with you.</p>
     <div class="end__sig r" style="--d:.4s">K &amp; S</div>
-    <div class="end__next r" style="--d:.6s">continuará · capítulo V</div>
+    <div class="end__next r" style="--d:.6s">to be continued · chapter V</div>
     <div class="end__links r" style="--d:.7s">
-      <button class="chip" id="reread">Volver a leer la carta</button>
-      <a class="chip" href="index.html">Volver a los capítulos</a>
+      <button class="chip" id="reread">Read the letter again</button>
+      <a class="chip" href="index.html">Back to the chapters</a>
     </div>
   </section>
 </main>
 
 <!-- ============ LIGHTBOX ============ -->
-<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Foto">
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo">
   <span class="lb__count" id="lbCount"></span>
-  <button class="lb__x" id="lbX" aria-label="Cerrar">✕</button>
-  <button class="lb__nav lb__prev" id="lbPrev" aria-label="Anterior">‹</button>
-  <button class="lb__nav lb__next" id="lbNext" aria-label="Siguiente">›</button>
+  <button class="lb__x" id="lbX" aria-label="Close">✕</button>
+  <button class="lb__nav lb__prev" id="lbPrev" aria-label="Previous">‹</button>
+  <button class="lb__nav lb__next" id="lbNext" aria-label="Next">›</button>
   <div class="lb__fig" id="lbFig"><img id="lbImg" alt=""><video id="lbVid" controls playsinline preload="metadata" hidden></video></div>
   <div class="lb__cap"><p id="lbCap"></p><small id="lbWhen"></small></div>
 </div>
 
 <!-- ============ LA CARTA ============ -->
-<div class="read" id="read" role="dialog" aria-modal="true" aria-label="La carta">
+<div class="read" id="read" role="dialog" aria-modal="true" aria-label="The letter">
   <div class="read__bar">
-    <div class="lang"><button class="on" data-lang="es">ES</button><button data-lang="en">EN</button></div>
-    <button class="read__x" id="readX" aria-label="Cerrar la carta">✕</button>
+    <div class="lang"><button class="on" data-lang="en">EN</button><button data-lang="es">ES</button></div>
+    <button class="read__x" id="readX" aria-label="Close the letter">✕</button>
   </div>
   <div class="letter">
     <div class="letter__paper">
@@ -608,8 +610,8 @@ html.reading .tide{ opacity:0; }
         <div class="l-close lr" id="readClose"></div>
         <div class="l-sign" id="readSign"></div>
         <div class="read__act lr">
-          <button id="savePdf">Guardar en PDF</button>
-          <button id="saveTxt">Descargar el texto</button>
+          <button id="savePdf">Save as PDF</button>
+          <button id="saveTxt">Download the text</button>
         </div>
       </div>
     </div>
@@ -678,8 +680,8 @@ Thank you for your infinite patience, for your unconditional love, and for makin
 const $ = id => document.getElementById(id);
 const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const FINE = matchMedia('(pointer:fine)').matches;
-const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
-const DIAS  = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+const MESES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DIAS  = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 let started = false;
 
 function toast(msg){
@@ -956,18 +958,18 @@ const hourOf = p => { const t = parseTaken(p.taken); return t ? t.h + t.mi/60 : 
 const isGolden = p => { const h = hourOf(p); return p.type !== 'video' && h !== null && h >= CONFIG.horaDorada[0] && h <= CONFIG.horaDorada[1]; };
 function momentOf(h){
   if(h === null) return '';
-  if(h >= 5 && h < 8) return 'amanecer';
-  if(h < 12 && h >= 8) return 'mañana';
-  if(h < CONFIG.horaDorada[0] && h >= 12) return 'tarde';
-  if(h <= CONFIG.horaDorada[1] && h >= CONFIG.horaDorada[0]) return 'atardecer';
-  return 'noche';
+  if(h >= 5 && h < 8) return 'dawn';
+  if(h < 12 && h >= 8) return 'morning';
+  if(h < CONFIG.horaDorada[0] && h >= 12) return 'afternoon';
+  if(h <= CONFIG.horaDorada[1] && h >= CONFIG.horaDorada[0]) return 'sunset';
+  return 'night';
 }
 const ROMAN = ['','I','II','III','IV','V','VI'];
-function dayTitle(t){ return DIAS[new Date(t.y, t.mo-1, t.d).getDay()] + ' ' + t.d + ' de ' + MESES[t.mo-1]; }
+function dayTitle(t){ return DIAS[new Date(t.y, t.mo-1, t.d).getDay()] + ', ' + MESES[t.mo-1] + ' ' + t.d; }
 function whenText(p){
   const t = parseTaken(p.taken);
   if(t) return dayTitle(t) + ' · ' + pad(t.h) + ':' + pad(t.mi);
-  return p.ch === 1 ? 'nuestro primer mes · 21 jun — 21 jul' : 'capítulo ' + ROMAN[p.ch] + ' · sin hora';
+  return p.ch === 1 ? 'our first month · Jun 21 — Jul 21' : 'chapter ' + ROMAN[p.ch] + ' · no time';
 }
 
 let CHAPTERS = [];
@@ -975,7 +977,7 @@ let CHAPTERS = [];
 async function loadPhotos(){
   const get = async url => { try{ const r = await fetch(url, { cache:'no-cache' }); return r.ok ? await r.json() : null; }catch(_){ return null; } };
   const [mem, man] = await Promise.all([get(CONFIG.memories), get(CONFIG.manifest)]);
-  CHAPTERS = (mem && mem.chapters) || [{ n:4, title:'A la orilla de ti', range:'21 sep — 21 oct', page:'mes-4.html' }];
+  CHAPTERS = (mem && mem.chapters) || [{ n:4, title:'On the shore of you', range:'Sep 21 — Oct 21', page:'mes-4.html' }];
   const byTaken = (a,b) => (a.taken ? 0 : 1) - (b.taken ? 0 : 1) || (a.taken || '').localeCompare(b.taken || '');
   const old = (mem && mem.photos || []).filter(p => p && p.src);
   const mine = (man && man.photos || []).filter(p => p && p.file).map(p => ({ ...p, src:CONFIG.dir + p.file, poster:p.poster ? CONFIG.dir + p.poster : null, ch:4 }));
@@ -997,7 +999,7 @@ function cellHTML(p, i, k){
   const wide = p.w && p.h && p.w/p.h > 1.15;
   const t = parseTaken(p.taken);
   const st = '--c:'+(p.color||'#5A2F48')+';--d:'+(k%6*.07).toFixed(2)+'s' + (wide ? ';aspect-ratio:'+(p.w/p.h).toFixed(3) : '');
-  return '<button class="ph'+(wide?' wide':'')+'" data-i="'+i+'" style="'+st+'" aria-label="Abrir ' + (p.type === 'video' ? 'vídeo' : 'foto') + ': '+whenText(p)+'">'
+  return '<button class="ph'+(wide?' wide':'')+'" data-i="'+i+'" style="'+st+'" aria-label="Open ' + (p.type === 'video' ? 'video' : 'photo') + ': '+whenText(p)+'">'
     + '<span class="ph__w"><img src="'+(p.poster || p.src)+'" alt="" loading="lazy" decoding="async">' + videoBits(p)
     + (t ? '<span class="ph__t">'+pad(t.h)+':'+pad(t.mi)+'</span>' : '')
     + '</span></button>';
@@ -1005,7 +1007,7 @@ function cellHTML(p, i, k){
 function buildGallery(list){
   const host = $('days');
   if(!list.length){
-    host.innerHTML = '<div class="empty"><i></i>La marea todavía está trayendo las fotos…</div>';
+    host.innerHTML = '<div class="empty"><i></i>The tide is still bringing in the photos…</div>';
     return;
   }
   const html = CHAPTERS.map(c => {
@@ -1013,11 +1015,11 @@ function buildGallery(list){
     const dated = idx.filter(i => list[i].taken);
     const nDays = new Set(dated.map(i => list[i].taken.slice(0,10))).size;
     let meta = c.range;
-    if(idx.length) meta += ' · ' + idx.length + ' foto' + (idx.length === 1 ? '' : 's') + (nDays ? ' · ' + nDays + ' día' + (nDays === 1 ? '' : 's') : '');
-    if(c.n !== 4) meta += ' · <a href="'+c.page+'">volver a vivirlo →</a>';
+    if(idx.length) meta += ' · ' + countLabel(idx.map(i => list[i])) + (nDays ? ' · ' + nDays + ' day' + (nDays === 1 ? '' : 's') : '');
+    if(c.n !== 4) meta += ' · <a href="'+c.page+'">live it again →</a>';
     const head = '<div class="chap__h r"><span class="chap__n">'+ROMAN[c.n]+'</span><div><h3>'+c.title+'</h3><p>'+meta+'</p></div></div><div class="chap__line"></div>';
     if(!idx.length){
-      return '<div class="chap" data-ch="'+c.n+'">'+head+'<div class="soon"><i></i>Las fotos de este mes las está trayendo la marea…</div></div>';
+      return '<div class="chap" data-ch="'+c.n+'">'+head+'<div class="soon"><i></i>The tide is bringing in this month’s photos…</div></div>';
     }
     /* grupos por día; las que no tienen fecha, en su propio grupo */
     const groups = [];
@@ -1035,11 +1037,11 @@ function buildGallery(list){
         const moments = [...new Set(g.items.map(i => momentOf(hourOf(list[i]))).filter(Boolean))];
         tag = countLabel(g.items.map(i => list[i])) + ' · ' + moments.join(' · ');
       } else if(c.n === 1){
-        title = 'del 21 de junio al 21 de julio';
-        tag = 'en el orden del capítulo I · estas fotos llegaron sin su hora';
+        title = 'from June 21 to July 21';
+        tag = 'in the order of chapter I · these photos arrived without their time';
       } else {
-        title = 'sin fecha exacta';
-        tag = 'estas perdieron su fecha por el camino';
+        title = 'no exact date';
+        tag = 'these lost their date along the way';
       }
       return '<div class="day"><div class="day__h r"><h3>'+title+'</h3><span>'+tag+'</span></div><div class="grid">'
         + g.items.map((i,k) => cellHTML(list[i], i, k)).join('') + '</div></div>';
@@ -1068,7 +1070,7 @@ function buildGallery(list){
   if(nVid){ $('stVw').hidden = false; countUp($('stV'), nVid); }
   countUp($('stD'), new Set(dated.map(p => p.taken.slice(0,10))).size);
   countUp($('stG'), new Set(list.filter(isGolden).map(p => p.taken.slice(0,10))).size);
-  $('mareaSub').textContent = countLabel(list) + ' de cuatro meses. ' + dated.length + ' con el día y la hora exactos, leídos de cada una.';
+  $('mareaSub').textContent = countLabel(list) + ' from four months. ' + dated.length + ' with their exact day and time, read from each one.';
   tideClock();
 }
 
@@ -1093,8 +1095,8 @@ function tideClock(){
     if(!best) return;
     const i = +best.dataset.i; if(i === last) return; last = i;
     const p = PHOTOS[i], t = parseTaken(p.taken);
-    $('tideA').textContent = t ? dayTitle(t) : (p.ch === 1 ? 'nuestro primer mes' : 'capítulo ' + ROMAN[p.ch]);
-    $('tideB').textContent = t ? pad(t.h) + ':' + pad(t.mi) : (p.ch === 1 ? '21 jun — 21 jul' : 'sin hora');
+    $('tideA').textContent = t ? dayTitle(t) : (p.ch === 1 ? 'our first month' : 'chapter ' + ROMAN[p.ch]);
+    $('tideB').textContent = t ? pad(t.h) + ':' + pad(t.mi) : (p.ch === 1 ? 'Jun 21 — Jul 21' : 'no time');
   }
   addEventListener('scroll', () => { if(!raf) raf = requestAnimationFrame(upd); }, { passive:true });
   addEventListener('resize', upd);
@@ -1130,13 +1132,13 @@ function buildGolden(list){
   const idx = list.map((p,i) => isGolden(p) ? i : -1).filter(i => i >= 0);
   if(idx.length < 2) return;
   $('hora').hidden = false;
-  $('goldSub').textContent = idx.length + ' fotos de los cuatro meses que tomamos mientras el sol bajaba, ' + new Set(idx.map(i => list[i].taken.slice(0,10))).size + ' tardes distintas, a la hora exacta de cada una.';
+  $('goldSub').textContent = idx.length + ' photos from the four months that we took while the sun was going down, on ' + new Set(idx.map(i => list[i].taken.slice(0,10))).size + ' different evenings, at the exact time of each one.';
   const track = $('gold');
   track.innerHTML = idx.map(i => {
     const p = list[i], t = parseTaken(p.taken);
-    return '<button class="gold__card" data-i="'+i+'" style="--c:'+(p.color||'#7A3E50')+'" aria-label="Abrir foto '+(i+1)+'">'
+    return '<button class="gold__card" data-i="'+i+'" style="--c:'+(p.color||'#7A3E50')+'" aria-label="Open photo '+(i+1)+'">'
       + '<img src="'+p.src+'" alt="" loading="lazy" decoding="async">'
-      + '<span class="gold__time">'+pad(t.h)+':'+pad(t.mi)+'<small>'+DIAS[new Date(t.y,t.mo-1,t.d).getDay()].slice(0,3)+' '+t.d+' '+MESES[t.mo-1].slice(0,3)+'</small></span></button>';
+      + '<span class="gold__time">'+pad(t.h)+':'+pad(t.mi)+'<small>'+DIAS[new Date(t.y,t.mo-1,t.d).getDay()].slice(0,3)+', '+MESES[t.mo-1].slice(0,3)+' '+t.d+'</small></span></button>';
   }).join('');
   track.querySelectorAll('img').forEach(imgOnLoad);
   track.querySelectorAll('.gold__card').forEach(c => c.addEventListener('click', () => openLb(+c.dataset.i)));
@@ -1177,7 +1179,7 @@ function videoBits(p){
 }
 function countLabel(items){
   const nv = items.filter(p => p.type === 'video').length, nf = items.length - nv;
-  return [nf ? nf + ' foto' + (nf === 1 ? '' : 's') : '', nv ? nv + ' vídeo' + (nv === 1 ? '' : 's') : ''].filter(Boolean).join(' y ');
+  return [nf ? nf + ' photo' + (nf === 1 ? '' : 's') : '', nv ? nv + ' video' + (nv === 1 ? '' : 's') : ''].filter(Boolean).join(' and ');
 }
 /* mientras suena un vídeo en el visor, la canción de la página se pausa */
 let ducked = false;
@@ -1369,7 +1371,7 @@ const Sand = (function(){
    Al abrirla, el pergamino se desenrolla, el sol se detiene en el horizonte
    y la carta aparece párrafo a párrafo, al ritmo de la lectura.
    ======================================================================= */
-const read = $('read'), readBody = $('readBody'); let lang = 'es', readSeen = false, readLive = false;
+const read = $('read'), readBody = $('readBody'); let lang = 'en', readSeen = false, readLive = false;
 const escH = t => t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const CLOSE_ART = '<svg viewBox="0 0 76 26" aria-hidden="true"><path d="M2 22 H74" stroke="#C9A06A" stroke-width="1" stroke-linecap="round"/>'
   + '<path d="M22 22 A16 16 0 0 1 54 22" fill="none" stroke="#E08A5A" stroke-width="1.4"/>'
@@ -1473,7 +1475,7 @@ if(CONFIG.VIDEO_ID){
   s.onerror = () => sunbtn.classList.add('mute'); document.head.appendChild(s);
   setTimeout(() => { if(!ytReady) sunbtn.classList.add('mute'); }, 9000);
   sunbtn.addEventListener('click', () => {
-    if(!ytReady) return toast('La música no carga ahora mismo');
+    if(!ytReady) return toast('The music won’t load right now');
     try{ yt.getPlayerState() === YT.PlayerState.PLAYING ? yt.pauseVideo() : playSong(); }catch(_){}
   });
 }
@@ -1530,5 +1532,6 @@ $('gateBtn').addEventListener('click', () => {
   if(started) observeReveals();
 })();
 </script>
+<script>if('serviceWorker' in navigator) addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));</script>
 </body>
 </html>

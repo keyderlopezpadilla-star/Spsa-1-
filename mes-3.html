@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <!-- Access guard -->
 <script>try{if(localStorage.getItem('ks_key')!=='1'){location.replace('index.html');}}catch(e){}</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#05060F">
-<meta name="description" content="Capítulo III — Nuestro propio universo.">
-<title>Capítulo III — Nuestro propio universo · K &amp; S</title>
+<meta name="description" content="Chapter III — Our own universe.">
+<title>Chapter III — Our own universe · K &amp; S</title>
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Capítulo III — Nuestro propio universo">
-<meta property="og:description" content="Tres meses bajo el mismo cielo. El universo continúa expandiéndose…">
+<meta property="og:title" content="Chapter III — Our own universe">
+<meta property="og:description" content="Three months under the same sky. The universe keeps expanding…">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9C%A8%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -383,6 +383,8 @@ footer a{ color:var(--silver); text-decoration:none; }
   .read__star{ display:none !important; }
 }
 </style>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="media/icons/apple-180.png">
 </head>
 <body>
 
@@ -393,30 +395,30 @@ footer a{ color:var(--silver); text-decoration:none; }
 <div class="grain"></div>
 <div class="vig"></div>
 
-<a class="back" id="back" href="index.html">‹ Capítulos</a>
+<a class="back" id="back" href="index.html">‹ Chapters</a>
 
 <!-- ============ ENTRADA AL OBSERVATORIO ============ -->
 <div class="open" id="opener">
   <div class="open__inner">
     <div class="rule"><i></i></div>
-    <p style="margin:1.6rem 0 .4rem">Hay personas que llegan a tu vida</p>
-    <p style="color:var(--gold-soft)">y terminan convirtiéndose en todo tu cielo.</p>
-    <button class="open__star" id="openBtn" aria-label="Abrir el universo"></button>
-    <p class="open__hint">toca la estrella</p>
+    <p style="margin:1.6rem 0 .4rem">Some people walk into your life</p>
+    <p style="color:var(--gold-soft)">and end up becoming your whole sky.</p>
+    <button class="open__star" id="openBtn" aria-label="Open the universe"></button>
+    <p class="open__hint">tap the star</p>
   </div>
 </div>
 
 <!-- ============ REPRODUCTOR ============ -->
 <div class="ytbox"><div id="ytplayer"></div></div>
 <div class="player" id="player">
-  <button class="orbit" id="orbit" aria-label="Poner o quitar la música">
+  <button class="orbit" id="orbit" aria-label="Play or pause the music">
     <span class="orbit__ring r1"></span>
     <span class="orbit__ring r2"></span>
     <span class="moon-body"></span>
     <span class="orbit__spin s1"><span class="planet p1"></span></span>
     <span class="orbit__spin s2"><span class="planet p2"></span></span>
   </button>
-  <p class="player__cap" id="playerCap"><b>Nuestra canción</b>Capítulo III</p>
+  <p class="player__cap" id="playerCap"><b>Our song</b>Chapter III</p>
 </div>
 
 <main id="main">
@@ -424,13 +426,13 @@ footer a{ color:var(--silver); text-decoration:none; }
   <!-- ============ HERO ============ -->
   <section class="hero">
     <div class="wrap">
-      <p class="hero__chapter" data-anim>Capítulo Tercero</p>
-      <h1 class="hero__title" data-anim>Nuestro propio<br><em>universo</em></h1>
-      <p class="hero__sub" data-anim>Tres meses encontrándote en todas partes.</p>
+      <p class="hero__chapter" data-anim>Chapter Three</p>
+      <h1 class="hero__title" data-anim>Our own<br><em>universe</em></h1>
+      <p class="hero__sub" data-anim>Three months finding you everywhere.</p>
       <div class="hero__const" data-anim>
-        <svg id="constKS" viewBox="0 0 300 120" aria-label="Constelación K y S"></svg>
+        <svg id="constKS" viewBox="0 0 300 120" aria-label="Constellation K and S"></svg>
       </div>
-      <p class="hero__cue"><i></i>desliza</p>
+      <p class="hero__cue"><i></i>scroll</p>
     </div>
   </section>
 
@@ -438,26 +440,26 @@ footer a{ color:var(--silver); text-decoration:none; }
   <section class="section">
     <div class="wrap">
       <div class="astros__head">
-        <span class="eyebrow" data-anim>Tres meses, tres astros</span>
-        <h2 class="h2" data-anim style="margin-top:1rem">Cada uno, <em>una luz</em></h2>
+        <span class="eyebrow" data-anim>Three months, three stars</span>
+        <h2 class="h2" data-anim style="margin-top:1rem">Each one, <em>a light</em></h2>
       </div>
       <div class="astros">
-        <button class="astro a1" data-say="El sol con el que empezó todo, cuando aún no sabíamos lo que venía.">
+        <button class="astro a1" data-say="The sun where it all began, when we didn’t know yet what was coming.">
           <span class="astro__orb"></span>
           <span class="astro__n">I</span>
-          <span class="astro__t">Donde empezó todo</span>
+          <span class="astro__t">Where it all began</span>
           <p class="astro__say"></p>
         </button>
-        <button class="astro a2" data-say="Nuestra historia clásica, la que se sintió como toda una vida.">
+        <button class="astro a2" data-say="Our classic story, the one that felt like a whole lifetime.">
           <span class="astro__orb"></span>
           <span class="astro__n">II</span>
-          <span class="astro__t">Nuestra historia clásica</span>
+          <span class="astro__t">Our classic story</span>
           <p class="astro__say"></p>
         </button>
-        <button class="astro a3" data-say="Y este: nuestro propio universo, donde te encuentro en todas partes.">
+        <button class="astro a3" data-say="And this one: our own universe, where I find you everywhere.">
           <span class="astro__orb"></span>
           <span class="astro__n">III</span>
-          <span class="astro__t">Nuestro propio universo</span>
+          <span class="astro__t">Our own universe</span>
           <p class="astro__say"></p>
         </button>
       </div>
@@ -468,15 +470,15 @@ footer a{ color:var(--silver); text-decoration:none; }
   <section class="section map" id="map">
     <div class="wrap">
       <div class="map__head">
-        <span class="eyebrow" data-anim>Mapa estelar</span>
-        <h2 class="h2" data-anim style="margin-top:1rem">Cada foto, <em>una estrella</em></h2>
-        <p class="lede" data-anim>Todo lo que este mes brilló. Desliza y se van dibujando las constelaciones; toca una estrella para verla de cerca.</p>
+        <span class="eyebrow" data-anim>Star map</span>
+        <h2 class="h2" data-anim style="margin-top:1rem">Each photo, <em>a star</em></h2>
+        <p class="lede" data-anim>Everything that shone this month. Scroll and the constellations draw themselves; tap a star to see it up close.</p>
       </div>
       <div class="map__field">
         <canvas id="mapLines"></canvas>
         <div class="map__stars" id="mapStars"></div>
       </div>
-      <p class="map__note">nuestro cielo, del 21 de agosto al 21 de septiembre</p>
+      <p class="map__note">our sky, from August 21 to September 21</p>
     </div>
   </section>
 
@@ -484,23 +486,21 @@ footer a{ color:var(--silver); text-decoration:none; }
   <section class="wish" id="wish">
     <div class="wish__sky" id="wishSky"></div>
     <div class="wish__inner">
-      <span class="eyebrow" data-anim>Pide un deseo</span>
-      <h2 data-anim style="margin-top:1rem">Cruza una <em>estrella fugaz</em></h2>
-      <p class="wish__hint" id="wishHint">atrápala antes de que se apague</p>
-      <p class="wish__caughtmsg" id="wishCaught">La atrapaste. Como me atrapaste a mí. 🤍</p>
-      <button class="wish__open" id="wishOpen">Leer lo que pedí</button>
+      <span class="eyebrow" data-anim>Make a wish</span>
+      <h2 data-anim style="margin-top:1rem">A <em>shooting star</em> is crossing</h2>
+      <p class="wish__hint" id="wishHint">catch it before it fades</p>
+      <p class="wish__caughtmsg" id="wishCaught">You caught it. Just like you caught me. 🤍</p>
+      <button class="wish__open" id="wishOpen">Read what I wished for</button>
     </div>
   </section>
 
   <!-- ============ MOMENTO ÍNTIMO (LUNA) ============ -->
   <section class="luna" id="luna">
     <div class="luna__inner">
-      <button class="luna__moon" id="lunaMoon" aria-label="Tocar la luna"></button>
-      <p class="luna__phrase">Entre todos los lugares posibles,<br>mi lugar favorito sigue siendo <em>a tu lado</em>.</p>
-      <p class="luna__hint" id="lunaHint">toca la luna</p>
-      <p class="luna__more" id="lunaMore">No importa dónde estemos ni qué tan lejos empezó todo: el cielo cambia,
-        las estrellas se mueven, y aun así siempre te encuentro. Si el universo es tan grande,
-        me sigue pareciendo increíble que en medio de todo terminara girando a tu alrededor.</p>
+      <button class="luna__moon" id="lunaMoon" aria-label="Touch the moon"></button>
+      <p class="luna__phrase">Of all the places in the world,<br>my favorite one is still <em>right next to you</em>.</p>
+      <p class="luna__hint" id="lunaHint">touch the moon</p>
+      <p class="luna__more" id="lunaMore">It doesn’t matter where we are or how far away it all began: the sky changes, the stars move, and still I always find you. With a universe this big, I still can’t believe that in the middle of it all I ended up orbiting around you.</p>
     </div>
   </section>
 
@@ -508,58 +508,58 @@ footer a{ color:var(--silver); text-decoration:none; }
   <section class="end" id="end">
     <div class="end__inner">
       <div class="end__const" id="endConst">
-        <svg viewBox="0 0 300 120" aria-label="Constelación S y K"></svg>
+        <svg viewBox="0 0 300 120" aria-label="Constellation S and K"></svg>
       </div>
-      <h2 data-anim>Tres meses bajo <em>el mismo cielo</em></h2>
-      <p class="end__sub" data-anim>Y todavía quiero descubrir contigo todo lo que falta.</p>
-      <p class="end__expand" data-anim>El universo continúa expandiéndose<span>.</span><span>.</span><span>.</span></p>
-      <button class="end__save" id="saveBtn">Guardar este capítulo</button>
-      <p class="end__tip" id="saveTip">en iPhone: Compartir → «Añadir a inicio».<br>en Android: menú (tres puntos) → «Añadir a pantalla de inicio».</p>
-      <p class="end__done" id="saveDone">Guardado. Te espero bajo el mismo cielo. 🤍</p>
+      <h2 data-anim>Three months under <em>the same sky</em></h2>
+      <p class="end__sub" data-anim>And I still want to discover everything that’s left, with you.</p>
+      <p class="end__expand" data-anim>The universe keeps expanding<span>.</span><span>.</span><span>.</span></p>
+      <button class="end__save" id="saveBtn">Save this chapter</button>
+      <p class="end__tip" id="saveTip">on iPhone: Share → “Add to Home Screen”.<br>on Android: menu (three dots) → “Add to Home screen”.</p>
+      <p class="end__done" id="saveDone">Saved. I’ll be waiting for you under the same sky. 🤍</p>
     </div>
   </section>
 </main>
 
 <footer>
-  K &amp; S · Capítulo III · Hecho con todo el universo que llevo dentro ·
-  Música: <a id="songLink" href="#" target="_blank" rel="noopener">nuestra canción</a> ·
-  <a href="index.html">volver a los capítulos</a>
+  K &amp; S · Chapter III · Made with the whole universe I carry inside ·
+  Music: <a id="songLink" href="#" target="_blank" rel="noopener">our song</a> ·
+  <a href="index.html">back to the chapters</a>
 </footer>
 
 <!-- ============ LA CARTA (cápsula del universo) ============ -->
 <div class="read" id="read">
-  <button class="read__close" id="readClose" aria-label="Cerrar">×</button>
+  <button class="read__close" id="readClose" aria-label="Close">×</button>
   <div class="read__sheet" id="readSheet">
     <div class="read__bg"></div>
     <div class="read__content" id="readContent" data-lenis-prevent>
       <div class="read__lang">
-        <button id="langEs" class="on">Español</button>
-        <button id="langEn">English</button>
+        <button id="langEn" class="on">English</button>
+        <button id="langEs">Español</button>
       </div>
       <p class="read__orn"><i></i><i></i><i></i></p>
-      <p class="read__to" id="readTo">Para Samanta,<br>mi amor…</p>
+      <p class="read__to" id="readTo">To Samanta,<br>my love…</p>
       <div class="read__rule"></div>
       <p class="read__text" id="readText"></p>
       <p class="read__sign" id="readSign">Keyder…</p>
       <div class="read__star"></div>
       <div class="read__actions">
-        <p class="read__keep" id="readKeep">para que te la quedes</p>
+        <p class="read__keep" id="readKeep">so you can keep it</p>
         <div class="read__btns">
-          <button id="btnPdf" type="button">Guardar en PDF</button>
-          <button id="btnTxt" type="button">Descargar el texto</button>
+          <button id="btnPdf" type="button">Save as PDF</button>
+          <button id="btnTxt" type="button">Download the text</button>
         </div>
       </div>
     </div>
-    <p class="read__hint" id="readHint">desliza para leer <b class="chev"></b></p>
+    <p class="read__hint" id="readHint">scroll to read <b class="chev"></b></p>
   </div>
 </div>
 
 <!-- ============ LIGHTBOX ============ -->
 <div class="lb" id="lb">
-  <button class="lb__btn lb__close" id="lbClose" aria-label="Cerrar">×</button>
-  <button class="lb__btn lb__prev" id="lbPrev" aria-label="Anterior">‹</button>
+  <button class="lb__btn lb__close" id="lbClose" aria-label="Close">×</button>
+  <button class="lb__btn lb__prev" id="lbPrev" aria-label="Previous">‹</button>
   <div class="lb__pane"><img id="lbImg" src="" alt=""><p class="lb__cap" id="lbCap"></p></div>
-  <button class="lb__btn lb__next" id="lbNext" aria-label="Siguiente">›</button>
+  <button class="lb__btn lb__next" id="lbNext" aria-label="Next">›</button>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -789,7 +789,7 @@ function buildMap(list){
     const inner = p.src
       ? '<span class="starpic__dot"><img src="'+p.src+'" alt="" loading="lazy" decoding="async"></span>'
       : '<span class="starpic__dot"></span>';
-    return '<button class="starpic'+big+'" data-n="'+p.n+'" aria-label="Estrella '+p.n+'">'
+    return '<button class="starpic'+big+'" data-n="'+p.n+'" aria-label="Star '+p.n+'">'
       +      '<span class="starpic__halo"></span>' + inner + '</button>';
   }).join('');
   drawLines();
@@ -921,7 +921,7 @@ $('lunaMoon').addEventListener('click', () => {
 /* =======================================================================
    LA CARTA
    ======================================================================= */
-let curLang = 'es', started = false, letterSeen = false;
+let curLang = 'en', started = false, letterSeen = false;
 const T = {
   es: { keep:'para que te la quedes', pdf:'Guardar en PDF', txt:'Descargar el texto' },
   en: { keep:'so you can keep it',    pdf:'Save as PDF',    txt:'Download the text' }
@@ -943,7 +943,7 @@ function setLang(l){
 }
 $('langEs').addEventListener('click', ()=>setLang('es'));
 $('langEn').addEventListener('click', ()=>setLang('en'));
-setLang('es');
+setLang('en');
 
 function openLetter(){
   read.classList.add('open');
@@ -993,7 +993,7 @@ $('songLink').href = 'https://youtu.be/' + CONFIG.VIDEO_ID;
 function markNoDisc(){
   if(ytFailed) return; ytFailed = true;
   player.classList.add('empty'); orbit.setAttribute('aria-disabled','true');
-  $('playerCap').innerHTML = '<b>sin señal</b>el planeta no carga';
+  $('playerCap').innerHTML = '<b>no signal</b>the planet won’t load';
 }
 window.onYouTubeIframeAPIReady = function(){
   yt = new YT.Player('ytplayer', {
@@ -1099,5 +1099,6 @@ function initMotion(){
   setTimeout(()=>{ if(window.ScrollTrigger) ScrollTrigger.refresh(); drawLines(); }, 1300);
 })();
 </script>
+<script>if('serviceWorker' in navigator) addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));</script>
 </body>
 </html>
