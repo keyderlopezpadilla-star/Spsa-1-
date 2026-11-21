@@ -134,7 +134,7 @@ Interacciones: las hojas caen con física (gravedad, aleteo, viento); **el dedo 
 ratón son viento** y las empujan; **tocar el suelo las levanta**; al volver hacia
 arriba, el árbol rebrota.
 
-- **Carta:** `LETTER` en `mes-5.html`. **Música:** «we fell in love in october» de girl in red (`CONFIG.VIDEO_ID`).
+- **Carta:** «Al chico del primer mensaje», en `LETTER` de `mes-5.html` (ES/EN). **Música:** «we fell in love in october» de girl in red (`CONFIG.VIDEO_ID`).
 - **Fotos de la portada:** cada letra lleva su foto en el atributo `style` (`--img`, y `--pos`/`--size` para encuadrarla).
 - Las 53 fotos del 21 oct al 1 nov estaban en `media/m4/` y se movieron a `media/m5/`.
 
